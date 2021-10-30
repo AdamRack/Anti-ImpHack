@@ -3,6 +3,7 @@ package mod.imphack.event.events;
 import mod.imphack.event.ImpHackEventCancellable;
 import net.minecraft.entity.MoverType;
 
+
 public class ImpHackEventMove extends ImpHackEventCancellable {
 
 	private MoverType move_type;
@@ -17,6 +18,8 @@ public class ImpHackEventMove extends ImpHackEventCancellable {
 		this.y = y;
 		this.z = z;
 	}
+	
+	   
 
 	public void set_move_type(MoverType type) {
 		this.move_type = type;

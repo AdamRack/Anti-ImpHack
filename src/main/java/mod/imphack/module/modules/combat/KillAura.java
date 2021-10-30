@@ -1,165 +1,83 @@
 package mod.imphack.module.modules.combat;
 
-import mod.imphack.Main;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+
 import mod.imphack.module.Category;
 import mod.imphack.module.Module;
 import mod.imphack.setting.settings.BooleanSetting;
-import mod.imphack.util.EntityUtil;
+import mod.imphack.setting.settings.IntSetting;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
-import net.minecraft.network.play.client.CPacketPlayerDigging;
-import net.minecraft.network.play.client.CPacketUseEntity;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.MinecraftForge;
 
 public class KillAura extends Module {
 
-	final BooleanSetting player = new BooleanSetting("Player", this, true);
-	final BooleanSetting hostile = new BooleanSetting("Hostile", this, true);
-	final BooleanSetting passive = new BooleanSetting("Passive", this, true);
-	final BooleanSetting tps = new BooleanSetting("Sync TPS", this, true);
-
+	public IntSetting range = new IntSetting("range", this, 6);
+	public BooleanSetting switchA = new BooleanSetting("switch", this, false);
+	public BooleanSetting swordOnly = new BooleanSetting("swordOnly", this, false);
+	public BooleanSetting players = new BooleanSetting("players", this, true);
+	public BooleanSetting passives = new BooleanSetting("passives", this, false);
+	public BooleanSetting hostiles = new BooleanSetting("hostiles", this, false);
+	
 	public KillAura() {
-		super("KillAura", "Makes You Hit Entities", Category.COMBAT);
+		super ("killAura", "automatically hits anything near u.", Category.COMBAT);
+		
+		this.addSetting(range);
+		this.addSetting(switchA);
+		this.addSetting(swordOnly);
+		this.addSetting(players);
+		this.addSetting(passives);
+		this.addSetting(hostiles);
 
-		this.addSetting(player);
-		this.addSetting(hostile);
-		this.addSetting(passive);
-		this.addSetting(tps);
-	}
-
-	boolean start_verify = true;
-
-	final EnumHand actual_hand = EnumHand.MAIN_HAND;
-
-	double tick = 0;
-
-	@Override
-	public void onEnable() {
-		tick = 0;
-
-		MinecraftForge.EVENT_BUS.register(this);
-
-		Main.config.Save();
 	}
 
 	@Override
 	public void onUpdate() {
-		if (mc.player != null && mc.world != null) {
+		if (mc.player == null || mc.player.isDead) return;
+		List<Entity> targets = mc.world.loadedEntityList.stream()
+				.filter(entity -> entity != mc.player)
+				.filter(entity -> mc.player.getDistance(entity) <= range.getValue())
+				.filter(entity -> !entity.isDead)
+				.filter(entity -> attackCheck(entity))
+				.sorted(Comparator.comparing(s -> mc.player.getDistance(s)))
+				.collect(Collectors.toList());
 
-			tick++;
-
-			if (mc.player.isDead | mc.player.getHealth() <= 0) {
-				return;
-			}
-			if (mc.player.getHeldItemMainhand().getItem() instanceof ItemSword) {
-				start_verify = true;
-			} else {
-				for (int i = 0; i < 9; i++) {
-					ItemStack stack = mc.player.inventory.getStackInSlot(i);
-					if (stack.getItem() instanceof ItemSword) {
-						mc.player.inventory.currentItem = i;
-						break;
-					}
-				}
-				start_verify = true;
-			}
-
-			Entity entity = find_entity();
-
-			if (entity != null && start_verify) {
-				// Tick.
-				float tick_to_hit = 20.0f - Main.get_event_handler().get_tick_rate();
-
-				// If possible hit or no.
-				boolean is_possible_attack = mc.player.getCooledAttackStrength(tps.enabled ? -tick_to_hit : 0.0f) >= 1;// TODO
-																														// test
-																														// tps
-																														// sync
-
-				// To hit if able.
-				if (is_possible_attack) {
-					attack_entity(entity);
-				}
-			}
-
-		}
+		targets.forEach(target -> {
+			attack(target);
+		});
 	}
 
-	public void attack_entity(Entity entity) {
-
-		// Get actual item off hand.
-		ItemStack off_hand_item = mc.player.getHeldItemOffhand();
-
-		// If off hand not null and is some SHIELD like use.
-		if (off_hand_item.getItem() == Items.SHIELD) {
-			// Ignore ant continue.
-			mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.RELEASE_USE_ITEM,
-					BlockPos.ORIGIN, mc.player.getHorizontalFacing()));
+	public void attack(Entity e) {
+		if (mc.player.getCooledAttackStrength(0) >= 1){
+			mc.playerController.attackEntity(mc.player, e);
+			mc.player.swingArm(EnumHand.MAIN_HAND);
 		}
-
-		// Start hit on entity.
-		mc.player.connection.sendPacket(new CPacketUseEntity(entity));
-		mc.player.swingArm(actual_hand);
-		mc.player.resetCooldown();
 	}
-
-	public Entity find_entity() {
-		// Create a request.
-		Entity entity_requested = null;
-
-		for (Entity e : mc.world.loadedEntityList) {
-			// If entity is not null continue to next event.
-			if (e != null) {
-				// If is compatible.
-				if (is_compatible(e)) {
-					// If is possible to get.
-					if (mc.player.getDistance(e) <= 5.0) {
-						// Atribute the entity into entity_requested.
-						entity_requested = e;
-					}
+	
+	private boolean attackCheck(Entity entity) {
+		if (players.isEnabled() && entity instanceof EntityPlayer) {
+				if (((EntityPlayer) entity).getHealth() > 0) { 
+					return true;
 				}
 			}
-		}
+		
 
-		// Return the entity requested.
-		return entity_requested;
-	}
-
-	public boolean is_compatible(Entity entity) {
-		// Instend entity with some type entity to continue or no.
-		if (player.enabled && entity instanceof EntityPlayer) {
-			if (entity != mc.player && !(entity.getName()
-					.equals(mc.player.getName())) /* && WurstplusFriendManager.is_friend(entity) == false */) {
+		if (passives.isEnabled() && entity instanceof EntityAnimal) {
+			if (entity instanceof EntityTameable) {
+				return false;
+			}else {
 				return true;
 			}
 		}
-
-		// If is hostile.
-		if (hostile.enabled && (EntityUtil.isNeutralMob(entity) || EntityUtil.isHostileMob(entity))) {
+		if (hostiles.isEnabled() && entity instanceof EntityMob) {
 			return true;
 		}
-
-		if (passive.enabled && EntityUtil.isPassive(entity)) {
-			return true;
-		}
-
-		// If entity requested die.
-		if (entity instanceof EntityLivingBase) {
-			EntityLivingBase entity_living_base = (EntityLivingBase) entity;
-
-			if (entity_living_base.getHealth() <= 0) {
-				return false;
-			}
-		}
-
-		// Return false.
 		return false;
 	}
-
 }

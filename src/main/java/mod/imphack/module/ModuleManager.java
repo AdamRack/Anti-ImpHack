@@ -34,7 +34,7 @@ public class ModuleManager {
 		addModule(new DiscordRPC());
 
 		// combat
-		addModule(new KillAura());
+		addModule(new KillAura()); // TODO Add Switch and Sword only
 		addModule(new CrystalAura());// TODO skid phobos ca mine is retarded
 		addModule(new Surround());// TODO fix surround its broken
 		addModule(new AutoTotem());
