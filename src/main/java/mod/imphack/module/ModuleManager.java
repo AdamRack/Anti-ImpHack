@@ -35,7 +35,7 @@ public class ModuleManager {
 
 		// combat
 		addModule(new KillAura()); // TODO Add Switch and Sword only
-		addModule(new CrystalAura());// TODO skid phobos ca mine is retarded
+		//addModule(new CrystalAura());// TODO BROKEN WILL FIX TMRW
 		addModule(new Surround());// TODO fix surround its broken
 		addModule(new AutoTotem());
 		addModule(new Anchor());
@@ -148,7 +148,7 @@ public class ModuleManager {
 
 		Vec3d pos = get_interpolated_pos(mc.player, event.getPartialTicks());
 
-		ImpHackEventRender event_render = new ImpHackEventRender(RenderUtil.INSTANCE, pos);
+		ImpHackEventRender event_render = new ImpHackEventRender(RenderUtil.INSTANCE, pos, 0);
 
 		event_render.reset_translation();
 

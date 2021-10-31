@@ -35,6 +35,7 @@ public class Main {
 	public static Config config;
 	
 	
+	
 	//Initilize HUD modules
 	public static final HudCoords hudCoords = new HudCoords();
 	public static final HudArrayList hudArrayList = new HudArrayList();
@@ -100,4 +101,6 @@ public class Main {
 	public static ImpHackEventHandler get_event_handler() {
 		return ImpHackEventHandler.INSTANCE;
 	}
+	
+	 
 }

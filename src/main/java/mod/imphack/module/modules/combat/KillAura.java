@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+import mod.imphack.Main;
 import mod.imphack.module.Category;
 import mod.imphack.module.Module;
 import mod.imphack.setting.settings.BooleanSetting;
@@ -39,7 +39,7 @@ public class KillAura extends Module {
 
 	@Override
 	public void onUpdate() {
-		if (mc.player == null || mc.player.isDead) return;
+		if (mc.player == null || mc.player.isDead || Main.moduleManager.getModule("Surround").isToggled()) return;
 		List<Entity> targets = mc.world.loadedEntityList.stream()
 				.filter(entity -> entity != mc.player)
 				.filter(entity -> mc.player.getDistance(entity) <= range.getValue())

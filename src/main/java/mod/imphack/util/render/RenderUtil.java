@@ -740,5 +740,183 @@ public class RenderUtil extends Tessellator {
 	     df.setMaximumFractionDigits(maxvalue);
 	     return df.format(value);
 	}
+    
+    public static void drawBox(BlockPos blockPos, double height, ColorUtil color, int sides) {
+		drawBox(blockPos.getX(), blockPos.getY(), blockPos.getZ(), 1, height, 1, color, sides);
+	}
+
+	public static void drawBox(AxisAlignedBB bb, boolean check,  double height, ColorUtil color, int sides) {
+		if (check){
+			drawBox(bb.minX,bb.minY,bb.minZ,bb.maxX-bb.minX, bb.maxY-bb.minY,bb.maxZ-bb.minZ,color,sides);
+		}
+		else {
+			drawBox(bb.minX,bb.minY,bb.minZ,bb.maxX-bb.minX, height,bb.maxZ-bb.minZ,color,sides);
+		}
+	}
+
+	public static void drawBox(double x, double y, double z, double w, double h, double d, ColorUtil color, int sides) {
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+		color.glColor();
+		bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+		if ((sides & Geometry.Quad.DOWN) != 0) {
+			vertex(x+w,y,z,  bufferbuilder);
+			vertex(x+w,y,z+d,bufferbuilder);
+			vertex(x,  y,z+d,bufferbuilder);
+			vertex(x,  y,z,  bufferbuilder);
+		}
+		if ((sides & Geometry.Quad.UP) != 0) {
+			vertex(x+w,y+h,z,  bufferbuilder);
+			vertex(x,  y+h,z,  bufferbuilder);
+			vertex(x,  y+h,z+d,bufferbuilder);
+			vertex(x+w,y+h,z+d,bufferbuilder);
+		}
+		if ((sides & Geometry.Quad.NORTH) != 0) {
+			vertex(x+w,y,  z,bufferbuilder);
+			vertex(x,  y,  z,bufferbuilder);
+			vertex(x,  y+h,z,bufferbuilder);
+			vertex(x+w,y+h,z,bufferbuilder);
+		}
+		if ((sides & Geometry.Quad.SOUTH) != 0) {
+			vertex(x,  y,  z+d,bufferbuilder);
+			vertex(x+w,y,  z+d,bufferbuilder);
+			vertex(x+w,y+h,z+d,bufferbuilder);
+			vertex(x,  y+h,z+d,bufferbuilder);
+		}
+		if ((sides & Geometry.Quad.WEST) != 0) {
+			vertex(x,y,  z,  bufferbuilder);
+			vertex(x,y,  z+d,bufferbuilder);
+			vertex(x,y+h,z+d,bufferbuilder);
+			vertex(x,y+h,z,  bufferbuilder);
+		}
+		if ((sides & Geometry.Quad.EAST) != 0) {
+			vertex(x+w,y,  z+d,bufferbuilder);
+			vertex(x+w,y,  z,  bufferbuilder);
+			vertex(x+w,y+h,z,  bufferbuilder);
+			vertex(x+w,y+h,z+d,bufferbuilder);
+		}
+		tessellator.draw();
+	}
+	private static void vertex (double x, double y, double z, BufferBuilder bufferbuilder) {
+		bufferbuilder.pos(x-mc.getRenderManager().viewerPosX,y-mc.getRenderManager().viewerPosY,z-mc.getRenderManager().viewerPosZ).endVertex();
+	}
+	
+	public static void drawBoundingBox (BlockPos bp, double height, float width, ColorUtil color) {
+		drawBoundingBox(getBoundingBox(bp,1, height,1),width,color);
+	}
+
+	public static void drawBoundingBox (AxisAlignedBB bb, float width, ColorUtil color) {
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+		GlStateManager.glLineWidth(width);
+		color.glColor();
+		bufferbuilder.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
+		vertex(bb.minX,bb.minY,bb.minZ,bufferbuilder);
+		vertex(bb.minX,bb.minY,bb.maxZ,bufferbuilder);
+		vertex(bb.maxX,bb.minY,bb.maxZ,bufferbuilder);
+		vertex(bb.maxX,bb.minY,bb.minZ,bufferbuilder);
+		vertex(bb.minX,bb.minY,bb.minZ,bufferbuilder);
+		vertex(bb.minX,bb.maxY,bb.minZ,bufferbuilder); //
+		vertex(bb.minX,bb.maxY,bb.maxZ,bufferbuilder);
+		vertex(bb.minX,bb.minY,bb.maxZ,bufferbuilder);
+		vertex(bb.maxX,bb.minY,bb.maxZ,bufferbuilder); //
+		vertex(bb.maxX,bb.maxY,bb.maxZ,bufferbuilder);
+		vertex(bb.minX,bb.maxY,bb.maxZ,bufferbuilder);
+		vertex(bb.maxX,bb.maxY,bb.maxZ,bufferbuilder);
+		vertex(bb.maxX,bb.maxY,bb.minZ,bufferbuilder);
+		vertex(bb.maxX,bb.minY,bb.minZ,bufferbuilder);
+		vertex(bb.maxX,bb.maxY,bb.minZ,bufferbuilder);
+		vertex(bb.minX,bb.maxY,bb.minZ,bufferbuilder);
+		tessellator.draw();
+	}
+	
+
+    public static void drawBoundingBox(AxisAlignedBB bb, float width, int color) {
+        final float alpha = (color >> 24 & 0xFF) / 255.0F;
+        final float red = (color >> 16 & 0xFF) / 255.0F;
+        final float green = (color >> 8 & 0xFF) / 255.0F;
+        final float blue = (color & 0xFF) / 255.0F;
+        drawBoundingBox(bb, width, red, green, blue, alpha);
+    }
+    public static void drawBoundingBox(AxisAlignedBB bb, float width, float red, float green, float blue, float alpha) {
+        GL11.glLineWidth(width);
+
+        final Tessellator tessellator = Tessellator.getInstance();
+        final BufferBuilder bufferbuilder = tessellator.getBuffer();
+
+        bufferbuilder.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION_COLOR);
+        bufferbuilder.pos(bb.minX, bb.minY, bb.minZ).color(red, green, blue, 0.0F).endVertex();
+        bufferbuilder.pos(bb.minX, bb.minY, bb.minZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.maxX, bb.minY, bb.minZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.maxX, bb.minY, bb.maxZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.minX, bb.minY, bb.maxZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.minX, bb.minY, bb.minZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.minX, bb.maxY, bb.minZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.maxX, bb.maxY, bb.minZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.maxX, bb.maxY, bb.maxZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.minX, bb.maxY, bb.maxZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.minX, bb.maxY, bb.minZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.minX, bb.maxY, bb.maxZ).color(red, green, blue, 0.0F).endVertex();
+        bufferbuilder.pos(bb.minX, bb.minY, bb.maxZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.maxX, bb.maxY, bb.maxZ).color(red, green, blue, 0.0F).endVertex();
+        bufferbuilder.pos(bb.maxX, bb.minY, bb.maxZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.maxX, bb.maxY, bb.minZ).color(red, green, blue, 0.0F).endVertex();
+        bufferbuilder.pos(bb.maxX, bb.minY, bb.minZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.maxX, bb.minY, bb.minZ).color(red, green, blue, 0.0F).endVertex();
+        tessellator.draw();
+    }
+
+	
+	
+	public static void drawFilledBox(AxisAlignedBB bb, int color) {
+        final float alpha = (color >> 24 & 0xFF) / 255.0F;
+        final float red = (color >> 16 & 0xFF) / 255.0F;
+        final float green = (color >> 8 & 0xFF) / 255.0F;
+        final float blue = (color & 0xFF) / 255.0F;
+
+        final Tessellator tessellator = Tessellator.getInstance();
+        final BufferBuilder bufferbuilder = tessellator.getBuffer();
+
+        bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+        bufferbuilder.pos(bb.minX, bb.minY, bb.minZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.maxX, bb.minY, bb.minZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.maxX, bb.minY, bb.maxZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.minX, bb.minY, bb.maxZ).color(red, green, blue, alpha).endVertex();
+
+        bufferbuilder.pos(bb.minX, bb.maxY, bb.minZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.minX, bb.maxY, bb.maxZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.maxX, bb.maxY, bb.maxZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.maxX, bb.maxY, bb.minZ).color(red, green, blue, alpha).endVertex();
+
+        bufferbuilder.pos(bb.minX, bb.minY, bb.minZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.minX, bb.maxY, bb.minZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.maxX, bb.maxY, bb.minZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.maxX, bb.minY, bb.minZ).color(red, green, blue, alpha).endVertex();
+
+        bufferbuilder.pos(bb.maxX, bb.minY, bb.minZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.maxX, bb.maxY, bb.minZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.maxX, bb.maxY, bb.maxZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.maxX, bb.minY, bb.maxZ).color(red, green, blue, alpha).endVertex();
+
+        bufferbuilder.pos(bb.minX, bb.minY, bb.maxZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.maxX, bb.minY, bb.maxZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.maxX, bb.maxY, bb.maxZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.minX, bb.maxY, bb.maxZ).color(red, green, blue, alpha).endVertex();
+
+        bufferbuilder.pos(bb.minX, bb.minY, bb.minZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.minX, bb.minY, bb.maxZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.minX, bb.maxY, bb.maxZ).color(red, green, blue, alpha).endVertex();
+        bufferbuilder.pos(bb.minX, bb.maxY, bb.minZ).color(red, green, blue, alpha).endVertex();
+        tessellator.draw();
+    }
+	
+	private static AxisAlignedBB getBoundingBox (BlockPos bp, double width, double height, double depth) {
+		double x=bp.getX();
+		double y=bp.getY();
+		double z=bp.getZ();
+		return new AxisAlignedBB(x,y,z,x+width,y+height,z+depth);
+	}
+	
+	
 	
 }

@@ -135,5 +135,8 @@ public class Module implements Listenable {
 
 	public void onRenderWorldLast(ImpHackEventRender event) {		
 	}
-
+	
+	public void onWorldRender(ImpHackEventRender event) {
+		
+	}
 }

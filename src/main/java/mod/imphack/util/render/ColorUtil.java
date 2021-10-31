@@ -20,32 +20,32 @@ public class ColorUtil extends Color {
 		return Color.getHSBColor((float) (rainbowState / 360.0f), 0.5f, 1f).getRGB();
 	}
     public ColorUtil (int rgb) {
-        super(rgb);
-    }
-
-    public ColorUtil (int rgba, boolean hasalpha) {
-        super(rgba,hasalpha);
-    }
-
-    public ColorUtil (int r, int g, int b) {
-        super(r,g,b);
-    }
-
-    public ColorUtil (int r, int g, int b, int a) {
-        super(r,g,b,a);
-    }
-
-    public ColorUtil (Color color) {
-        super(color.getRed(),color.getGreen(),color.getBlue(),color.getAlpha());
-    }
-
-    public ColorUtil (ColorUtil color, int a) {
-        super(color.getRed(),color.getGreen(),color.getBlue(),a);
-    }
-
-    public static ColorUtil fromHSB (float hue, float saturation, float brightness) {
-        return new ColorUtil(Color.getHSBColor(hue,saturation,brightness));
-    }
+		super(rgb);
+	}
+	
+	public ColorUtil (int rgba, boolean hasalpha) {
+		super(rgba,hasalpha);
+	}
+	
+	public ColorUtil (int r, int g, int b) {
+		super(r,g,b);
+	}
+	
+	public ColorUtil (int r, int g, int b, int a) {
+		super(r,g,b,a);
+	}
+	
+	public ColorUtil (Color color) {
+		super(color.getRed(),color.getGreen(),color.getBlue(),color.getAlpha());
+	}
+	
+	public ColorUtil (ColorUtil color, int a) {
+		super(color.getRed(),color.getGreen(),color.getBlue(),a);
+	}
+	
+	public static ColorUtil fromHSB (float hue, float saturation, float brightness) {
+		return new ColorUtil(Color.getHSBColor(hue,saturation,brightness));
+	}
 
     public float getHue() {
         return RGBtoHSB(getRed(),getGreen(),getBlue(),null)[0];
@@ -76,4 +76,5 @@ public class ColorUtil extends Color {
     public int toHex(){
         return toHex(r, g, b);
     }
+ 
 }

@@ -10,5 +10,10 @@ public class ImpHackEventMotionUpdate extends ImpHackEventCancellable {
 		super();
 		this.stage = stage;
 	}
+	
+	 public int getStage() {
+	        return stage;
+	    }
+
 
 }

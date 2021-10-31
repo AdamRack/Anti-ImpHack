@@ -13,6 +13,7 @@ import mod.imphack.util.Timer;
 import mod.imphack.setting.settings.BooleanSetting;
 import mod.imphack.setting.settings.IntSetting;
 import mod.imphack.util.BlockUtil;
+import mod.imphack.util.PlayerUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockLiquid;
@@ -89,8 +90,8 @@ public class Surround extends  Module{
         }
 
         if (centerPlayer.isEnabled() && mc.player.onGround) {
-            mc.player.motionX = 0;
-            mc.player.motionZ = 0;
+        	
+           PlayerUtil.centerPlayer(centeredBlock);
         }
 
         centeredBlock = getCenterOfBlock(mc.player.posX, mc.player.posY, mc.player.posY);
@@ -162,38 +163,7 @@ public class Surround extends  Module{
 
         if (centerPlayer.isEnabled() && centeredBlock != Vec3d.ZERO && mc.player.onGround) {
 
-            double xDeviation = Math.abs(centeredBlock.x - mc.player.posX);
-            double zDeviation = Math.abs(centeredBlock.z - mc.player.posZ);
-
-            if (xDeviation <= 0.1 && zDeviation <= 0.1){
-                centeredBlock = Vec3d.ZERO;
-            }
-            else {
-                double newX;
-                double newZ;
-                if (mc.player.posX > Math.round(mc.player.posX)) {
-                   newX = Math.round(mc.player.posX) + 0.5;
-                }
-                else if (mc.player.posX < Math.round(mc.player.posX)) {
-                    newX = Math.round(mc.player.posX) - 0.5;
-                }
-                else {
-                    newX = mc.player.posX;
-                }
-
-                if (mc.player.posZ > Math.round(mc.player.posZ)) {
-                    newZ = Math.round(mc.player.posZ) + 0.5;
-                }
-                else if (mc.player.posZ < Math.round(mc.player.posZ)) {
-                    newZ = Math.round(mc.player.posZ) - 0.5;
-                }
-                else {
-                    newZ = mc.player.posZ;
-                }
-
-                mc.player.connection.sendPacket(new CPacketPlayer.Position(newX, mc.player.posY, newZ, true));
-                mc.player.setPosition(newX, mc.player.posY, newZ);
-            }
+           PlayerUtil.centerPlayer(centeredBlock);
         }
 
         if (triggerSurround.isEnabled() && runTimeTicks >= timeOutTicks.getValue()) {

@@ -3,8 +3,13 @@ package mod.imphack.util;
 public class Timer {
 	private long time;
 	private long lastMS = 0L;
+	private long current;
+
 	public Timer() {
 		this.time = -1L;
+		this.current = System.currentTimeMillis();
+
+		
 	}
 
 	public boolean getPassedSeconds(final double s) {
@@ -57,4 +62,10 @@ public class Timer {
     public void setLastMS() {
 		this.lastMS = System.currentTimeMillis();
 	}
+    
+    public long getTimePassed(){
+		return System.currentTimeMillis() - this.current;
+	}
+    
+  
 }

@@ -75,6 +75,10 @@ public class BlockUtil {
 		mc = Minecraft.getMinecraft();
 	}
 	
+	 public static Block getBlock(double x, double y, double z) {
+	        return mc.world.getBlockState(new BlockPos(x, y, z)).getBlock();
+	    }
+	
 	public static EnumFacing getPlaceableSide(BlockPos pos){
 
 		for (EnumFacing side : EnumFacing.values()){
@@ -128,5 +132,7 @@ public class BlockUtil {
 				mc.player.posY + mc.player.getEyeHeight(),
 				mc.player.posZ);
 	}
+	
+	
 	
 }

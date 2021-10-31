@@ -81,6 +81,13 @@ public class MathUtil {
 
 	        return (i + j) / 2;
 	    }
+	 
+	 public static double getDistance(Vec3d pos, double x, double y, double z) {
+	        final double deltaX = pos.x - x;
+	        final double deltaY = pos.y - y;
+	        final double deltaZ = pos.z - z;
+	        return MathHelper.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
+	    }
 
 
 }
