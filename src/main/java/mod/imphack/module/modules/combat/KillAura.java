@@ -26,7 +26,7 @@ public class KillAura extends Module {
 	public BooleanSetting hostiles = new BooleanSetting("hostiles", this, false);
 	
 	public KillAura() {
-		super ("killAura", "automatically hits anything near u.", Category.COMBAT);
+		super ("killAura", "Attacks nearby entities", Category.COMBAT);
 		
 		this.addSetting(range);
 		this.addSetting(switchA);

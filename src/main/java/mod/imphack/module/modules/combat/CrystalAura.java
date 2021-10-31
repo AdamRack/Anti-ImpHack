@@ -51,7 +51,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.lwjgl.input.Keyboard;
-
+//TODO rewrite this 
 public class CrystalAura extends Module {
 
 	public BooleanSetting breakCrystal = new BooleanSetting("breakCrystal", this, true);
@@ -85,7 +85,7 @@ public class CrystalAura extends Module {
 	public BooleanSetting showDamage = new BooleanSetting("showDamage", this, true);
 
 	public CrystalAura() {
-		super("CrystalAura", "AutoPlaces Crystals", Category.COMBAT);
+		super("CrystalAura", "places and breaks Crystals", Category.COMBAT);
 
 		addSetting(breakCrystal);
 		addSetting(placeCrystal);
