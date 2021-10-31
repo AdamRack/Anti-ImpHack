@@ -85,7 +85,7 @@ public class CrystalAura extends Module {
 	public BooleanSetting showDamage = new BooleanSetting("showDamage", this, true);
 
 	public CrystalAura() {
-		super("CrystalAura", "AutoPlaces Crystals", Category.COMBAT);
+		super("CrystalAura", "places and breaks Crystals", Category.COMBAT);
 
 		addSetting(breakCrystal);
 		addSetting(placeCrystal);
