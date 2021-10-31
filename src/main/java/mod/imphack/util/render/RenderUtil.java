@@ -811,6 +811,7 @@ public class RenderUtil extends Tessellator {
 		GlStateManager.glLineWidth(width);
 		color.glColor();
 		bufferbuilder.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
+
 		vertex(bb.minX,bb.minY,bb.minZ,bufferbuilder);
 		vertex(bb.minX,bb.minY,bb.maxZ,bufferbuilder);
 		vertex(bb.maxX,bb.minY,bb.maxZ,bufferbuilder);

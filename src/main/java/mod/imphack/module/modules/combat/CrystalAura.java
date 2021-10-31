@@ -81,6 +81,7 @@ public class CrystalAura extends Module {
 	public FloatSetting wallsRange = new FloatSetting("wallsRange", this, 3.5f);
 	public BooleanSetting mode113 = new BooleanSetting("1.13place", this, false);
 	public BooleanSetting outline = new BooleanSetting("outline", this, false);
+	public BooleanSetting showBlock = new BooleanSetting("showBlock", this, true);
 	public BooleanSetting showDamage = new BooleanSetting("showDamage", this, true);
 
 	public CrystalAura() {
@@ -113,6 +114,8 @@ public class CrystalAura extends Module {
 		addSetting(wallsRange);
 		addSetting(mode113);
 		addSetting(outline);
+		addSetting(showBlock);
+
 		addSetting(showDamage);
 
 
@@ -142,11 +145,12 @@ Timer timer = new Timer();
 
 @Override
 public void onEnable() {
-	super.onEnable();
 	if(mc.player == null || mc.world == null) return;
 	oldSlot = mc.player.inventory.currentItem;
 
 	PlacedCrystals.clear();
+    resetRotation();
+
 
 	active = false;
 	placing = false;
@@ -183,7 +187,7 @@ public void onUpdate() {
 		}
 	}
 
-	if(mc.player == null || mc.world == null)
+	if(mc.player == null || mc.world == null || Main.moduleManager.getModule("Surround").isToggled())
 		return;
 	implementLogic();
 }
@@ -397,11 +401,12 @@ private void placeLogic() {
 
 }
 @Override
-public void onWorldRender(ImpHackEventRender event) {
-    if (this.renderBlock != null) {
-    	RenderUtil.drawBox(this.renderBlock,1, new ColorUtil(0, 255, 255), 255);
-    	if(outline.isEnabled()) RenderUtil.drawBoundingBox(this.renderBlock, 1, 1.00f, new ColorUtil(255,255, 0, 255));
+public void render(ImpHackEventRender event) {
+    if (this.renderBlock != null && showBlock.isEnabled()) {
+    	RenderUtil.drawBox(this.renderBlock, 1, new ColorUtil(0, 255, 255), 255);
     }
+	if(outline.isEnabled()) RenderUtil.drawBoundingBox(this.renderBlock, 1, 1.00f, new ColorUtil(0, 255, 255, 255));
+
 
     if(showDamage.isEnabled()) {
         if (this.renderBlock != null && this.renderEnt != null) {
@@ -411,6 +416,8 @@ public void onWorldRender(ImpHackEventRender event) {
             RenderUtil.drawNametag(renderBlock.getX()+0.5,renderBlock.getY() + 0.5,renderBlock.getZ() + 0.5,damageText,new ColorUtil(255, 255, 255), 1);
         }
     }
+	super.onRenderWorldLast(event);
+
 }
 
 private void breakCrystal(EntityEnderCrystal crystal) {
