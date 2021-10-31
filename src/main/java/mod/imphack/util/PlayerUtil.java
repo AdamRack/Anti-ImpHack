@@ -3,10 +3,14 @@ package mod.imphack.util;
 import net.minecraft.block.BlockAir;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemFood;
+import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.network.play.client.CPacketPlayer;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -14,6 +18,30 @@ import net.minecraft.util.math.Vec3d;
 public class PlayerUtil {
 	static final Minecraft mc = Minecraft.getMinecraft();
 
+	 public static Minecraft mc() {
+	        return Minecraft.getMinecraft();
+	    }
+	 public static EntityPlayerSP player() {
+	        return mc().player;
+	    }
+	 
+	public static PlayerControllerMP controller() {
+        return mc().playerController;
+    }
+
+    public void swingArm() {
+        player().swingArm(EnumHand.MAIN_HAND);
+    }
+
+    public static void attack(Entity entity) {
+        controller().attackEntity(player(), entity);
+    }
+    
+    public static void sendPacket(Packet<?> packet) {
+        player().connection.sendPacket(packet);
+    }
+
+    
 	public static double getFallDistance(EntityPlayerSP player, WorldClient world) {
 		for (double i = player.serverPosY; i > 0; i--) {
 			if (world.getBlockState(new BlockPos(player.serverPosX, i, player.serverPosZ))

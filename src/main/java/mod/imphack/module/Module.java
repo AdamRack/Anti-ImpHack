@@ -5,6 +5,7 @@ import mod.imphack.Client;
 import mod.imphack.Main;
 import mod.imphack.container.ImpHackInventory;
 import mod.imphack.event.ImpHackEventBus;
+import mod.imphack.event.ImpHackEventConnection;
 import mod.imphack.event.events.ImpHackEventRender;
 import mod.imphack.setting.Setting;
 import mod.imphack.util.render.RenderUtil;
@@ -25,7 +26,7 @@ import java.util.List;
 
 public class Module implements Listenable {
 
-	protected final Minecraft mc = Minecraft.getMinecraft();
+	protected static Minecraft mc = Minecraft.getMinecraft();
 	protected final ImpHackInventory inv = new ImpHackInventory();
 	public final String name;
 	public String description;
@@ -139,4 +140,14 @@ public class Module implements Listenable {
 	public void onWorldRender(ImpHackEventRender event) {
 		
 	}
+	 public void setup() {
+	    }
+	 
+	 public boolean onPacket(Object packet, ImpHackEventConnection.Side side) {
+	        return true;
+	    }
+	  public void onClientTick(TickEvent.ClientTickEvent event) {
+	    }
+	  
+	  
 }

@@ -19,6 +19,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class ModuleManager {
 	public static final Minecraft mc = Minecraft.getMinecraft();
@@ -35,7 +36,7 @@ public class ModuleManager {
 
 		// combat
 		addModule(new KillAura()); // TODO Add Switch and Sword only
-		//addModule(new CrystalAura());// TODO BROKEN WILL FIX TMRW
+		addModule(new CrystalAura());// TODO BROKEN WILL FIX TMRW
 		addModule(new Surround());// TODO fix surround its broken
 		addModule(new AutoTotem());
 		addModule(new Anchor());
@@ -74,6 +75,7 @@ public class ModuleManager {
 		addModule(new BlockOverlay());// compatible, fix character skin, fix desync and glitch on disable
 		addModule(new Nametags());
 		addModule(new ExtraTab());
+		//addModule(new NoRender());
 		// TODO norender
 		// TODO newchunks
 		// TODO camera clip
@@ -199,4 +201,13 @@ public class ModuleManager {
 		return new Vec3d((entity.posX - entity.lastTickPosX) * x, (entity.posY - entity.lastTickPosY) * y,
 				(entity.posZ - entity.lastTickPosZ) * z);
 	}
+	
+	  public void onClientTick(TickEvent.ClientTickEvent event) {
+	        for (Module m : getModuleList())  {
+	        	if(m.toggled) {
+	            m.onClientTick(event);
+	        	}
+	        	
+	        }
+	    }
 }
