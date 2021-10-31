@@ -418,7 +418,7 @@ public void render(ImpHackEventRender event) {
             damageText[0] = (Math.floor(d) == d ? (int) d : String.format("%.1f", d)) + "";
             RenderUtil.drawNametag(renderBlock.getX()+0.5,renderBlock.getY() + 0.5,renderBlock.getZ() + 0.5,damageText,new ColorUtil(255, 255, 255), 1);
         }
-    }
+    }//
 
 }
 
