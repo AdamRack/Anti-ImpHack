@@ -10,7 +10,7 @@ import net.minecraft.network.play.client.CPacketCloseWindow;
 public class XCarry extends Module {
 
 	public XCarry() {
-		super("XCarry", "Keep items in your inventory slots", Category.PLAYER);
+		super("XCarry", "Keep items in your crafting slot", Category.PLAYER);
 	}
 
 	@EventHandler
