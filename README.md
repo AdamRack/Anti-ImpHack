@@ -19,7 +19,9 @@ In order to bind the clickgui to a key you need to type ".bind set clickgui keyn
 If you are on windows you can type 
 
 `gradlew setupdecompworkspace`
+
 `gradlew clean`
+
 `gradlew build`
 
 ### Message MaxRockatasky on 2b2t or create a new issue if you have any questions.
