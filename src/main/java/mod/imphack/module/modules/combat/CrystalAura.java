@@ -408,7 +408,7 @@ public void render(ImpHackEventRender event) {
 		if (this.renderBlock != null && this.renderEnt != null) {
 		RenderUtil.drawBoundingBox(this.renderBlock, 1, 1.0f, new ColorUtil(0, 255, 255, 255));
 	}
-}
+}//
 
 
     if(showDamage.isEnabled()) {
