@@ -1,3 +1,10 @@
+![minecraft](https://img.shields.io/badge/Minecraft-1.12.2-blue.svg)
+![GitHub All Releases](https://img.shields.io/github/downloads/Supergamer5465/ImpHack-Revised/total?color=purple)
+![GitHub contributors](https://img.shields.io/github/contributors/Supergamer5465/ImpHack-Revised?logo=github)
+![GitHub forks](https://img.shields.io/github/forks/Supergamer5465/ImpHack-Revised?logo=github)
+![GitHub Repo stars](https://img.shields.io/github/stars/Supergamer5465/ImpHack-Revised?logo=github)
+![GitHub issues](https://img.shields.io/github/issues/Supergamer5465/ImpHack-Revised?logo=Github)
+
 # ImpHack Revised
 Official client of the 2b2t Imperials.
 
