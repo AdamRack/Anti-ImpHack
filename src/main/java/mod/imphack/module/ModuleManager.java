@@ -95,6 +95,7 @@ public class ModuleManager {
 		// the client
 		// addModule(new NoteBot());
 		addModule(new LSD());
+                // TODO add visual range player notifier
 	}
 
 	public void addModule(Module m) {
