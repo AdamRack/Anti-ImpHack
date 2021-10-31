@@ -18,7 +18,7 @@ public class Jesus extends Module {
 	final BooleanSetting dmg = new BooleanSetting("Packet Anti-FallDamage", this, false);
 
 	public Jesus() {
-		super("Jesus", "Keeps you walk on water", Category.MOVEMENT);
+		super("Jesus", "makes you walk on water", Category.MOVEMENT);
 
 		this.addSetting(mode);
 		this.addSetting(speed);
