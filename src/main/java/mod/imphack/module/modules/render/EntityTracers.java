@@ -67,8 +67,8 @@ public class EntityTracers extends Module {
 					final Vec3d forward = new Vec3d(0, 0, 1)
 							.rotatePitch(-(float) Math.toRadians(Minecraft.getMinecraft().player.rotationPitch))
 							.rotateYaw(-(float) Math.toRadians(Minecraft.getMinecraft().player.rotationYaw));
-					RenderUtil.drawLine3D((float) forward.x, (float) forward.y + mc.player.getEyeHeight() ,
-							(float) forward.z, (float) pos.x, (float) pos.y + 1, (float) pos.z, width.value,
+					RenderUtil.drawLine3D((float) forward.x, (float) forward.y + mc.player.getEyeHeight(),
+							(float) forward.z, (float) pos.x, (float) pos.y, (float) pos.z, width.value,
 							getColor(entity));
 					mc.gameSettings.viewBobbing = bobbing;
 					mc.entityRenderer.setupCameraTransform(event.get_partial_ticks(), 0);

@@ -169,7 +169,6 @@ public void onDisable() {
 	renderBlock = null;
     renderEnt = null;
 
-    resetRotation();
     PlacedCrystals.clear();
 
     active = false;
@@ -405,7 +404,11 @@ public void render(ImpHackEventRender event) {
     if (this.renderBlock != null && showBlock.isEnabled()) {
     	RenderUtil.drawBox(this.renderBlock, 1, new ColorUtil(0, 255, 255), 255);
     }
-	if(outline.isEnabled()) RenderUtil.drawBoundingBox(this.renderBlock, 1, 1.00f, new ColorUtil(0, 255, 255, 255));
+	if(outline.isEnabled()) {
+		if (this.renderBlock != null && this.renderEnt != null) {
+		RenderUtil.drawBoundingBox(this.renderBlock, 1, 1.0f, new ColorUtil(0, 255, 255, 255));
+	}
+}
 
 
     if(showDamage.isEnabled()) {
@@ -416,7 +419,6 @@ public void render(ImpHackEventRender event) {
             RenderUtil.drawNametag(renderBlock.getX()+0.5,renderBlock.getY() + 0.5,renderBlock.getZ() + 0.5,damageText,new ColorUtil(255, 255, 255), 1);
         }
     }
-	super.onRenderWorldLast(event);
 
 }
 
