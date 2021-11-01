@@ -7,9 +7,11 @@ import mod.imphack.module.Category;
 import mod.imphack.module.Module;
 import mod.imphack.module.ModuleManager;
 import mod.imphack.setting.settings.BooleanSetting;
+import mod.imphack.setting.settings.ColorSetting;
 import mod.imphack.setting.settings.FloatSetting;
 import mod.imphack.setting.settings.IntSetting;
 import mod.imphack.setting.settings.ModeSetting;
+import mod.imphack.util.Reference;
 import mod.imphack.util.Timer;
 import mod.imphack.util.render.ColorUtil;
 import mod.imphack.util.render.RenderUtil;
@@ -83,6 +85,8 @@ public class CrystalAura extends Module {
 	public BooleanSetting outline = new BooleanSetting("outline", this, false);
 	public BooleanSetting showBlock = new BooleanSetting("showBlock", this, true);
 	public BooleanSetting showDamage = new BooleanSetting("showDamage", this, true);
+	final ColorSetting color = new ColorSetting("Color", this, Reference.IMPHACK_COLOR);
+
 
 	public CrystalAura() {
 		super("CrystalAura", "places and breaks Crystals", Category.COMBAT);
@@ -115,7 +119,6 @@ public class CrystalAura extends Module {
 		addSetting(mode113);
 		addSetting(outline);
 		addSetting(showBlock);
-
 		addSetting(showDamage);
 
 
@@ -402,11 +405,11 @@ private void placeLogic() {
 @Override
 public void render(ImpHackEventRender event) {
     if (this.renderBlock != null && showBlock.isEnabled()) {
-    	RenderUtil.drawBox(this.renderBlock, 1, new ColorUtil(0, 255, 255), 255);
+    	RenderUtil.drawBox(this.renderBlock, 1, new ColorUtil(color.getValue()), 255);
     }
 	if(outline.isEnabled()) {
 		if (this.renderBlock != null && this.renderEnt != null) {
-		RenderUtil.drawBoundingBox(this.renderBlock, 1, 1.0f, new ColorUtil(0, 255, 255, 255));
+		RenderUtil.drawBoundingBox(this.renderBlock, 1, 1.0f, new ColorUtil(color.getValue(), 255));
 	}
 }
 

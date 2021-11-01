@@ -43,7 +43,7 @@ public class ClickGuiFrame {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glShadeModel(GL11.GL_SMOOTH);
-		GL11.glLineWidth(5);
+		GL11.glLineWidth(1);
 
 		GL11.glColor4f(0.0f, 0.0f, 0.0f, 0.4f);
 		GL11.glBegin(GL11.GL_QUADS);

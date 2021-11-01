@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import mod.imphack.Main;
 import mod.imphack.module.Module;
+import mod.imphack.module.modules.combat.CrystalAura;
 import mod.imphack.setting.Setting;
 import mod.imphack.util.render.ColorUtil;
 
@@ -11,16 +12,18 @@ public class ColorSetting extends Setting {
 	public int red;
 	public int green;
 	public int blue;
+	public int alpha;
 	private boolean rainbow;
 	private ColorUtil value;
+	
+	
 
-	public ColorSetting(String name, Module parent, int red, int green, int blue) {
+	public ColorSetting (String name, Module parent, final ColorUtil value) {
 		this.name = name;
 		this.parent = parent;
+		this.value = value;
 		if (!Main.configLoaded) {
-			this.red = red;
-			this.green = green;
-			this.blue = blue;
+			this.value = value;
 		}
 	}
 	
@@ -31,13 +34,26 @@ public class ColorSetting extends Setting {
 		return this.value;
 	}
 
-	public ColorUtil getColor() {
-		return this.value;
-	}
-	
 	public static ColorUtil getRainbow(int incr, int alpha) {
 		ColorUtil color =  ColorUtil.fromHSB(((System.currentTimeMillis() + incr * 200)%(360*20))/(360f * 20),0.5f,1f);
 		return new ColorUtil(color.getRed(), color.getBlue(), color.getGreen(), alpha);
 	}
-}
 
+
+	public void setValue (boolean rainbow, final ColorUtil value) {
+		this.rainbow = rainbow;
+		this.value = value;
+	}
+
+	public long toInteger() {
+		return this.value.getRGB() & (0xFFFFFFFF);
+	}
+
+	public void fromInteger (long number) {
+		this.value = new ColorUtil(Math.toIntExact(number & 0xFFFFFFFF),true);
+	}
+	
+	public ColorUtil getColor() {
+		return this.value;
+	}
+}

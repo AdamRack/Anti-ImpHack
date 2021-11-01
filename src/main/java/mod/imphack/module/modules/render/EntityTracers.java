@@ -11,6 +11,7 @@ import mod.imphack.setting.settings.FloatSetting;
 import mod.imphack.setting.settings.IntSetting;
 import mod.imphack.util.EntityUtil;
 import mod.imphack.util.MathUtil;
+import mod.imphack.util.render.ColorUtil;
 import mod.imphack.util.render.RenderUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -26,11 +27,11 @@ public class EntityTracers extends Module {
 	final BooleanSetting players = new BooleanSetting("Players", this, true);
 	final BooleanSetting items = new BooleanSetting("Items", this, true);
 	final BooleanSetting other = new BooleanSetting("Other Entities", this, true);
-	final ColorSetting monsterColor = new ColorSetting("Monster Color", this, 255, 255, 255);
-	final ColorSetting passiveColor = new ColorSetting("Passive Color", this, 255, 255, 255);
-	final ColorSetting playerColor = new ColorSetting("Player Color", this, 255, 255, 255);
-	final ColorSetting itemColor = new ColorSetting("Item Color", this, 255, 255, 255);
-	final ColorSetting otherColor = new ColorSetting("Other Color", this, 255, 255, 255);
+	final ColorSetting monsterColor = new ColorSetting("Monster Color", this, new ColorUtil(255, 255, 255, 255));
+	final ColorSetting passiveColor = new ColorSetting("Passive Color", this, new ColorUtil(255, 255, 255, 255));
+	final ColorSetting playerColor = new ColorSetting("Player Color", this, new ColorUtil(255, 255, 255, 255));
+	final ColorSetting itemColor = new ColorSetting("Item Color", this, new ColorUtil(255, 255, 255, 255));
+	final ColorSetting otherColor = new ColorSetting("Other Color", this, new ColorUtil(255, 255, 255, 255));
 	final FloatSetting width = new FloatSetting("Tracer Width", this, 1f);
 
 	public EntityTracers() {

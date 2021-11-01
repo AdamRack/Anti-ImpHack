@@ -75,6 +75,7 @@ public class ModuleManager {
 		addModule(new BlockOverlay());// compatible, fix character skin, fix desync and glitch on disable
 		addModule(new Nametags());
 		addModule(new ExtraTab());
+		addModule(new HoleEsp());
 		//addModule(new NoRender());
 		// TODO norender
 		// TODO newchunks
