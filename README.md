@@ -22,7 +22,11 @@ Skidders can rot in a hole and die!
 ## To get started:
 This client runs on forge 1.12.2
 
-In order to bind the clickgui to a key you need to type ".bind set clickgui keyname"
+The prefix of the client is "." (Period) 
+
+
+
+There is no initial keybind for the click gui so in order to bind the clickgui to a key you need to type ".bind set clickgui keyname"
 
 ### How to Build 
 If you are on windows you can type 
