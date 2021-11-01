@@ -36,6 +36,10 @@ public class Timer {
 	void reset() {
 		this.time = System.nanoTime();
 	}
+	public
+	void resetCurrent() {
+		this.current = System.currentTimeMillis();
+	}
 
 	public long convertToMillis(final long time) {
 		return time / 1000000L;
@@ -66,6 +70,8 @@ public class Timer {
     public long getTimePassed(){
 		return System.currentTimeMillis() - this.current;
 	}
+    
+    
     
   
 }

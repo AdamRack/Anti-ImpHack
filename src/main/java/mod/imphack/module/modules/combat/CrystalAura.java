@@ -215,7 +215,7 @@ private void breakLogic() {
 			 return;
 
 		 if(timer.getTimePassed() / 50 >= 20 - breakSpeed.getValue()) {
-			 timer.reset();
+			 timer.resetCurrent();
 			 active = true;
 
 			 if(rotate.isEnabled()) {
@@ -395,7 +395,7 @@ private void placeLogic() {
             }
         }
         if (!placeCrystal.isEnabled()) return;
-        timer.reset();
+        timer.resetCurrent();
     }
 
 }
