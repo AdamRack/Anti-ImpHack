@@ -7,7 +7,6 @@
 [![Discord](https://img.shields.io/discord/840168131652747264?color=79C1FF&label=discord&style=flat-square)](https://discord.gg/KKPVj2K3GF)
 ![GitHub Lines](https://img.shields.io/tokei/lines/github/Supergamer5465/ImpHack-Revised)
 ![GitHub Language](https://img.shields.io/github/languages/top/Supergamer5465/ImpHack-Revised?color=9900ee)
-[![GitHub Version](https://img.shields.io/github/v/release/Supergamer5465/ImpHack-Revised)](https://github.com//Supergamer5465/ImpHack-Revised/releases/latest)
 
 # ImpHack Revised
 Official client of the 2b2t Imperials.
