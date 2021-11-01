@@ -7,7 +7,7 @@
 [![GitHub contributors](https://img.shields.io/github/contributors/Supergamer5465/ImpHack-Revised?logo=github)]
 [![GitHub forks](https://img.shields.io/github/forks/Supergamer5465/ImpHack-Revised?logo=github)](https://github.com/Supergamer5465/ImpHack-Revised/network/members)
 [![GitHub Repo stars](https://img.shields.io/github/stars/Supergamer5465/ImpHack-Revised?logo=github)](https://github.com/Supergamer5465/ImpHack-Revised/stargazers)
-![GitHub issues](https://img.shields.io/github/issues/Supergamer5465/ImpHack?logo=Github)
+![GitHub issues](https://img.shields.io/github/issues/Supergamer5465/ImpHack-Revised?logo=Github)
 [![Discord](https://img.shields.io/discord/840168131652747264?color=79C1FF&label=discord&style=flat-square)](https://discord.gg/KKPVj2K3GF)
 ![GitHub Lines](https://img.shields.io/tokei/lines/github/Supergamer5465/ImpHack-Revised)
 
