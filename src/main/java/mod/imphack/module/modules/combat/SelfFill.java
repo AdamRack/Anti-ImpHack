@@ -7,7 +7,6 @@ import mod.imphack.setting.settings.FloatSetting;
 import mod.imphack.setting.settings.IntSetting;
 import mod.imphack.setting.settings.ModeSetting;
 import mod.imphack.util.BlockUtil;
-import mod.imphack.util.login.Mapping;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockEnderChest;
