@@ -8,7 +8,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/Supergamer5465/ImpHack-Revised?logo=github)](https://github.com/Supergamer5465/ImpHack-Revised/network/members)
 [![GitHub Repo stars](https://img.shields.io/github/stars/Supergamer5465/ImpHack-Revised?logo=github)](https://github.com/Supergamer5465/ImpHack-Revised/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/Supergamer5465/ImpHack-Revised?logo=Github)](https://github.com/Supergamer5465/ImpHack-Revised/issues)
-[![Discord](https://img.shields.io/discord/614275329879572501?color=79C1FF&label=discord&style=flat-square)](https://discord.gg/qCyPMPmuMM)
+[![Discord](https://img.shields.io/discord/840168131652747264?color=79C1FF&label=discord&style=flat-square)](https://discord.gg/qCyPMPmuMM)
 
 # ImpHack Revised
 Official client of the 2b2t Imperials.
