@@ -2,8 +2,8 @@
 
 # imphack
 
-[![minecraft](https://img.shields.io/badge/Minecraft-1.12.2-blue.svg)](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.12.2.html?color=9900ee)
-[![Discord](https://img.shields.io/discord/840168131652747264?color=9900ee=discord&style=flat-round)](https://discord.gg/KKPVj2K3GF?color=9900ee)
+[![minecraft](https://img.shields.io/badge/Minecraft-1.12.2-blueviolet.svg)](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.12.2.html)
+[![Discord](https://img.shields.io/discord/840168131652747264?color=9900ee=discord&style=flat-round)](https://discord.gg/KKPVj2K3GF)
 ![GitHub Lines](https://img.shields.io/tokei/lines/github/Supergamer5465/ImpHack-Revised?color=9900ee)
 ![GitHub Language](https://img.shields.io/github/languages/top/Supergamer5465/ImpHack-Revised?color=9900ee)
 ![minecraft](https://img.shields.io/badge/Client--Prefix-.-blueviolet)
