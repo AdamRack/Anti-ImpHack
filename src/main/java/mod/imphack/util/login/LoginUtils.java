@@ -15,7 +15,9 @@ import java.lang.reflect.Field;
 import java.net.Proxy;
 
 public class LoginUtils{
-
+	
+	public static String session = isNotObfuscated() ? "session" : "field_71449_j";
+	
     public static String loginAlt(String email, String password) {
         YggdrasilAuthenticationService authenticationService = new YggdrasilAuthenticationService(Proxy.NO_PROXY, "");
         YggdrasilUserAuthentication authentication = (YggdrasilUserAuthentication) authenticationService.createUserAuthentication(Agent.MINECRAFT);
@@ -26,7 +28,7 @@ public class LoginUtils{
         try {
             authentication.logIn();   
             try {
-            	Field f = Minecraft.class.getDeclaredField(Mapping.session);
+            	Field f = Minecraft.class.getDeclaredField(session);
             	f.setAccessible(true);
 				f.set(Minecraft.getMinecraft(), new Session(authentication.getSelectedProfile().getName(), authentication.getSelectedProfile().getId().toString(), authentication.getAuthenticatedToken(), "mojang"));
 				displayText = "Logged [License]: " + Minecraft.getMinecraft().getSession().getUsername();
@@ -66,7 +68,7 @@ public class LoginUtils{
 
     public static void changeCrackedName(String name) {
         try {
-        	Field f = Minecraft.class.getDeclaredField(Mapping.session);
+        	Field f = Minecraft.class.getDeclaredField(session);
         	f.setAccessible(true);
 			f.set(Minecraft.getMinecraft(), new Session(name, "", "", "mojang"));
 		} catch (Exception e) {
@@ -74,5 +76,9 @@ public class LoginUtils{
 		}
     }
 
+    public static boolean isNotObfuscated() {
+        try { return Minecraft.class.getDeclaredField("instance") != null;
+        } catch (Exception ex) { return false; }
+    }
 
 }
