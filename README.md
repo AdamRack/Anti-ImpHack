@@ -8,7 +8,7 @@
 ![GitHub Language](https://img.shields.io/github/languages/top/Supergamer5465/ImpHack-Revised?color=9900ee)
 ![minecraft](https://img.shields.io/badge/Client--Prefix-.-blueviolet)
 [![Downloads](https://img.shields.io/github/downloads/Supergamer5465/ImpHack-Revised/total?color=9900ee)](https://github.com/Supergamer5465/ImpHack-Revised/release/latest)
-[![License](https://img.shields.io/github/license/Supergamer5465/ImpHack-Revised)](https://github.com/Supergamer5465/ImpHack-Revised/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/Supergamer5465/ImpHack-Revised)](https://github.com/Supergamer5465/ImpHack-Revised/blob/master/LICENSE?color=9900ee)
 
 # ImpHack Revised
 Official client of the 2b2t Imperials.
