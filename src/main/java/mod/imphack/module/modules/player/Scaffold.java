@@ -1,3 +1,5 @@
+
+  
 package mod.imphack.module.modules.player;
 
 import me.zero.alpine.listener.EventHandler;
@@ -10,6 +12,11 @@ import mod.imphack.module.Module;
 import mod.imphack.setting.settings.BooleanSetting;
 import mod.imphack.util.*;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.ClickType;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPacketEntityAction;
@@ -24,13 +31,20 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class Scaffold extends Module {
 
+	final BooleanSetting refill = new BooleanSetting("refill", this, true);
 	final BooleanSetting rotation = new BooleanSetting("Rotation", this, true);
 	private final Timer timer = new Timer();
+	
+    private final int[] blackList = new int[]{145, 130, 12, 252, 54, 146, 122, 13, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 50};
+
 
 	public Scaffold() {
 		super("Scaffold", "Places Blocks Below You", Category.PLAYER);
 
 		addSetting(rotation);
+		addSetting(refill);
+		
+		
 	}
 
 	@Override
@@ -122,8 +136,11 @@ public class Scaffold extends Module {
 			mc.player.connection
 					.sendPacket(new CPacketEntityAction(mc.player, CPacketEntityAction.Action.START_SNEAKING));
 			crouched = true;
+            
+
 		}
 		if (!(mc.player.getHeldItemMainhand().getItem() instanceof ItemBlock)) {
+            
 			mc.player.connection.sendPacket(new CPacketHeldItemChange(newSlot));
 			mc.player.inventory.currentItem = newSlot;
 			mc.playerController.updateController();
@@ -149,9 +166,102 @@ public class Scaffold extends Module {
 		mc.player.connection.sendPacket(new CPacketHeldItemChange(oldSlot));
 		mc.player.inventory.currentItem = oldSlot;
 		mc.playerController.updateController();
+        final double[] dir = MathUtil.directionSpeed(1);
+
 		if (crouched) {
 			mc.player.connection
 					.sendPacket(new CPacketEntityAction(mc.player, CPacketEntityAction.Action.STOP_SNEAKING));
 		}
+		else {
+			
+            final Vec3d block = this.getFirstBlock(dir);
+
+	        if (this.refill.isEnabled() && block == null) {
+	            final int slot = this.findStackHotbar();
+	            if (slot != -1) {
+	                mc.player.inventory.currentItem = slot;
+	                mc.playerController.updateController();
+	            } else {
+	                final int invSlot = findStackInventory();
+	                if (invSlot != -1) {
+	                    final int empty = findEmptyhotbar();
+	                    mc.playerController.windowClick(mc.player.inventoryContainer.windowId, invSlot, empty == -1 ? mc.player.inventory.currentItem : empty, ClickType.SWAP, mc.player);
+	                    mc.playerController.updateController();
+	                    mc.player.setVelocity(0, 0, 0);
+	            }
+	        }
+		}
 	}
+}
+	
+	 private int getBlockCount() {
+	        int count = 0;
+
+	        if (Minecraft.getMinecraft().player == null)
+	            return count;
+
+	        for (int i = 0; i < 36; i++) {
+	            final ItemStack stack = Minecraft.getMinecraft().player.inventory.getStackInSlot(i);
+	            if (canPlace(stack) && stack.getItem() instanceof ItemBlock) {
+	                count += stack.getCount();
+	            }
+	        }
+
+	        return count;
+	    }
+	 private Vec3d getFirstBlock(double[] dir) {
+	        final Minecraft mc = Minecraft.getMinecraft();
+	        Vec3d pos = new Vec3d(mc.player.posX, mc.player.posY - 1, mc.player.posZ);
+	        Vec3d dirpos = new Vec3d(mc.player.posX + dir[0], mc.player.posY - 1, mc.player.posZ + dir[1]);
+	        if (mc.world.getBlockState(new BlockPos(pos.x, pos.y, pos.z)).getBlock() == Blocks.AIR)
+	            return pos;
+	        if (mc.world.getBlockState(new BlockPos(dirpos.x, dirpos.y, dirpos.z)).getBlock() == Blocks.AIR)
+	            if (mc.world.getBlockState(new BlockPos(pos.x, dirpos.y, dirpos.z)).getBlock() == Blocks.AIR && mc.world.getBlockState(new BlockPos(dirpos.x, dirpos.y, pos.z)).getBlock() == Blocks.AIR) {
+	                return new Vec3d(dirpos.x, pos.y, pos.z);
+	            } else {
+	                return dirpos;
+	            }
+	        return null;
+	    }
+	  
+          
+          private int findEmptyhotbar() {
+              for (int i = 0; i < 9; i++) {
+                  final ItemStack stack = Minecraft.getMinecraft().player.inventory.getStackInSlot(i);
+                  if (stack.getItem() == Items.AIR) {
+                      return i;
+                  }
+              }
+              return -1;
+          }
+
+          private int findStackInventory() {
+              for (int i = 9; i < 36; i++) {
+                  final ItemStack stack = Minecraft.getMinecraft().player.inventory.getStackInSlot(i);
+                  if (canPlace(stack) && stack.getItem() instanceof ItemBlock) {
+                      return i;
+                  }
+              }
+              return -1;
+          }
+
+          private int findStackHotbar() {
+              for (int i = 0; i < 9; i++) {
+                  final ItemStack stack = Minecraft.getMinecraft().player.inventory.getStackInSlot(i);
+                  if (canPlace(stack) && stack.getItem() instanceof ItemBlock) {
+                      return i;
+                  }
+              }
+              return -1;
+          }
+          
+          private boolean canPlace(ItemStack stack) {
+              for (int i : this.blackList) {
+                  if (Item.getIdFromItem(stack.getItem()) == i) {
+                      return false;
+                  }
+              }
+              return true;
+          }
+
 }

@@ -148,6 +148,9 @@ public class Module implements Listenable {
 	    }
 	  public void onClientTick(TickEvent.ClientTickEvent event) {
 	    }
+	  public String getMetaData() {
+	        return null;
+	    }
 	  
 	  
 }

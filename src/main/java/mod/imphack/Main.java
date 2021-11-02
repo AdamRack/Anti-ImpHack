@@ -35,7 +35,7 @@ public class Main {
 	public static Config config;
 	
 	
-	
+
 	//Initilize HUD modules
 	public static final HudCoords hudCoords = new HudCoords();
 	public static final HudArrayList hudArrayList = new HudArrayList();
@@ -83,6 +83,7 @@ public class Main {
 		cmdManager = new CommandManager();
 		settingManager = new SettingManager();
 		eventManager = new ImpHackEventManager();
+
 		config = new Config();
 		config.Load();
 		configLoaded = true;
@@ -102,5 +103,6 @@ public class Main {
 		return ImpHackEventHandler.INSTANCE;
 	}
 	
+	  
 	 
 }
