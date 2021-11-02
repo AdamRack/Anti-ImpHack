@@ -7,6 +7,7 @@
 ![GitHub Lines](https://img.shields.io/tokei/lines/github/Supergamer5465/ImpHack-Revised?color=9900ee)
 ![GitHub Language](https://img.shields.io/github/languages/top/Supergamer5465/ImpHack-Revised?color=9900ee)
 ![minecraft](https://img.shields.io/badge/Client--Prefix-.-blueviolet)
+[![Downloads](https://img.shields.io/github/downloads/Supergamer5465/ImpHack-Revised/total?color=9900ee)](https://github.com/Supergamer5465/ImpHack-Revisedseppuku/release/latest)
 
 # ImpHack Revised
 Official client of the 2b2t Imperials.
