@@ -26,5 +26,7 @@ public class ImpHackEventPacket extends ImpHackEventCancellable {
 		public SendPacket(Packet<?> packet) {
 			super(packet);
 		}
+
+		
 	}
 }
