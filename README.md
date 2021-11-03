@@ -28,14 +28,12 @@ The prefix of the client is "." (Period)
 
 There is no initial keybind for the click gui so in order to bind the clickgui to a key you need to type ".bind set clickgui keyname"
 
-### How to Build 
-If you are on windows you can type 
+how to build 
 
-`gradlew setupdecompworkspace`
-
-`gradlew clean`
-
-`gradlew build`
+### windows CMD
+1. Run `./gradlew setupDecompWorkspace`
+2. Run `./gradlew clean`
+3. Run `./gradlew build`
 
 ### Message MaxRockatasky on 2b2t or create a new issue if you have any questions.
 
