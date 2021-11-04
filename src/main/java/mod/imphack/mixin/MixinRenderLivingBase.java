@@ -27,7 +27,8 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
     protected ModelBase mainModel;
 
     // chams
-    @Inject(method = "doRender", at = @At("HEAD"))
+    @SuppressWarnings("hiding")
+	@Inject(method = "doRender", at = @At("HEAD"))
     private <T extends EntityLivingBase> void injectChamsPre(final T a, final double b, final double c, final double d, final float e, final float f, final CallbackInfo g) {
         if (Main.moduleManager.getModule("esp's") != null && Main.moduleManager.getModule("esp's").isToggled() && ((Esp)Main.moduleManager.getModule("esp's")).chams.isEnabled()) {
             GL11.glEnable(32823);
@@ -35,7 +36,8 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
         }
     }
 
-    @Inject(method = "doRender", at = @At("RETURN"))
+    @SuppressWarnings("hiding")
+	@Inject(method = "doRender", at = @At("RETURN"))
     private <T extends EntityLivingBase> void injectChamsPost(final T a, final double b, final double c, final double d, final float e, final float f, final CallbackInfo g) {
         if (Main.moduleManager.getModule("esp's") != null && Main.moduleManager.getModule("esp's").isToggled() && ((Esp)Main.moduleManager.getModule("esp's")).chams.isEnabled()) {
             GL11.glPolygonOffset(1.0f, 1000000.0f);
@@ -43,9 +45,6 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
         }
     }
 
-    /**
-     * outline esp's
-     */
     @Inject(method = "renderModel", at = @At("HEAD"))
     protected void renderModel(T entitylivingbaseIn, float p_77036_2_, float p_77036_3_, float p_77036_4_, float p_77036_5_, float p_77036_6_, float scaleFactor, final CallbackInfo g) {
         boolean flag = !entitylivingbaseIn.isInvisible();
