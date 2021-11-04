@@ -78,6 +78,9 @@ public class ModuleManager {
 		addModule(new Nametags());
 		addModule(new ExtraTab());
 		addModule(new HoleEsp());
+		addModule(new Esp());
+		addModule(new Esp2dHelper());
+
 		//addModule(new NoRender());
 		// TODO norender
 		// TODO newchunks

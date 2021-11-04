@@ -61,8 +61,11 @@ public class HudArrayList extends Gui{
 					int y = 2;
 					ArrayList<Module> modules = new ArrayList<>();
 					for (Module mod : Main.moduleManager.getModuleList()) {
-						if (!mod.getName().equalsIgnoreCase("") && mod.isToggled()) {
+						if (!mod.getName().equalsIgnoreCase("Esp2dHelper") && mod.isToggled()) {
+							if (!mod.getName().equalsIgnoreCase("Hud") && mod.isToggled()) {
+
 							modules.add(mod);
+						}
 						}
 					}
 

@@ -148,7 +148,7 @@ public class Nametags extends Module {
 	        mc.getRenderItem().renderItemOverlays(mc.fontRenderer, itemStack, posX, posY + posY3);
 	        RenderHelper.disableStandardItemLighting();
 	        mc.getRenderItem().zLevel = 0.0f;
-	        RenderUtil.prepare();
+	        RenderUtil.prepare_new();
 	        GlStateManager.pushMatrix();
 	        GlStateManager.scale(.5, .5, .5);
 	        renderEnchants(itemStack, posX, posY - 24);
