@@ -20,6 +20,9 @@ jobs:
 
       - name: Set up Minecraft workspace
         run: ./gradlew setupDecompWorkspace
+        
+      - name: Clean Gradle
+        run: ./gradlew clean
 
       - name: Build with Gradle
         run: ./gradlew build
