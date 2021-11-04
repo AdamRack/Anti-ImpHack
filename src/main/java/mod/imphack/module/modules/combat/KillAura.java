@@ -24,10 +24,10 @@ public class KillAura extends Module {
 	public BooleanSetting players = new BooleanSetting("players", this, true);
 	public BooleanSetting passives = new BooleanSetting("passives", this, false);
 	public BooleanSetting hostiles = new BooleanSetting("hostiles", this, false);
-	
+
 	public KillAura() {
-		super ("killAura", "Attacks nearby entities", Category.COMBAT);
-		
+		super("KillAura", "Attacks nearby entities", Category.COMBAT);
+
 		this.addSetting(range);
 		this.addSetting(switchA);
 		this.addSetting(swordOnly);
@@ -39,13 +39,11 @@ public class KillAura extends Module {
 
 	@Override
 	public void onUpdate() {
-		if (mc.player == null || mc.player.isDead || Main.moduleManager.getModule("Surround").isToggled()) return;
-		List<Entity> targets = mc.world.loadedEntityList.stream()
-				.filter(entity -> entity != mc.player)
-				.filter(entity -> mc.player.getDistance(entity) <= range.getValue())
-				.filter(entity -> !entity.isDead)
-				.filter(entity -> attackCheck(entity))
-				.sorted(Comparator.comparing(s -> mc.player.getDistance(s)))
+		if (mc.player == null || mc.player.isDead || Main.moduleManager.getModule("Surround").isToggled())
+			return;
+		List<Entity> targets = mc.world.loadedEntityList.stream().filter(entity -> entity != mc.player)
+				.filter(entity -> mc.player.getDistance(entity) <= range.getValue()).filter(entity -> !entity.isDead)
+				.filter(entity -> attackCheck(entity)).sorted(Comparator.comparing(s -> mc.player.getDistance(s)))
 				.collect(Collectors.toList());
 
 		targets.forEach(target -> {
@@ -54,24 +52,23 @@ public class KillAura extends Module {
 	}
 
 	public void attack(Entity e) {
-		if (mc.player.getCooledAttackStrength(0) >= 1){
+		if (mc.player.getCooledAttackStrength(0) >= 1) {
 			mc.playerController.attackEntity(mc.player, e);
 			mc.player.swingArm(EnumHand.MAIN_HAND);
 		}
 	}
-	
+
 	private boolean attackCheck(Entity entity) {
 		if (players.isEnabled() && entity instanceof EntityPlayer) {
-				if (((EntityPlayer) entity).getHealth() > 0) { 
-					return true;
-				}
+			if (((EntityPlayer) entity).getHealth() > 0) {
+				return true;
 			}
-		
+		}
 
 		if (passives.isEnabled() && entity instanceof EntityAnimal) {
 			if (entity instanceof EntityTameable) {
 				return false;
-			}else {
+			} else {
 				return true;
 			}
 		}
