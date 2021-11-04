@@ -9,12 +9,14 @@ import org.lwjgl.opengl.GL11;
 import mod.imphack.Main;
 import mod.imphack.util.render.RenderUtil;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiWorldSelection;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
 
 public class ImpHackSplashScreen extends GuiScreen {
@@ -107,6 +109,8 @@ public class ImpHackSplashScreen extends GuiScreen {
 	}
 
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		if (mc.soundHandler.isSoundPlaying(PositionedSoundRecord.getMasterRecord(SoundEvents.MUSIC_MENU, 1.0f)))
+			mc.soundHandler.stopSound(PositionedSoundRecord.getMasterRecord(SoundEvents.MUSIC_MENU, 1.0f));
 		this.x = this.width / 32;
 		this.y = this.height / 32 + 10;
 		GlStateManager.enableTexture2D();
@@ -148,6 +152,7 @@ public class ImpHackSplashScreen extends GuiScreen {
 	}
 
 	public void playMusic() {
+		mc.soundHandler.stopSounds();
 		if (!mc.soundHandler.isSoundPlaying(Main.songManager.getMenuSong())) {
 			mc.soundHandler.playSound(Main.songManager.getMenuSong());
 		}
