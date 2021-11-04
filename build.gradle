@@ -120,8 +120,6 @@ processResources {
 	rename "(.+_at.cfg)", 'META-INF/$1'
 }
 
-//doesn't work in development environment but add for jar
-/*
 jar {
 	manifest {
 		attributes (
@@ -135,6 +133,5 @@ jar {
 		)
 	}
 }
-//*/
 
 build.dependsOn(shadowJar)
