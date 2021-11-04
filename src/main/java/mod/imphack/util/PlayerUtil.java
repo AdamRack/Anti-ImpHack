@@ -196,5 +196,9 @@ public class PlayerUtil {
 	            mc.player.connection.sendPacket(new CPacketPlayer.Position(newX, mc.player.posY, newZ, true));
 	            mc.player.setPosition(newX, mc.player.posY, newZ);
 	        }
+	        
+	        
 	    }
+	 
+	 
 }

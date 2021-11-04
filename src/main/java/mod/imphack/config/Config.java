@@ -41,10 +41,13 @@ public class Config {
 
 		for (Module mod : Main.moduleManager.modules) {
 			if (mod.getName().equalsIgnoreCase("ClickGUI")) {
+				if (mod.getName().equalsIgnoreCase("Esp2dHelper")) {
+
 				save.add("module:" + mod.getName() + ":false:" + mod.getKey());
 			} else {
 				save.add("module:" + mod.getName() + ":" + mod.isToggled() + ":" + mod.getKey());
 			}
+		}
 		}
 
 		for (Module mod : Main.moduleManager.modules) {
@@ -93,7 +96,7 @@ public class Config {
 					save.add("setting:" + mod.getName() + ":" + setting.name + ":" + list + ";" + colorList);
 				}
 			}
-		}
+	}
 
 		try {
 			PrintWriter pw = new PrintWriter(this.configFile.toFile());
@@ -104,6 +107,7 @@ public class Config {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 	public void Load() {

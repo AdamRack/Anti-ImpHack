@@ -43,7 +43,6 @@ public class Main {
 	public static ModuleManager moduleManager;
 	public static Config config;
 
-	// Initilize HUD modules
 	public static final HudCoords hudCoords = new HudCoords();
 	public static final HudArrayList hudArrayList = new HudArrayList();
 	public static final HudWatermark hudVersion = new HudWatermark();
@@ -113,5 +112,4 @@ public class Main {
 	public static ImpHackEventHandler get_event_handler() {
 		return ImpHackEventHandler.INSTANCE;
 	}
-
 }

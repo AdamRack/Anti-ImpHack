@@ -26,7 +26,7 @@ import java.util.List;
 
 public class Module implements Listenable {
 
-	protected static Minecraft mc = Minecraft.getMinecraft();
+	protected static final Minecraft mc = Minecraft.getMinecraft();
 	protected final ImpHackInventory inv = new ImpHackInventory();
 	public final String name;
 	public String description;
@@ -147,6 +147,9 @@ public class Module implements Listenable {
 	        return true;
 	    }
 	  public void onClientTick(TickEvent.ClientTickEvent event) {
+	    }
+	  public String getMetaData() {
+	        return null;
 	    }
 	  
 	  
