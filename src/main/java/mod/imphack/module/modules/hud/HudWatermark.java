@@ -1,9 +1,5 @@
 package mod.imphack.module.modules.hud;
 
-import java.awt.Font;
-
-import org.lwjgl.opengl.GL11;
-
 import mod.imphack.Main;
 import mod.imphack.setting.settings.BooleanSetting;
 import mod.imphack.util.Reference;

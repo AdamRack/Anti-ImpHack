@@ -1,23 +1,14 @@
 package org.newdawn.slick.tests;
 
-import java.io.IOException;
-
-import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.util.Bootstrap;
 import org.newdawn.slick.util.ResourceLoader;
 import org.newdawn.slick.util.pathfinding.Mover;
 import org.newdawn.slick.util.pathfinding.PathFindingContext;
 import org.newdawn.slick.util.pathfinding.TileBasedMap;
-import org.newdawn.slick.util.pathfinding.navmesh.Link;
-import org.newdawn.slick.util.pathfinding.navmesh.NavMesh;
-import org.newdawn.slick.util.pathfinding.navmesh.NavMeshBuilder;
-import org.newdawn.slick.util.pathfinding.navmesh.NavPath;
-import org.newdawn.slick.util.pathfinding.navmesh.Space;
+import org.newdawn.slick.util.pathfinding.navmesh.*;
+
+import java.io.IOException;
 
 /**
  * A test to show nav-mesh generation on tile based maps.

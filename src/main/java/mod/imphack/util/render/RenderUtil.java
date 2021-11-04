@@ -1,16 +1,5 @@
 package mod.imphack.util.render;
 
-import java.awt.Color;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Arrays;
-import java.util.Locale;
-
-import javax.vecmath.Vector3d;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL32;
-
 import mod.imphack.util.EntityUtil;
 import mod.imphack.util.MathUtil;
 import mod.imphack.util.Timer;
@@ -25,6 +14,15 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL32;
+
+import javax.vecmath.Vector3d;
+import java.awt.*;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Arrays;
+import java.util.Locale;
 
 public class RenderUtil extends Tessellator {
 
@@ -33,7 +31,7 @@ public class RenderUtil extends Tessellator {
 	public static Timer splashTimer = new Timer();
 	public static int splashTickPos = 0;
 
-	static Minecraft mc = Minecraft.getMinecraft();
+	static final Minecraft mc = Minecraft.getMinecraft();
 
 	public static final RenderUtil INSTANCE = new RenderUtil();
 
@@ -575,23 +573,23 @@ public class RenderUtil extends Tessellator {
 		GlStateManager.popMatrix();
 	}
 
-	private static void drawBorderedRect(double x, double y, double x1, double y1, float lineWidth, ColorUtil inside,
-			ColorUtil border) {
+	private static void drawBorderedRect(double x, double y, double x1, ColorUtil inside,
+										 ColorUtil border) {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		inside.glColor();
 		bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
-		bufferbuilder.pos(x, y1, 0).endVertex();
-		bufferbuilder.pos(x1, y1, 0).endVertex();
+		bufferbuilder.pos(x, 1, 0).endVertex();
+		bufferbuilder.pos(x1, 1, 0).endVertex();
 		bufferbuilder.pos(x1, y, 0).endVertex();
 		bufferbuilder.pos(x, y, 0).endVertex();
 		tessellator.draw();
 		border.glColor();
-		GlStateManager.glLineWidth(lineWidth);
+		GlStateManager.glLineWidth((float) 1.8);
 		bufferbuilder.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
 		bufferbuilder.pos(x, y, 0).endVertex();
-		bufferbuilder.pos(x, y1, 0).endVertex();
-		bufferbuilder.pos(x1, y1, 0).endVertex();
+		bufferbuilder.pos(x, 1, 0).endVertex();
+		bufferbuilder.pos(x1, 1, 0).endVertex();
 		bufferbuilder.pos(x1, y, 0).endVertex();
 		bufferbuilder.pos(x, y, 0).endVertex();
 		tessellator.draw();
@@ -640,13 +638,13 @@ public class RenderUtil extends Tessellator {
 			 * if (Nametags.customColor.getValue()) { bcolor =
 			 * Nametags.borderColor.getValue(); }
 			 */
-			for (int i = 0; i < text.length; i++) {
-				double w = FontUtils.getStringWidth(false, text[i]) / 2;
+			for (String s : text) {
+				double w = FontUtils.getStringWidth(false, s) / 2;
 				if (w > width) {
 					width = w;
 				}
 			}
-			drawBorderedRect(-width - 1, -mc.fontRenderer.FONT_HEIGHT, width + 2, 1, 1.8f, new ColorUtil(0, 4, 0, 85),
+			drawBorderedRect(-width - 1, -mc.fontRenderer.FONT_HEIGHT, width + 2, new ColorUtil(0, 4, 0, 85),
 					bcolor);
 		}
 		GlStateManager.enableTexture2D();
@@ -852,7 +850,7 @@ public class RenderUtil extends Tessellator {
 	}
 
 	public static void drawBoundingBox(BlockPos bp, double height, float width, ColorUtil color) {
-		drawBoundingBox(getBoundingBox(bp, 1, height, 1), width, color);
+		drawBoundingBox(getBoundingBox(bp, height), width, color);
 	}
 
 	public static void drawBoundingBox(AxisAlignedBB bb, float width, ColorUtil color) {
@@ -958,16 +956,16 @@ public class RenderUtil extends Tessellator {
         tessellator.draw();
     }
 	
-	private static AxisAlignedBB getBoundingBox (BlockPos bp, double width, double height, double depth) {
+	private static AxisAlignedBB getBoundingBox(BlockPos bp, double height) {
 		double x=bp.getX();
 		double y=bp.getY();
 		double z=bp.getZ();
-		return new AxisAlignedBB(x,y,z,x+width,y+height,z+depth);
+		return new AxisAlignedBB(x,y,z,x+ (double) 1,y+height,z+ (double) 1);
 	}
 
 	//ESP'S
 	public static void playerEsp (BlockPos bp, double height, float width, ColorUtil color) {
-		drawBoundingBox(getBoundingBox(bp,1, height,1),width,color);
+		drawBoundingBox(getBoundingBox(bp, height),width,color);
 	}
 
 	public static void playerEsp (AxisAlignedBB bb, float width, ColorUtil color) {
@@ -1105,7 +1103,7 @@ public class RenderUtil extends Tessellator {
 	
 	
 	public static void drawBoundingBoxWithSides(BlockPos blockPos, int width, ColorUtil color, int sides){
-		drawBoundingBoxWithSides(getBoundingBox(blockPos, 1, 1, 1), width, color, sides);
+		drawBoundingBoxWithSides(getBoundingBox(blockPos, 1), width, color, sides);
 	}
 
 	//hoosiers put this together with blood, sweat, and tears D:     

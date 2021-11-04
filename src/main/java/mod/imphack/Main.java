@@ -1,19 +1,12 @@
 package mod.imphack;
 
-import java.util.ArrayList;
-
 import mod.imphack.command.CommandManager;
 import mod.imphack.config.Config;
 import mod.imphack.event.ImpHackEventBus;
 import mod.imphack.event.ImpHackEventHandler;
 import mod.imphack.event.ImpHackEventManager;
 import mod.imphack.module.ModuleManager;
-import mod.imphack.module.modules.hud.HudArmor;
-import mod.imphack.module.modules.hud.HudArrayList;
-import mod.imphack.module.modules.hud.HudCoords;
-import mod.imphack.module.modules.hud.HudFPS;
-import mod.imphack.module.modules.hud.HudWatermark;
-import mod.imphack.module.modules.hud.HudWelcome;
+import mod.imphack.module.modules.hud.*;
 import mod.imphack.setting.SettingManager;
 import mod.imphack.sound.SongManager;
 import mod.imphack.ui.clickgui.ClickGuiController;
@@ -29,6 +22,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.ArrayList;
+
 //main class, contains all event handlers etc.
 
 @Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION)
@@ -38,7 +33,7 @@ public class Main {
 	public static long startTimeStamp = 0;
 	public static ImpHackFontRenderer customFontRenderer;
 
-	Minecraft mc = Minecraft.getMinecraft();
+	final Minecraft mc = Minecraft.getMinecraft();
 
 	public static ModuleManager moduleManager;
 	public static Config config;

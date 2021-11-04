@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 public class Login extends Command{
 
 	
-	Minecraft mc = Minecraft.getMinecraft();
+	final Minecraft mc = Minecraft.getMinecraft();
 	@Override
 	public String getAlias() {
 		return "login";
@@ -33,8 +33,8 @@ public class Login extends Command{
 			try
 			{
 				if(args.length > 1 || args[0].contains(":")) {
-					String email = "";
-					String password = "";
+					String email;
+					String password;
 					if(args[0].contains(":")) {
 						String[] split = args[0].split(":", 2);
 						email = split[0];

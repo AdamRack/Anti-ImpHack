@@ -8,13 +8,13 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public class ImpHackFont {
-    private float imgSize = 512;
-    protected CharData[] charData = new CharData[256];
+    private final float imgSize = 512;
+    protected final CharData[] charData = new CharData[256];
     protected Font font;
     protected boolean antiAlias;
     protected boolean fractionalMetrics;
     protected int fontHeight = -1;
-    protected int charOffset = 0;
+    protected final int charOffset = 0;
     protected DynamicTexture tex;
 
     public ImpHackFont(Font font, boolean antiAlias, boolean fractionalMetrics) {
@@ -149,7 +149,8 @@ public class ImpHackFont {
         tex = setupTexture(font, this.antiAlias, this.fractionalMetrics, this.charData);
     }
 
-    protected class CharData {
+    protected static
+    class CharData {
         public int width;
         public int height;
         public int storedX;

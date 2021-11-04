@@ -7,7 +7,7 @@ import net.minecraft.util.math.Vec3d;
 
 public class Utils {
 
-	public static Minecraft mc = Minecraft.getMinecraft();
+	public static final Minecraft mc = Minecraft.getMinecraft();
 	
 	
 	

@@ -1,14 +1,8 @@
 package mod.imphack.module.modules.hud;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.util.ArrayList;
-import java.util.Comparator;
-
 import mod.imphack.Main;
 import mod.imphack.module.Module;
 import mod.imphack.setting.settings.BooleanSetting;
-import mod.imphack.util.Reference;
 import mod.imphack.util.render.ColorUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -17,6 +11,9 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Text;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class HudArrayList extends Gui{
 	
@@ -71,8 +68,7 @@ public class HudArrayList extends Gui{
 
 					modules.sort(comparator);
 
-					for (int i = 0; i < modules.size(); i++) {
-						Module m = modules.get(i);
+					for (Module m : modules) {
 						mc.fontRenderer.drawStringWithShadow(m.getName(), sr.getScaledWidth() - fr.getStringWidth(m.getName()) - 2,
 								y, ColorUtil.rainbow(300));
 						y += fr.FONT_HEIGHT;

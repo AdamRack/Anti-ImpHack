@@ -1,14 +1,10 @@
 package mod.imphack.module;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.lwjgl.opengl.GL11;
-
 import mod.imphack.event.events.ImpHackEventRender;
-import mod.imphack.module.modules.client.*;
+import mod.imphack.module.modules.client.ClickGui;
+import mod.imphack.module.modules.client.DiscordRPC;
 import mod.imphack.module.modules.combat.*;
-import mod.imphack.module.modules.hud.*;
+import mod.imphack.module.modules.hud.Hud;
 import mod.imphack.module.modules.movement.*;
 import mod.imphack.module.modules.player.*;
 import mod.imphack.module.modules.render.*;
@@ -20,6 +16,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ModuleManager {
 	public static final Minecraft mc = Minecraft.getMinecraft();

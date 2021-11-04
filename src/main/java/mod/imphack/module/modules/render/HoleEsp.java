@@ -1,11 +1,5 @@
 package mod.imphack.module.modules.render;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-import java.awt.Color;
-
-
 import mod.imphack.event.events.ImpHackEventRender;
 import mod.imphack.module.Category;
 import mod.imphack.module.Module;
@@ -20,13 +14,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class HoleEsp extends Module{
 	
-	public FloatSetting size = new FloatSetting("size", this, 0.1f);
-	public BooleanSetting outline = new BooleanSetting("outline", this, true);
+	public final FloatSetting size = new FloatSetting("size", this, 0.1f);
+	public final BooleanSetting outline = new BooleanSetting("outline", this, true);
 
-	public ColorSetting obbyColor = new ColorSetting("obbyColor", this, new ColorUtil(69, 48, 146, 110));
-	public ColorSetting bedrockColor = new ColorSetting("bedrockColor", this, new ColorUtil(0, 255, 0, 110));
+	public final ColorSetting obbyColor = new ColorSetting("obbyColor", this, new ColorUtil(69, 48, 146, 110));
+	public final ColorSetting bedrockColor = new ColorSetting("bedrockColor", this, new ColorUtil(0, 255, 0, 110));
 	public HoleEsp() {
 		super("HoleEsp", "Shows safe holes", Category.RENDER);
 		
@@ -125,12 +123,8 @@ public class HoleEsp extends Module{
 			return;
 		}
 		
-		safeHoles.forEach((blockPos, isBedrock) -> {
-			drawBox(blockPos,1, isBedrock);
-		});
-		safeHoles.forEach((blockPos, isBedrock) -> {
-			drawOutline(blockPos,2,isBedrock);
-		});
+		safeHoles.forEach((blockPos, isBedrock) -> drawBox(blockPos, isBedrock));
+		safeHoles.forEach((blockPos, isBedrock) -> drawOutline(blockPos, isBedrock));
 	}
 	
 	private ColorUtil getColor (boolean isBedrock) {
@@ -140,15 +134,15 @@ public class HoleEsp extends Module{
 		return new ColorUtil(c);
 	}
 
-	private void drawBox(BlockPos blockPos, int width, boolean isBedrock) {
+	private void drawBox(BlockPos blockPos, boolean isBedrock) {
 			ColorUtil color=getColor(isBedrock);
 			RenderUtil.drawBox(blockPos, size.getValue(), color, Geometry.Quad.ALL);
 		}
 
-	private void drawOutline(BlockPos blockPos, int width, boolean isBedrock) {
+	private void drawOutline(BlockPos blockPos, boolean isBedrock) {
 		ColorUtil color=getColor(isBedrock);
 		if(outline.isEnabled()) {
-			RenderUtil.drawBoundingBox(blockPos, size.getValue(), width, color);
+			RenderUtil.drawBoundingBox(blockPos, size.getValue(), 2, color);
 		}
 	}
 

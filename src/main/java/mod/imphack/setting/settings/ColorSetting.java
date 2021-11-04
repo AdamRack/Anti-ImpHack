@@ -1,10 +1,7 @@
 package mod.imphack.setting.settings;
 
-import java.awt.Color;
-
 import mod.imphack.Main;
 import mod.imphack.module.Module;
-import mod.imphack.module.modules.combat.CrystalAura;
 import mod.imphack.setting.Setting;
 import mod.imphack.util.render.ColorUtil;
 
@@ -46,11 +43,11 @@ public class ColorSetting extends Setting {
 	}
 
 	public long toInteger() {
-		return this.value.getRGB() & (0xFFFFFFFF);
+		return this.value.getRGB();
 	}
 
 	public void fromInteger (long number) {
-		this.value = new ColorUtil(Math.toIntExact(number & 0xFFFFFFFF),true);
+		this.value = new ColorUtil(Math.toIntExact(number),true);
 	}
 	
 	public ColorUtil getColor() {

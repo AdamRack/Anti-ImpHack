@@ -1,22 +1,17 @@
 package mod.imphack.module.modules.combat;
 
+import me.zero.alpine.listener.EventHandler;
+import me.zero.alpine.listener.Listener;
 import mod.imphack.Main;
 import mod.imphack.event.events.ImpHackEventPacket;
 import mod.imphack.event.events.ImpHackEventRender;
 import mod.imphack.module.Category;
 import mod.imphack.module.Module;
-import mod.imphack.module.ModuleManager;
-import mod.imphack.setting.settings.BooleanSetting;
-import mod.imphack.setting.settings.ColorSetting;
-import mod.imphack.setting.settings.FloatSetting;
-import mod.imphack.setting.settings.IntSetting;
-import mod.imphack.setting.settings.ModeSetting;
+import mod.imphack.setting.settings.*;
 import mod.imphack.util.Reference;
 import mod.imphack.util.Timer;
 import mod.imphack.util.render.ColorUtil;
 import mod.imphack.util.render.RenderUtil;
-import me.zero.alpine.listener.EventHandler;
-import me.zero.alpine.listener.Listener;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -34,57 +29,48 @@ import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
 import net.minecraft.network.play.client.CPacketUseEntity;
 import net.minecraft.network.play.server.SPacketSoundEffect;
 import net.minecraft.potion.Potion;
-import net.minecraft.util.CombatRules;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.*;
+import net.minecraft.util.math.*;
 import net.minecraft.world.Explosion;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-import org.lwjgl.input.Keyboard;
-//TODO rewrite this 
+//TODO rewrite this
 public class CrystalAura extends Module {
 
-	public BooleanSetting breakCrystal = new BooleanSetting("breakCrystal", this, true);
-	public BooleanSetting placeCrystal = new BooleanSetting("placeCrystal", this, true);
-	public ModeSetting switchHand = new ModeSetting("switch", this, "off", "off", "onEnable", "detect");
-	public ModeSetting logic = new ModeSetting("logic", this, "break, place", "break, place", "place, break");
-	public IntSetting breakSpeed = new IntSetting("breakSpeed", this, 20);
-	public ModeSetting breakType = new ModeSetting("breakType", this, "packet", "swing", "packet");
-	public ModeSetting breakHand = new ModeSetting("breakHand", this, "both", "main", "offhand", "both");
-	public ModeSetting breakMode = new ModeSetting("breakMode", this, "all", "all", "smart", "own");
-	public FloatSetting breakRange = new FloatSetting("breakRange", this, 4.4f);
-	public FloatSetting placeRange = new FloatSetting("placeRange", this, 4.4f);
-	public IntSetting facePlaceValue = new IntSetting("facePlcVal", this, 8);
-	public BooleanSetting highPing = new BooleanSetting("highPing", this, true);
-	public BooleanSetting antiGhost = new BooleanSetting("antiGhosting", this, true);
-	public BooleanSetting raytrace = new BooleanSetting("raytrace", this, true);
-	public BooleanSetting rotate = new BooleanSetting("rotate", this, true);
-	public BooleanSetting spoofRotations = new BooleanSetting("spoofRotations", this, true);
-	public IntSetting minDmg = new IntSetting("minDmg", this, 5);
-	public BooleanSetting multiplace = new BooleanSetting("multiplace", this, false);
-	public IntSetting multiplaceValue = new IntSetting("multiplaceValue", this, 2);
-	public BooleanSetting multiplacePlus = new BooleanSetting("multiplacePlus", this, true);
-	public BooleanSetting antiSuicide = new BooleanSetting("antiSuicide", this, false);
-	public IntSetting maxSelfDmg = new IntSetting("antiSuicideValue", this, 10);
-	public BooleanSetting antiSelfPop = new BooleanSetting("antiSelfPop", this, true);
-	public FloatSetting enemyRange = new FloatSetting("range", this, 6.0f);
-	public FloatSetting wallsRange = new FloatSetting("wallsRange", this, 3.5f);
-	public BooleanSetting mode113 = new BooleanSetting("1.13place", this, false);
-	public BooleanSetting outline = new BooleanSetting("outline", this, false);
-	public BooleanSetting showBlock = new BooleanSetting("showBlock", this, true);
-	public BooleanSetting showDamage = new BooleanSetting("showDamage", this, true);
+	public final BooleanSetting breakCrystal = new BooleanSetting("breakCrystal", this, true);
+	public final BooleanSetting placeCrystal = new BooleanSetting("placeCrystal", this, true);
+	public final ModeSetting switchHand = new ModeSetting("switch", this, "off", "off", "onEnable", "detect");
+	public final ModeSetting logic = new ModeSetting("logic", this, "break, place", "break, place", "place, break");
+	public final IntSetting breakSpeed = new IntSetting("breakSpeed", this, 20);
+	public final ModeSetting breakType = new ModeSetting("breakType", this, "packet", "swing", "packet");
+	public final ModeSetting breakHand = new ModeSetting("breakHand", this, "both", "main", "offhand", "both");
+	public final ModeSetting breakMode = new ModeSetting("breakMode", this, "all", "all", "smart", "own");
+	public final FloatSetting breakRange = new FloatSetting("breakRange", this, 4.4f);
+	public final FloatSetting placeRange = new FloatSetting("placeRange", this, 4.4f);
+	public final IntSetting facePlaceValue = new IntSetting("facePlcVal", this, 8);
+	public final BooleanSetting highPing = new BooleanSetting("highPing", this, true);
+	public final BooleanSetting antiGhost = new BooleanSetting("antiGhosting", this, true);
+	public final BooleanSetting raytrace = new BooleanSetting("raytrace", this, true);
+	public final BooleanSetting rotate = new BooleanSetting("rotate", this, true);
+	public final BooleanSetting spoofRotations = new BooleanSetting("spoofRotations", this, true);
+	public final IntSetting minDmg = new IntSetting("minDmg", this, 5);
+	public final BooleanSetting multiplace = new BooleanSetting("multiplace", this, false);
+	public final IntSetting multiplaceValue = new IntSetting("multiplaceValue", this, 2);
+	public final BooleanSetting multiplacePlus = new BooleanSetting("multiplacePlus", this, true);
+	public final BooleanSetting antiSuicide = new BooleanSetting("antiSuicide", this, false);
+	public final IntSetting maxSelfDmg = new IntSetting("antiSuicideValue", this, 10);
+	public final BooleanSetting antiSelfPop = new BooleanSetting("antiSelfPop", this, true);
+	public final FloatSetting enemyRange = new FloatSetting("range", this, 6.0f);
+	public final FloatSetting wallsRange = new FloatSetting("wallsRange", this, 3.5f);
+	public final BooleanSetting mode113 = new BooleanSetting("1.13place", this, false);
+	public final BooleanSetting outline = new BooleanSetting("outline", this, false);
+	public final BooleanSetting showBlock = new BooleanSetting("showBlock", this, true);
+	public final BooleanSetting showDamage = new BooleanSetting("showDamage", this, true);
 	final ColorSetting color = new ColorSetting("Color", this, Reference.IMPHACK_COLOR);
 
 
@@ -144,7 +130,7 @@ private boolean togglePitch = false;
 int oldSlot;
 public static boolean placing = false;
 
-Timer timer = new Timer();
+final Timer timer = new Timer();
 
 @Override
 public void onEnable() {
@@ -208,7 +194,7 @@ private void breakLogic() {
 	 EntityEnderCrystal crystal = mc.world.loadedEntityList.stream()
              .filter(entity -> entity instanceof EntityEnderCrystal)
              .filter(e -> mc.player.getDistance(e) <= breakRange.getValue())
-             .filter(e -> crystalCheck(e))
+             .filter(this::crystalCheck)
              .map(entity -> (EntityEnderCrystal) entity)
              .min(Comparator.comparing(c -> mc.player.getDistance(c)))
              .orElse(null);
@@ -262,8 +248,7 @@ private void placeLogic() {
 		 }
 	 }
 
-	 if(mc.player.getHeldItemOffhand().getItem() == Items.END_CRYSTAL) offHand = true;
-	 else offHand = false;
+    offHand = mc.player.getHeldItemOffhand().getItem() == Items.END_CRYSTAL;
 
 	 if(mc.player.getHeldItemOffhand().getItem() == Items.END_CRYSTAL) {
 		 offHand = true;
@@ -272,9 +257,8 @@ private void placeLogic() {
 	 }
 
 	List<BlockPos> blocks = findCrystalBlocks();
-	List<Entity> entities = new ArrayList<>();
 
-	entities.addAll(mc.world.playerEntities.stream().collect(Collectors.toList()));
+    List <Entity> entities = new ArrayList <>(new ArrayList <>(mc.world.playerEntities));
 
 	BlockPos blockPos1 = null;
 	double damage = 0.5D;
@@ -446,7 +430,7 @@ private void swingArm() {
 
 @EventHandler
 private final Listener<ImpHackEventPacket.SendPacket> packetSendListener = new Listener<>(event -> {
-    Packet packet = event.get_packet();
+    Packet <?> packet = event.get_packet();
     if (packet instanceof CPacketPlayer && spoofRotations.isEnabled()) {
         if (isSpoofingAngles) {
             ((CPacketPlayer) packet).getYaw(yaw);
@@ -506,7 +490,7 @@ public boolean canPlaceCrystal(BlockPos blockPos) {
     boolean crystal = mc.world.loadedEntityList.stream()
             .filter(entity -> entity instanceof EntityEnderCrystal)
             .filter(e -> mc.player.getDistance(e) <= breakRange.getValue())
-            .filter(e -> crystalCheck(e))
+            .filter(this::crystalCheck)
             .map(entity -> (EntityEnderCrystal) entity)
             .min(Comparator.comparing(c -> mc.player.getDistance(c)))
             .orElse(null) != null;
@@ -600,9 +584,9 @@ private boolean validTarget(Entity entity) {
 
 private EntityLivingBase GetNearTarget(Entity distanceTarget) {
     return mc.world.loadedEntityList.stream()
-            .filter(entity -> validTarget(entity))
+            .filter(this::validTarget)
             .map(entity -> (EntityLivingBase) entity)
-            .min(Comparator.comparing(entity -> distanceTarget.getDistance(entity)))
+            .min(Comparator.comparing(distanceTarget::getDistance))
             .orElse(null);
 }
 
@@ -636,7 +620,7 @@ public static float getBlastReduction(EntityLivingBase entity, float damage, Exp
         float f = MathHelper.clamp(k, 0.0F, 20.0F);
         damage *= 1.0F - f / 25.0F;
 
-        if (entity.isPotionActive(Potion.getPotionById(11))) {
+        if (entity.isPotionActive(Objects.requireNonNull(Potion.getPotionById(11)))) {
             damage = damage - (damage / 4);
         }
         damage = Math.max(damage, 0.0F);

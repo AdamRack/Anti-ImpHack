@@ -6,11 +6,8 @@ import mod.imphack.module.Module;
 import mod.imphack.util.BlockUtil;
 import mod.imphack.util.render.RenderUtil;
 import net.minecraft.block.Block;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-
-
+import net.minecraft.util.math.RayTraceResult;
 
 
 public class BlockOverlay extends Module {

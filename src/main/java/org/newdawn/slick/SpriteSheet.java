@@ -1,10 +1,10 @@
 package org.newdawn.slick;
 
+import org.newdawn.slick.opengl.Texture;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-
-import org.newdawn.slick.opengl.Texture;
 
 /**
  * A sheet of sprites that can be drawn individually

@@ -1,16 +1,15 @@
 package mod.imphack.sound;
 
-import java.util.Arrays;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.ISound;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.ISound;
-
 public class SongManager {
 
-	private final List<ISound> songs = Arrays.asList(ICopeBrickZebra.sound);
+	private final List<ISound> songs = Collections.singletonList(ICopeBrickZebra.sound);
 
 	private final ISound menuSong;
 	private ISound currentSong;

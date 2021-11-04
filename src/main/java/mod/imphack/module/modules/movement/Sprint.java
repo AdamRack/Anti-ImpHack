@@ -21,11 +21,7 @@ public class Sprint extends Module {
 	public void onUpdate() {
 		if(mc.world != null) {
 			if(mc.gameSettings.keyBindForward.isKeyDown()) {
-				if(mc.player.collidedHorizontally && strict.isEnabled() || mc.player.getFoodStats().getFoodLevel() <= 6 && hungerSafe.isEnabled() || mc.player.isSneaking() || mc.player.isHandActive()) {
-					mc.player.setSprinting(false);
-				} else {
-					mc.player.setSprinting(true);
-				}
+                mc.player.setSprinting((!mc.player.collidedHorizontally || !strict.isEnabled()) && (mc.player.getFoodStats().getFoodLevel() > 6 || !hungerSafe.isEnabled()) && !mc.player.isSneaking() && !mc.player.isHandActive());
 			} else {
           mc.player.setSprinting(false);
 			}

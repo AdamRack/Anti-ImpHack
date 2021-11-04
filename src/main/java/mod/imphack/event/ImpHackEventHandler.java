@@ -62,6 +62,6 @@ public class ImpHackEventHandler implements Listenable {
 		this.last_update_tick = System.currentTimeMillis();
 	}
 	  public boolean onPacket(Object packet, ImpHackEventConnection.Side side) {
-	        return true;
+	        return false;
 	    }
 }

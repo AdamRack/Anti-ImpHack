@@ -1,11 +1,7 @@
 package mod.imphack.command;
 
 import mod.imphack.Client;
-import mod.imphack.command.commands.Bind;
-import mod.imphack.command.commands.Help;
-import mod.imphack.command.commands.Login;
-import mod.imphack.command.commands.Rotate;
-import mod.imphack.command.commands.Toggle;
+import mod.imphack.command.commands.*;
 
 import java.util.ArrayList;
 

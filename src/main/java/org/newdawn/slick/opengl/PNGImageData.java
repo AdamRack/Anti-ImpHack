@@ -1,10 +1,10 @@
 package org.newdawn.slick.opengl;
 
+import org.lwjgl.BufferUtils;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
-
-import org.lwjgl.BufferUtils;
 
 /**
  * The PNG imge data source that is pure java reading PNGs

@@ -1,12 +1,5 @@
 package mod.imphack.mixin;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.Color;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import mod.imphack.Main;
 import mod.imphack.module.modules.render.Esp;
 import mod.imphack.util.render.ColorUtil;
@@ -17,7 +10,13 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.Color;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
 @Mixin(RenderLivingBase.class)
@@ -27,8 +26,7 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
     protected ModelBase mainModel;
 
     // chams
-    @SuppressWarnings("hiding")
-	@Inject(method = "doRender", at = @At("HEAD"))
+    @Inject(method = "doRender", at = @At("HEAD"))
     private <T extends EntityLivingBase> void injectChamsPre(final T a, final double b, final double c, final double d, final float e, final float f, final CallbackInfo g) {
         if (Main.moduleManager.getModule("esp's") != null && Main.moduleManager.getModule("esp's").isToggled() && ((Esp)Main.moduleManager.getModule("esp's")).chams.isEnabled()) {
             GL11.glEnable(32823);
@@ -36,8 +34,7 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
         }
     }
 
-    @SuppressWarnings("hiding")
-	@Inject(method = "doRender", at = @At("RETURN"))
+    @Inject(method = "doRender", at = @At("RETURN"))
     private <T extends EntityLivingBase> void injectChamsPost(final T a, final double b, final double c, final double d, final float e, final float f, final CallbackInfo g) {
         if (Main.moduleManager.getModule("esp's") != null && Main.moduleManager.getModule("esp's").isToggled() && ((Esp)Main.moduleManager.getModule("esp's")).chams.isEnabled()) {
             GL11.glPolygonOffset(1.0f, 1000000.0f);
@@ -51,7 +48,7 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
         boolean flag1 = !flag && !entitylivingbaseIn.isInvisibleToPlayer(Minecraft.getMinecraft().player);
 
         if (flag || flag1) {
-            if (!bindEntityTexture(entitylivingbaseIn)) {
+            if (bindEntityTexture(entitylivingbaseIn)) {
                 return;
             }
 
