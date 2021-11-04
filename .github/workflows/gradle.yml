@@ -25,7 +25,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: ImpHack
-          path: build/libs/*-release.jar
+          path: build/libs/*-all.jar
 
       - name: Cleanup Gradle Cache
         run: rm -rf ~/.gradle/caches/
