@@ -17,8 +17,7 @@
 		"ImpHackMixinRenderPlayer",
 		"ImpHackMixinVisGraph",
 		"ImpHackMixinWorld",
+		"ImpHackMixinMinecraft"
 		"MixinRenderLivingBase"
-		
-	
 	]
 }
