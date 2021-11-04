@@ -1,17 +1,26 @@
 package mod.imphack;
 
+import java.util.ArrayList;
+
 import mod.imphack.command.CommandManager;
 import mod.imphack.config.Config;
 import mod.imphack.event.ImpHackEventBus;
 import mod.imphack.event.ImpHackEventHandler;
 import mod.imphack.event.ImpHackEventManager;
 import mod.imphack.module.ModuleManager;
-import mod.imphack.module.modules.hud.*;
+import mod.imphack.module.modules.hud.HudArmor;
+import mod.imphack.module.modules.hud.HudArrayList;
+import mod.imphack.module.modules.hud.HudCoords;
+import mod.imphack.module.modules.hud.HudFPS;
+import mod.imphack.module.modules.hud.HudWatermark;
+import mod.imphack.module.modules.hud.HudWelcome;
 import mod.imphack.setting.SettingManager;
+import mod.imphack.sound.SongManager;
 import mod.imphack.ui.clickgui.ClickGuiController;
 import mod.imphack.util.Reference;
 import mod.imphack.util.font.ImpHackFontRenderer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -33,10 +42,8 @@ public class Main {
 
 	public static ModuleManager moduleManager;
 	public static Config config;
-	
-	
-	
-	//Initilize HUD modules
+
+	// Initilize HUD modules
 	public static final HudCoords hudCoords = new HudCoords();
 	public static final HudArrayList hudArrayList = new HudArrayList();
 	public static final HudWatermark hudVersion = new HudWatermark();
@@ -44,14 +51,10 @@ public class Main {
 	public static final HudArmor hudArmor = new HudArmor();
 	public static final HudWelcome hudWelcome = new HudWelcome();
 
-
-
-
-	
-	
 	public static CommandManager cmdManager;
 	public static SettingManager settingManager;
 	public static ImpHackEventManager eventManager;
+	public static SongManager songManager;
 	private ClickGuiController gui;
 	public static boolean configLoaded = false;
 
@@ -65,7 +68,7 @@ public class Main {
 
 		ImpHackEventHandler.INSTANCE = new ImpHackEventHandler();
 
-		//register HUD
+		// register HUD
 		MinecraftForge.EVENT_BUS.register(instance);
 		MinecraftForge.EVENT_BUS.register(hudCoords);
 		MinecraftForge.EVENT_BUS.register(hudArrayList);
@@ -74,15 +77,11 @@ public class Main {
 		MinecraftForge.EVENT_BUS.register(hudArmor);
 		MinecraftForge.EVENT_BUS.register(hudWelcome);
 
-
-
-
-		
-
 		moduleManager = new ModuleManager();
 		cmdManager = new CommandManager();
 		settingManager = new SettingManager();
 		eventManager = new ImpHackEventManager();
+		songManager = new SongManager();
 		config = new Config();
 		config.Load();
 		configLoaded = true;
@@ -92,6 +91,19 @@ public class Main {
 		ImpHackEventBus.EVENT_BUS.subscribe(eventManager);
 
 		startTimeStamp = System.currentTimeMillis();
+
+		ArrayList<ResourceLocation> backgrounds = new ArrayList<>();
+		backgrounds.add(new ResourceLocation("textures/1.png"));
+		backgrounds.add(new ResourceLocation("textures/2.png"));
+		backgrounds.add(new ResourceLocation("textures/3.png"));
+		backgrounds.add(new ResourceLocation("textures/4.jpg"));
+		backgrounds.add(new ResourceLocation("textures/5.png"));
+		backgrounds.add(new ResourceLocation("textures/6.png"));
+		backgrounds.add(new ResourceLocation("textures/7.png"));
+		backgrounds.add(new ResourceLocation("textures/8.png"));
+		backgrounds.add(new ResourceLocation("textures/9.jpg"));
+		for (ResourceLocation r : backgrounds)
+			this.mc.getTextureManager().bindTexture(r);
 	}
 
 	public ClickGuiController getGui() {
@@ -101,6 +113,5 @@ public class Main {
 	public static ImpHackEventHandler get_event_handler() {
 		return ImpHackEventHandler.INSTANCE;
 	}
-	
-	 
+
 }

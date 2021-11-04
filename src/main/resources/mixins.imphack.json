@@ -16,8 +16,7 @@
 		"ImpHackMixinNetworkManager",
 		"ImpHackMixinRenderPlayer",
 		"ImpHackMixinVisGraph",
-		"ImpHackMixinWorld"
-		
-	
+		"ImpHackMixinWorld",
+		"ImpHackMixinMinecraft"
 	]
 }
