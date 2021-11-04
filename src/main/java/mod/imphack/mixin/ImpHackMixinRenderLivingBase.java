@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 
 @Mixin(RenderLivingBase.class)
-public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends ImpHackMixinRender<T> {
+public abstract class ImpHackMixinRenderLivingBase<T extends EntityLivingBase> extends ImpHackMixinRender<T> {
 
     @Shadow
     protected ModelBase mainModel;
