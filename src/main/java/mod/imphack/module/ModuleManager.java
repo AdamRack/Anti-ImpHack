@@ -41,7 +41,7 @@ public class ModuleManager {
 		addModule(new AutoTotem());
 		addModule(new Anchor());
 		addModule(new Criticals());
-		addModule(new SelfFill());
+		//addModule(new SelfFill());
 
 
 		// movement
