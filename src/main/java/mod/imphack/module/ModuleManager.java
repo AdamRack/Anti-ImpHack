@@ -80,6 +80,12 @@ public class ModuleManager {
 		addModule(new HoleEsp());
 		addModule(new Esp());
 		addModule(new Esp2dHelper());
+		addModule(new LowOffHand());
+		addModule(new ViewModel());
+		addModule(new FOV());
+
+		
+
 
 		//addModule(new NoRender());
 		// TODO norender
