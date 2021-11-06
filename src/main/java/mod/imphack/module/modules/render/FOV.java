@@ -7,26 +7,26 @@ import mod.imphack.setting.settings.IntSetting;
 public class FOV extends Module {
 
 	public FOV() {
-		super("Fov", "Changes your players view", Category.RENDER);
+		super("FOV", "Changes your players view", Category.RENDER);
 		addSetting(fov);
 	}
-	
-	  IntSetting fov = new IntSetting("Fov", this, 120);
 
-	    float fovOld;
+	IntSetting fov = new IntSetting("Fov", this, 120);
 
-	    @Override
-	    public void onEnable(){
-	        fovOld = mc.gameSettings.fovSetting;
-	    }
+	float fovOld;
 
-	    @Override
-	    public void onUpdate() {
-	        mc.gameSettings.fovSetting = (float) fov.getValue();
-	    }
-
-	    @Override
-	    public void onDisable(){
-	        mc.gameSettings.fovSetting = fovOld;
-	    }
+	@Override
+	public void onEnable() {
+		fovOld = mc.gameSettings.fovSetting;
 	}
+
+	@Override
+	public void onUpdate() {
+		mc.gameSettings.fovSetting = (float) fov.getValue();
+	}
+
+	@Override
+	public void onDisable() {
+		mc.gameSettings.fovSetting = fovOld;
+	}
+}
