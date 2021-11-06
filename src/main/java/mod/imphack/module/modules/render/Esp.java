@@ -35,7 +35,7 @@ import net.minecraft.util.math.BlockPos;
 public class Esp extends Module {
 
 	public final BooleanSetting chams = new BooleanSetting("walls", this, false);
-	public final ModeSetting entityMode = new ModeSetting("entity", this, "box", "box", "highlight", "box+highlight", "outline", "outlineEsp", "glow", "off");
+	public final ModeSetting entityMode = new ModeSetting("entity", this, "box", "box", "highlight", "box+highlight", "outline", "outlineEsp2D", "glow", "off");
 	public final ModeSetting storage = new ModeSetting("storage", this, "outline", "outline", "fill", "both", "off");
 	public final ModeSetting crystalMode = new ModeSetting("crystal", this, "pretty", "pretty", "glow", "off");
 
