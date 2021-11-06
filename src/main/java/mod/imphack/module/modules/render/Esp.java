@@ -47,7 +47,7 @@ public class Esp extends Module {
 	public final ColorSetting otherColor = new ColorSetting("other", this, new ColorUtil(150, 150, 150, 50));
 	
 	public Esp() {
-		super ("esp's", "draws esp around players and storage blocks.", Category.RENDER);
+		super ("Esp's", "draws esp around players and storage blocks.", Category.RENDER);
 		this.addSetting(entityMode, storage, crystalMode, mob, item, chams, range, lineWidth, playerColor, passiveMobColor, hostileMobColor, itemColor, chestColor
 				, enderChestColor, shulkerBoxColor, otherColor);
 	}
@@ -94,7 +94,7 @@ public class Esp extends Module {
             	RenderUtil.drawPlayerBox(entity.getEntityBoundingBox(), (float)lineWidth.getValue(), playerC, Geometry.Quad.ALL);
             }
             
-            // glow esp's
+            // glow Esp's
             if (entityMode.is("glow") && entity instanceof EntityPlayer) {
             	entity.setGlowing(true);
             }

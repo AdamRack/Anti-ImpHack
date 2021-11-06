@@ -28,7 +28,7 @@ public class Esp2dHelper extends Module {
 	 public void render(ImpHackEventRender event) {
 			Minecraft mc = Minecraft.getMinecraft();
 	    	//add mobs and items to 2dEsp
-		  if (Main.moduleManager.getModule("esp's") != null && Main.moduleManager.getModule("esp's").isToggled() && ((Esp)Main.moduleManager.getModule("esp's")).entityMode.is("2dEsp")) {
+		  if (Main.moduleManager.getModule("Esp's") != null && Main.moduleManager.getModule("Esp's").isToggled() && ((Esp)Main.moduleManager.getModule("Esp's")).entityMode.is("2dEsp")) {
 	       	 if ((mc.getRenderManager()).options == null)
 	  		      return; 
 	       	 float viewerYaw = (mc.getRenderManager()).playerViewY;
@@ -41,8 +41,8 @@ public class Esp2dHelper extends Module {
 	  		     GlStateManager.rotate(-viewerYaw, 0.0F, 1.0F, 0.0F);
 	  		          GL11.glEnable(2848);
 	  		          if (e instanceof net.minecraft.entity.player.EntityPlayer) {
-	  		        	  ppColor = new ColorUtil(((Esp)Main.moduleManager.getModule("esp's")).playerColor.getValue());
-	  		        	  GlStateManager.glLineWidth(((Esp)Main.moduleManager.getModule("esp's")).lineWidth.getValue());
+	  		        	  ppColor = new ColorUtil(((Esp)Main.moduleManager.getModule("Esp's")).playerColor.getValue());
+	  		        	  GlStateManager.glLineWidth(((Esp)Main.moduleManager.getModule("Esp's")).lineWidth.getValue());
 	  		        	  ppColor.glColor();
 	  		        	  GL11.glBegin(2);
 	  		        	  GL11.glVertex2d(-e.width, 0.0D);
@@ -76,7 +76,7 @@ public class Esp2dHelper extends Module {
 	 }
 	 
 	   public boolean rangeEntityCheck(Entity entity) {
-	        if (entity.getDistance(mc.player) > ((Esp)Main.moduleManager.getModule("esp's")).range.getValue()){
+	        if (entity.getDistance(mc.player) > ((Esp)Main.moduleManager.getModule("Esp's")).range.getValue()){
 	            return false;
 	        }
 
@@ -101,7 +101,7 @@ public class Esp2dHelper extends Module {
 
 	    public boolean rangeTileCheck(TileEntity tileEntity) {
 	        //the range value has to be squared for this
-	        if (tileEntity.getDistanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) > ((Esp)Main.moduleManager.getModule("esp's")).range.getValue() * ((Esp)Main.moduleManager.getModule("esp's")).range.getValue()){
+	        if (tileEntity.getDistanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) > ((Esp)Main.moduleManager.getModule("Esp's")).range.getValue() * ((Esp)Main.moduleManager.getModule("Esp's")).range.getValue()){
 	            return false;
 	        }
 
