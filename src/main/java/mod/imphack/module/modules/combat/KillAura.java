@@ -1,9 +1,5 @@
 package mod.imphack.module.modules.combat;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import mod.imphack.Main;
 import mod.imphack.module.Category;
 import mod.imphack.module.Module;
@@ -16,14 +12,18 @@ import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class KillAura extends Module {
 
-	public IntSetting range = new IntSetting("range", this, 6);
-	public BooleanSetting switchA = new BooleanSetting("switch", this, false);
-	public BooleanSetting swordOnly = new BooleanSetting("swordOnly", this, false);
-	public BooleanSetting players = new BooleanSetting("players", this, true);
-	public BooleanSetting passives = new BooleanSetting("passives", this, false);
-	public BooleanSetting hostiles = new BooleanSetting("hostiles", this, false);
+	public final IntSetting range = new IntSetting("range", this, 6);
+	public final BooleanSetting switchA = new BooleanSetting("switch", this, false);
+	public final BooleanSetting swordOnly = new BooleanSetting("swordOnly", this, false);
+	public final BooleanSetting players = new BooleanSetting("players", this, true);
+	public final BooleanSetting passives = new BooleanSetting("passives", this, false);
+	public final BooleanSetting hostiles = new BooleanSetting("hostiles", this, false);
 
 	public KillAura() {
 		super("KillAura", "Attacks nearby entities", Category.COMBAT);
@@ -43,12 +43,10 @@ public class KillAura extends Module {
 			return;
 		List<Entity> targets = mc.world.loadedEntityList.stream().filter(entity -> entity != mc.player)
 				.filter(entity -> mc.player.getDistance(entity) <= range.getValue()).filter(entity -> !entity.isDead)
-				.filter(entity -> attackCheck(entity)).sorted(Comparator.comparing(s -> mc.player.getDistance(s)))
+				.filter(this::attackCheck).sorted(Comparator.comparing(s -> mc.player.getDistance(s)))
 				.collect(Collectors.toList());
 
-		targets.forEach(target -> {
-			attack(target);
-		});
+		targets.forEach(this::attack);
 	}
 
 	public void attack(Entity e) {
@@ -66,15 +64,8 @@ public class KillAura extends Module {
 		}
 
 		if (passives.isEnabled() && entity instanceof EntityAnimal) {
-			if (entity instanceof EntityTameable) {
-				return false;
-			} else {
-				return true;
-			}
+			return !(entity instanceof EntityTameable);
 		}
-		if (hostiles.isEnabled() && entity instanceof EntityMob) {
-			return true;
-		}
-		return false;
+		return hostiles.isEnabled() && entity instanceof EntityMob;
 	}
 }

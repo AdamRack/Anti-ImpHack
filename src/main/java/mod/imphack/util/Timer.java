@@ -49,11 +49,8 @@ public class Timer {
 		return time * 1000000L;
 	}
 	public boolean isDelay(long delay) {
-		if(System.currentTimeMillis() - lastMS >= delay) {
-			return true;
-		}
-		return false;
-	}
+        return System.currentTimeMillis() - lastMS >= delay;
+    }
 	
     public long getCurrentMS(){
 		return System.nanoTime() / 1000000L;

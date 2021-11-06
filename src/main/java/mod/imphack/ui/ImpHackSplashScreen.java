@@ -1,26 +1,22 @@
 package mod.imphack.ui;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Random;
-
-import org.lwjgl.opengl.GL11;
-
 import mod.imphack.Main;
 import mod.imphack.util.render.RenderUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiMultiplayer;
-import net.minecraft.client.gui.GuiOptions;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiWorldSelection;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 
+import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Random;
+
 public class ImpHackSplashScreen extends GuiScreen {
 
-	private ArrayList<ResourceLocation> backgrounds = new ArrayList<>();
+	private final ArrayList<ResourceLocation> backgrounds = new ArrayList<>();
 
 	private ResourceLocation background;
 

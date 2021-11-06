@@ -1,22 +1,14 @@
 package mod.imphack.module;
 
 import me.zero.alpine.listener.Listenable;
-import mod.imphack.Client;
 import mod.imphack.Main;
 import mod.imphack.container.ImpHackInventory;
 import mod.imphack.event.ImpHackEventBus;
 import mod.imphack.event.ImpHackEventConnection;
 import mod.imphack.event.events.ImpHackEventRender;
 import mod.imphack.setting.Setting;
-import mod.imphack.util.render.RenderUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraftforge.client.event.EntityViewRenderEvent;
-import net.minecraftforge.client.event.GuiContainerEvent;
-import net.minecraftforge.client.event.GuiOpenEvent;
-import net.minecraftforge.client.event.MouseEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 

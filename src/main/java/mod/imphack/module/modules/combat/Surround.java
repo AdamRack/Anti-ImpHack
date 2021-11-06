@@ -1,15 +1,8 @@
 package mod.imphack.module.modules.combat;
 
 
-
-import static mod.imphack.util.BlockUtil.faceVectorPacketInstant;
-
-import org.lwjgl.input.Keyboard;
-
-
 import mod.imphack.module.Category;
 import mod.imphack.module.Module;
-import mod.imphack.util.Timer;
 import mod.imphack.setting.settings.BooleanSetting;
 import mod.imphack.setting.settings.IntSetting;
 import mod.imphack.util.BlockUtil;
@@ -18,19 +11,18 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockObsidian;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketEntityAction;
-import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+
+import static mod.imphack.util.BlockUtil.faceVectorPacketInstant;
 
 public class Surround extends  Module{
 	public Surround() {
@@ -46,22 +38,21 @@ public class Surround extends  Module{
 		addSetting(blocksPerTick);
 	}
 
-	public BooleanSetting triggerSurround = new BooleanSetting("trigger", this, false);
-	public BooleanSetting shiftOnly = new BooleanSetting("onShift", this, false);
-	public BooleanSetting rotate = new BooleanSetting("rotate", this, true);
-	public BooleanSetting disableOnJump = new BooleanSetting("offJump", this, false);
-	public BooleanSetting centerPlayer = new BooleanSetting("autoCenter", this, true);
-	public IntSetting tickDelay = new IntSetting("tickDelay", this, 5);
-	public IntSetting timeOutTicks = new IntSetting("timeOutTicks", this, 100);
-	public IntSetting blocksPerTick = new IntSetting("blocksPerTick", this, 4);
+	public final BooleanSetting triggerSurround = new BooleanSetting("trigger", this, false);
+	public final BooleanSetting shiftOnly = new BooleanSetting("onShift", this, false);
+	public final BooleanSetting rotate = new BooleanSetting("rotate", this, true);
+	public final BooleanSetting disableOnJump = new BooleanSetting("offJump", this, false);
+	public final BooleanSetting centerPlayer = new BooleanSetting("autoCenter", this, true);
+	public final IntSetting tickDelay = new IntSetting("tickDelay", this, 5);
+	public final IntSetting timeOutTicks = new IntSetting("timeOutTicks", this, 100);
+	public final IntSetting blocksPerTick = new IntSetting("blocksPerTick", this, 4);
 
 	private boolean noObby = false;
     private boolean isSneaking = false;
     private boolean firstRun = false;
 
     private int oldSlot = -1;
-    
-    private int blocksPlaced;
+
     private int runTimeTicks = 0;
     private int delayTimeTicks = 0;
     private int offsetSteps = 0;
@@ -110,7 +101,7 @@ public class Surround extends  Module{
         }
 
         if (isSneaking){
-            mc.player.connection.sendPacket((Packet<?>) new CPacketEntityAction(mc.player, CPacketEntityAction.Action.STOP_SNEAKING));
+            mc.player.connection.sendPacket(new CPacketEntityAction(mc.player, CPacketEntityAction.Action.STOP_SNEAKING));
             isSneaking = false;
         }
 
@@ -172,7 +163,7 @@ public class Surround extends  Module{
             return;
         }
 
-        blocksPlaced = 0;
+        int blocksPlaced = 0;
 
         while (blocksPlaced <= blocksPerTick.getValue()) {
             Vec3d[] offsetPattern;
@@ -187,11 +178,7 @@ public class Surround extends  Module{
             BlockPos offsetPos = new BlockPos(offsetPattern[offsetSteps]);
             BlockPos targetPos = new BlockPos(mc.player.getPositionVector()).add(offsetPos.getX(), offsetPos.getY(), offsetPos.getZ());
 
-            boolean tryPlacing = true;
-
-            if (!mc.world.getBlockState(targetPos).getMaterial().isReplaceable()) {
-                tryPlacing = false;
-            }
+            boolean tryPlacing = mc.world.getBlockState(targetPos).getMaterial().isReplaceable();
 
             for (Entity entity : mc.world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(targetPos))) {
                 if (entity instanceof EntityPlayer) {
@@ -249,7 +236,7 @@ public class Surround extends  Module{
         BlockPos neighbour = pos.offset(side);
         EnumFacing opposite = side.getOpposite();
 
-        if (!BlockUtil.canBeClicked(neighbour)) {
+        if (BlockUtil.canBeClicked(neighbour)) {
             return false;
         }
 

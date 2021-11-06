@@ -1,15 +1,7 @@
 package org.newdawn.slick.muffin;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.EOFException;
 import java.io.IOException;
-import java.net.URL;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
-
-import org.newdawn.slick.util.Log;
 
 /**
  * A muffin load/save implementation based on using Webstart Muffins (a bit like cookies only 

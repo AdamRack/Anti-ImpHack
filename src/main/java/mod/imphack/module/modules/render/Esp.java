@@ -1,8 +1,4 @@
 package mod.imphack.module.modules.render;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.lwjgl.input.Keyboard;
 
 import mod.imphack.event.events.ImpHackEventRender;
 import mod.imphack.module.Category;
@@ -23,36 +19,32 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.tileentity.TileEntityDispenser;
-import net.minecraft.tileentity.TileEntityDropper;
-import net.minecraft.tileentity.TileEntityEnderChest;
-import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraft.tileentity.TileEntityHopper;
-import net.minecraft.tileentity.TileEntityShulkerBox;
+import net.minecraft.tileentity.*;
 import net.minecraft.util.math.BlockPos;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Esp extends Module {
 	
-	public BooleanSetting chams = new BooleanSetting("walls", this, false);
-	public ModeSetting entityMode = new ModeSetting("entity", this, "box", "box", "highlight", "box+highlight", "outline", "2dEsp", "glow", "off");
-	public ModeSetting storage = new ModeSetting("storage", this, "outline", "outline", "fill", "both", "off");
-	public ModeSetting crystalMode = new ModeSetting("crystal", this, "pretty", "pretty", "glow", "off");
+	public final BooleanSetting chams = new BooleanSetting("walls", this, false);
+	public final ModeSetting entityMode = new ModeSetting("entity", this, "box", "box", "highlight", "box+highlight", "outline", "2dEsp", "glow", "off");
+	public final ModeSetting storage = new ModeSetting("storage", this, "outline", "outline", "fill", "both", "off");
+	public final ModeSetting crystalMode = new ModeSetting("crystal", this, "pretty", "pretty", "glow", "off");
 	
-	public BooleanSetting mob = new BooleanSetting("mob", this, false);
-	public BooleanSetting item = new BooleanSetting("item", this, true);
-	public IntSetting range = new IntSetting("range", this, 100);
-	public IntSetting lineWidth = new IntSetting("lineWidth", this, 3);
+	public final BooleanSetting mob = new BooleanSetting("mob", this, false);
+	public final BooleanSetting item = new BooleanSetting("item", this, true);
+	public final IntSetting range = new IntSetting("range", this, 100);
+	public final IntSetting lineWidth = new IntSetting("lineWidth", this, 3);
 	
-	public ColorSetting playerColor = new ColorSetting("player", this, new ColorUtil(0, 121, 194, 100)); 
-	public ColorSetting hostileMobColor = new ColorSetting("hostileMob", this, new ColorUtil(255, 0, 0, 100)); 
-	public ColorSetting passiveMobColor = new ColorSetting("passiveMob", this, new ColorUtil(0, 255, 0, 100)); 
-	public ColorSetting itemColor = new ColorSetting("itemColor", this, new ColorUtil(0, 121, 194, 100)); 
-	public ColorSetting chestColor = new ColorSetting("chest", this, new ColorUtil(255, 255, 0, 50));
-	public ColorSetting enderChestColor = new ColorSetting("enderChest", this, new ColorUtil(255, 70, 200, 50)); 
-	public ColorSetting shulkerBoxColor = new ColorSetting("shulkerBox", this, new ColorUtil(255, 182, 193, 50)); 
-	public ColorSetting otherColor = new ColorSetting("other", this, new ColorUtil(150, 150, 150, 50)); 
+	public final ColorSetting playerColor = new ColorSetting("player", this, new ColorUtil(0, 121, 194, 100));
+	public final ColorSetting hostileMobColor = new ColorSetting("hostileMob", this, new ColorUtil(255, 0, 0, 100));
+	public final ColorSetting passiveMobColor = new ColorSetting("passiveMob", this, new ColorUtil(0, 255, 0, 100));
+	public final ColorSetting itemColor = new ColorSetting("itemColor", this, new ColorUtil(0, 121, 194, 100));
+	public final ColorSetting chestColor = new ColorSetting("chest", this, new ColorUtil(255, 255, 0, 50));
+	public final ColorSetting enderChestColor = new ColorSetting("enderChest", this, new ColorUtil(255, 70, 200, 50));
+	public final ColorSetting shulkerBoxColor = new ColorSetting("shulkerBox", this, new ColorUtil(255, 182, 193, 50));
+	public final ColorSetting otherColor = new ColorSetting("other", this, new ColorUtil(150, 150, 150, 50));
 	
 	public Esp() {
 		super ("esp's", "draws esp around players and storage blocks.", Category.RENDER);
@@ -139,7 +131,7 @@ public class Esp extends Module {
         });
         
         if (storage.is("outline")) {
-            mc.world.loadedTileEntityList.stream().filter(tileEntity -> rangeTileCheck(tileEntity)).forEach(tileEntity -> {
+            mc.world.loadedTileEntityList.stream().filter(this::rangeTileCheck).forEach(tileEntity -> {
                 if (tileEntity instanceof TileEntityChest){
                     containerColor = new ColorUtil(chestColor.getValue(), 255);
                     RenderUtil.drawBoundingBox(mc.world.getBlockState(tileEntity.getPos()).getSelectedBoundingBox(mc.world, tileEntity.getPos()), 2, containerColor);
@@ -160,51 +152,51 @@ public class Esp extends Module {
         }
         
         if (storage.is("both")) {
-            mc.world.loadedTileEntityList.stream().filter(tileEntity -> rangeTileCheck(tileEntity)).forEach(tileEntity -> {
+            mc.world.loadedTileEntityList.stream().filter(this::rangeTileCheck).forEach(tileEntity -> {
                 if (tileEntity instanceof TileEntityChest){
                     containerColor = new ColorUtil(chestColor.getValue(), 255);
                     containerBox = new ColorUtil(chestColor.getValue());
                     RenderUtil.drawBoundingBox(mc.world.getBlockState(tileEntity.getPos()).getSelectedBoundingBox(mc.world, tileEntity.getPos()), 2, containerColor);
-                    drawStorageBox(tileEntity.getPos(), 1, containerBox);
+                    drawStorageBox(tileEntity.getPos(), containerBox);
                 }
                 if (tileEntity instanceof TileEntityEnderChest){
                 	containerColor = new ColorUtil(enderChestColor.getValue(), 255);
                 	containerBox = new ColorUtil(enderChestColor.getValue());
                     RenderUtil.drawBoundingBox(mc.world.getBlockState(tileEntity.getPos()).getSelectedBoundingBox(mc.world, tileEntity.getPos()), 2, containerColor);
-                    drawStorageBox(tileEntity.getPos(), 1, containerBox);
+                    drawStorageBox(tileEntity.getPos(), containerBox);
                 }
                 if (tileEntity instanceof TileEntityShulkerBox){
                 	containerColor = new ColorUtil(shulkerBoxColor.getValue(), 255);
                 	containerBox = new ColorUtil(shulkerBoxColor.getValue());
                     RenderUtil.drawBoundingBox(mc.world.getBlockState(tileEntity.getPos()).getSelectedBoundingBox(mc.world, tileEntity.getPos()), 2, containerColor);
-                    drawBox(tileEntity.getPos(), 1, containerBox);
+                    drawBox(tileEntity.getPos(), containerBox);
                 }
                 if(tileEntity instanceof TileEntityDispenser || tileEntity instanceof TileEntityFurnace || tileEntity instanceof TileEntityHopper || tileEntity instanceof TileEntityDropper){
                 	containerColor = new ColorUtil(otherColor.getValue(), 255);
                 	containerBox = new ColorUtil(otherColor.getValue());
                     RenderUtil.drawBoundingBox(mc.world.getBlockState(tileEntity.getPos()).getSelectedBoundingBox(mc.world, tileEntity.getPos()), 2, containerColor);
-                    drawBox(tileEntity.getPos(), 1, containerBox);
+                    drawBox(tileEntity.getPos(), containerBox);
                 }
             });
         }
         
         if (storage.is("fill")) {
-            mc.world.loadedTileEntityList.stream().filter(tileEntity -> rangeTileCheck(tileEntity)).forEach(tileEntity -> {
+            mc.world.loadedTileEntityList.stream().filter(this::rangeTileCheck).forEach(tileEntity -> {
                 if (tileEntity instanceof TileEntityChest){
                 	containerBox = new ColorUtil(chestColor.getValue());
-                    drawStorageBox(tileEntity.getPos(), 1, containerBox);
+                    drawStorageBox(tileEntity.getPos(), containerBox);
                 }
                 if (tileEntity instanceof TileEntityEnderChest){
                 	containerBox = new ColorUtil(enderChestColor.getValue());
-                    drawStorageBox(tileEntity.getPos(), 1, containerBox);
+                    drawStorageBox(tileEntity.getPos(), containerBox);
                 }
                 if (tileEntity instanceof TileEntityShulkerBox){
                 	containerBox = new ColorUtil(shulkerBoxColor.getValue());
-                    drawBox(tileEntity.getPos(), 1, containerBox);
+                    drawBox(tileEntity.getPos(), containerBox);
                 }
                 if(tileEntity instanceof TileEntityDispenser || tileEntity instanceof TileEntityFurnace || tileEntity instanceof TileEntityHopper || tileEntity instanceof TileEntityDropper){
                 	containerBox = new ColorUtil(otherColor.getValue());
-                    drawBox(tileEntity.getPos(), 1, containerBox);
+                    drawBox(tileEntity.getPos(), containerBox);
                 }
             });
         }
@@ -216,11 +208,11 @@ public class Esp extends Module {
         }
     }
     
-    private void drawStorageBox(BlockPos blockPos, int width, ColorUtil color) {
+    private void drawStorageBox(BlockPos blockPos, ColorUtil color) {
 		RenderUtil.drawStorageBox(blockPos, 0.88, color, Geometry.Quad.ALL);
     }
     
-    private void drawBox(BlockPos blockPos, int width, ColorUtil color) {
+    private void drawBox(BlockPos blockPos, ColorUtil color) {
 		RenderUtil.drawBox(blockPos, 1, color, Geometry.Quad.ALL);
    }
 

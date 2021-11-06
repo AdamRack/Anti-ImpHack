@@ -1,20 +1,15 @@
 package mod.imphack.module.modules.render;
 
-import java.awt.Font;
-
-import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.tests.UnicodeFontTest;
-
 import com.mojang.realmsclient.gui.ChatFormatting;
-
+import me.zero.alpine.event.type.Cancellable;
 import me.zero.alpine.listener.EventHandler;
 import me.zero.alpine.listener.Listener;
+import mod.imphack.event.events.ImpHackEventPush;
 import mod.imphack.event.events.ImpHackEventRender;
 import mod.imphack.event.events.ImpHackEventRenderEntityName;
 import mod.imphack.module.Category;
 import mod.imphack.module.Module;
 import mod.imphack.setting.settings.BooleanSetting;
-import mod.imphack.setting.settings.FloatSetting;
 import mod.imphack.setting.settings.IntSetting;
 import mod.imphack.util.render.ColorUtil;
 import mod.imphack.util.render.RenderUtil;
@@ -28,15 +23,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
+import org.lwjgl.opengl.GL11;
 
 public class Nametags extends Module {
-	BooleanSetting renderSelf = new BooleanSetting("self", this, true);
-	IntSetting range = new IntSetting("Range", this, 150);
-	BooleanSetting items = new BooleanSetting("items", this, true);
-	BooleanSetting durability = new BooleanSetting("durability", this, true);
-	BooleanSetting protType = new BooleanSetting("protType", this, true);
-	BooleanSetting health = new BooleanSetting("health", this, true);
-	BooleanSetting ping = new BooleanSetting("ping", this, true);
+	final BooleanSetting renderSelf = new BooleanSetting("self", this, true);
+	final IntSetting range = new IntSetting("Range", this, 150);
+	final BooleanSetting items = new BooleanSetting("items", this, true);
+	final BooleanSetting durability = new BooleanSetting("durability", this, true);
+	final BooleanSetting protType = new BooleanSetting("protType", this, true);
+	final BooleanSetting health = new BooleanSetting("health", this, true);
+	final BooleanSetting ping = new BooleanSetting("ping", this, true);
 
 	public Nametags() {
 		super("Nametags", "Adds More Features To Nametags", Category.RENDER);
@@ -54,16 +50,15 @@ public class Nametags extends Module {
 
 	@Override
 	public void render(ImpHackEventRender event) {
-		if (mc.player == null || mc.world == null)
-			return;
+		  if (mc.player == null || mc.world == null) return;
 
-		mc.world.playerEntities.stream().filter(this::shouldRender).forEach(entityPlayer -> {
-			Vec3d vec3d = findEntityVec3d(entityPlayer);
-			renderNameTags(entityPlayer, vec3d.x, vec3d.y, vec3d.z);
-		});
-	}
-
-	 private void renderNameTags(EntityPlayer entityPlayer, double posX, double posY, double posZ) {
+	        mc.world.playerEntities.stream().filter(this::shouldRender).forEach(entityPlayer -> {
+	            Vec3d vec3d = findEntityVec3d(entityPlayer);
+	            renderNameTags(entityPlayer, vec3d.x, vec3d.y, vec3d.z);
+	        });
+	    }
+	    
+	    private void renderNameTags(EntityPlayer entityPlayer, double posX, double posY, double posZ) {
 	        double adjustedY = posY + (entityPlayer.isSneaking() ? 1.9 : 2.1);
 
 	        String[] name = new String[1];
@@ -92,7 +87,7 @@ public class Nametags extends Module {
 	    }
 
 	    private double balancePosition(double newPosition, double oldPosition) {
-	        return oldPosition + (newPosition - oldPosition) * mc.getRenderPartialTicks();
+	        return oldPosition + (newPosition - oldPosition) * mc.timer.renderPartialTicks;
 	    }
 	    
 	    private TextFormatting healthColor(int health) {
@@ -293,11 +288,16 @@ public class Nametags extends Module {
 
 	        return string.substring(0, 1).toUpperCase() + string.substring(1) + ((level > 1) ? level : "");
 	    }
+		
+	
 	
 
 	@EventHandler
-	private Listener<ImpHackEventRenderEntityName> player_nametag = new Listener<>(event -> {
+	private final Listener<ImpHackEventRenderEntityName> player_nametag = new Listener<>(event -> {
 		event.cancel();
-	});
+	
+	
+	
 
+	});
 }

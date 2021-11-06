@@ -27,21 +27,21 @@ import net.minecraftforge.client.event.RenderBlockOverlayEvent.OverlayType;
 
 public class NoRender extends Module{
 
-	public BooleanSetting rain = new BooleanSetting("rain", this, false);
-	public BooleanSetting skylight = new BooleanSetting("skylightUpdates", this, false);
-	public ModeSetting hurtCam = new ModeSetting("hurtCam", this, "yesHurtCam", "yesHurtCam", "noHurtCam", "penis");
-	public BooleanSetting fire = new BooleanSetting("fire", this, false);
-	public BooleanSetting portalEffect = new BooleanSetting("portalEffect", this, false);
-	public BooleanSetting potionIndicators = new BooleanSetting("potionIndicators", this, false);
-	public BooleanSetting crystals = new BooleanSetting("crystals", this, false);
-	public BooleanSetting totemAnimation = new BooleanSetting("totemAnimation", this, false);
-	public BooleanSetting enchantTables = new BooleanSetting("encahtTables", this, false);
-	public BooleanSetting armor = new BooleanSetting("armor", this, false);
-	public BooleanSetting tnt = new BooleanSetting("tnt", this, false);
-	public BooleanSetting items = new BooleanSetting("items", this, false);
-	public BooleanSetting withers = new BooleanSetting("withers", this, false);
-	public BooleanSetting skulls = new BooleanSetting("skulls", this, false);
-	public BooleanSetting fireworks = new BooleanSetting("fireworks", this, false);
+	public final BooleanSetting rain = new BooleanSetting("rain", this, false);
+	public final BooleanSetting skylight = new BooleanSetting("skylightUpdates", this, false);
+	public final ModeSetting hurtCam = new ModeSetting("hurtCam", this, "yesHurtCam", "yesHurtCam", "noHurtCam", "penis");
+	public final BooleanSetting fire = new BooleanSetting("fire", this, false);
+	public final BooleanSetting portalEffect = new BooleanSetting("portalEffect", this, false);
+	public final BooleanSetting potionIndicators = new BooleanSetting("potionIndicators", this, false);
+	public final BooleanSetting crystals = new BooleanSetting("crystals", this, false);
+	public final BooleanSetting totemAnimation = new BooleanSetting("totemAnimation", this, false);
+	public final BooleanSetting enchantTables = new BooleanSetting("encahtTables", this, false);
+	public final BooleanSetting armor = new BooleanSetting("armor", this, false);
+	public final BooleanSetting tnt = new BooleanSetting("tnt", this, false);
+	public final BooleanSetting items = new BooleanSetting("items", this, false);
+	public final BooleanSetting withers = new BooleanSetting("withers", this, false);
+	public final BooleanSetting skulls = new BooleanSetting("skulls", this, false);
+	public final BooleanSetting fireworks = new BooleanSetting("fireworks", this, false);
 	
 	public BooleanSetting particles = new BooleanSetting("particles", this, false);
 	public BooleanSetting signs = new BooleanSetting("signs", this, false);
@@ -93,7 +93,7 @@ public class NoRender extends Module{
 	
 	// rain
 	@EventHandler
-	private Listener<ImpHackEventRain> onRain = new Listener<>(event -> {
+	private final Listener<ImpHackEventRain> onRain = new Listener<>(event -> {
 		if(rain.isEnabled()) {
 		    if (mc.world == null)
 		        return;
@@ -103,7 +103,7 @@ public class NoRender extends Module{
 	
 	// totem animation
 	@EventHandler
-    private Listener<ImpHackEventPacket> PacketEvent = new Listener<>(event -> {
+    private final Listener<ImpHackEventPacket> PacketEvent = new Listener<>(event -> {
         if (mc.world == null || mc.player == null) return;
         if (event.get_packet() instanceof SPacketEntityStatus) {
             SPacketEntityStatus packet = (SPacketEntityStatus)event.get_packet();
@@ -116,14 +116,14 @@ public class NoRender extends Module{
 	
 	// fire
 	@EventHandler
-    private Listener<RenderBlockOverlayEvent> OnBlockOverlayEvent = new Listener<>(event -> {
+    private final Listener<RenderBlockOverlayEvent> OnBlockOverlayEvent = new Listener<>(event -> {
         if (fire.isEnabled() && event.getOverlayType() == OverlayType.FIRE) event.setCanceled(true);
     });
 	
 	// crystals, tnt, items, withers, skulls, and fireworks
 	
 	@EventHandler
-	private Listener<ImpHackEventPacket.ReceivePacket> onReceivePacket = new Listener<>(event -> {	
+	private final Listener<ImpHackEventPacket.ReceivePacket> onReceivePacket = new Listener<>(event -> {
 		 if (event.get_era() == Era.EVENT_PRE) {
 	            if (event.get_packet() instanceof SPacketSpawnMob) {
 	                final SPacketSpawnMob packet = (SPacketSpawnMob) event.get_packet();
@@ -138,7 +138,7 @@ public class NoRender extends Module{
 	});
 	
 	@EventHandler
-	private Listener<ImpHackEventEntity> onRenderEntity = new Listener<>(event -> {
+	private final Listener<ImpHackEventEntity> onRenderEntity = new Listener<>(event -> {
 			if(crystals.isEnabled()) {
 				if (event.get_entity() instanceof EntityEnderCrystal) event.cancel();
 			}
@@ -165,7 +165,7 @@ public class NoRender extends Module{
         
 	});
 	@EventHandler
-	private Listener<ImpHackEventSpawnEffect> onSpawnEffectParticle = new Listener<>(event -> {
+	private final Listener<ImpHackEventSpawnEffect> onSpawnEffectParticle = new Listener<>(event -> {
 		if (fireworks.isEnabled()) {
             if (event.getParticleID() == EnumParticleTypes.FIREWORKS_SPARK.getParticleID() || event.getParticleID() == EnumParticleTypes.EXPLOSION_HUGE.getParticleID() ||
             		event.getParticleID() == EnumParticleTypes.EXPLOSION_LARGE.getParticleID() || event.getParticleID() == EnumParticleTypes.EXPLOSION_NORMAL.getParticleID()) {
@@ -175,7 +175,7 @@ public class NoRender extends Module{
 	});
 	
 	@EventHandler
-	private Listener<ImpHackEventEntity> onEntityAdd = new Listener<>(event -> {
+	private final Listener<ImpHackEventEntity> onEntityAdd = new Listener<>(event -> {
 		if (fireworks.isEnabled()) {
             if (event.get_entity() instanceof EntityFireworkRocket) {
                 event.cancel();

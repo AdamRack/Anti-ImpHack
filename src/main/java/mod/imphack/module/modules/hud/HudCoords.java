@@ -1,11 +1,7 @@
 package mod.imphack.module.modules.hud;
 
-import java.awt.Color;
-import java.awt.Font;
-
 import mod.imphack.Main;
 import mod.imphack.setting.settings.BooleanSetting;
-import mod.imphack.util.font.FontUtils;
 import mod.imphack.util.render.ColorUtil;
 import mod.imphack.util.render.RenderUtil;
 import net.minecraft.client.Minecraft;
@@ -14,7 +10,6 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.Text;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class HudCoords extends Gui{

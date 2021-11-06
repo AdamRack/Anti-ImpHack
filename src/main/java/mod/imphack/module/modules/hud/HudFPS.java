@@ -27,7 +27,7 @@ public class HudFPS extends Gui{
 				if (((BooleanSetting) Main.settingManager.getSettingByName(Main.moduleManager.getModule("Hud"),
 						"FPS")).enabled) {
 					
-					String fps = String.format("FPS: " + mc.getDebugFPS());
+					String fps = "FPS: " + Minecraft.getDebugFPS();
 					boolean isChatOpen = mc.currentScreen instanceof GuiChat;
 					
 					int heightFPS = isChatOpen ? sr.getScaledHeight() - 35  : sr.getScaledHeight() - 20;

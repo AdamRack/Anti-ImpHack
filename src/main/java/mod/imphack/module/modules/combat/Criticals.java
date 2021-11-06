@@ -10,7 +10,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.network.play.client.CPacketUseEntity;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Criticals extends Module {
 

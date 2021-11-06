@@ -1,17 +1,16 @@
 package mod.imphack.mixin;
 
-import javax.annotation.Nullable;
-
+import mod.imphack.ui.ImpHackSplashScreen;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraft.client.gui.GuiScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import mod.imphack.ui.ImpHackSplashScreen;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.GuiScreen;
+import javax.annotation.Nullable;
 
 @Mixin(value = { Minecraft.class })
 public abstract class ImpHackMixinMinecraft {

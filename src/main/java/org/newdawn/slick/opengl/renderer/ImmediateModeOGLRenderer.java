@@ -1,13 +1,13 @@
 package org.newdawn.slick.opengl.renderer;
 
+import org.lwjgl.opengl.EXTSecondaryColor;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GLContext;
+
 import java.nio.ByteBuffer;
 import java.nio.DoubleBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-
-import org.lwjgl.opengl.EXTSecondaryColor;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GLContext;
 
 /**
  * The default OpenGL renderer, uses immediate mode for everything

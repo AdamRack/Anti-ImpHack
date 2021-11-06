@@ -5,25 +5,22 @@ import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.exceptions.AuthenticationUnavailableException;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.Field;
 import java.net.Proxy;
 
 public class LoginUtils{
 	
-	public static String session = isNotObfuscated() ? "session" : "field_71449_j";
+	public static final String session = isNotObfuscated() ? "session" : "field_71449_j";
 	
     public static String loginAlt(String email, String password) {
         YggdrasilAuthenticationService authenticationService = new YggdrasilAuthenticationService(Proxy.NO_PROXY, "");
         YggdrasilUserAuthentication authentication = (YggdrasilUserAuthentication) authenticationService.createUserAuthentication(Agent.MINECRAFT);
         authentication.setUsername(email);
         authentication.setPassword(password);
-        String displayText = null;
+        String displayText;
 
         try {
             authentication.logIn();   

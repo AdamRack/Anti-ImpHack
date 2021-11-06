@@ -1,5 +1,6 @@
 package mod.imphack.module.modules.utilities;
 
+import mod.imphack.container.ImpHackInventory;
 import mod.imphack.module.Category;
 import mod.imphack.module.Module;
 import mod.imphack.setting.settings.BooleanSetting;
@@ -40,7 +41,7 @@ public class AutoFish extends Module {
 					if (stack.getItem().isDamaged(stack) && mc.player.getHeldItemMainhand() != stack) {
 						for (Map.Entry<?, ?> me : EnchantmentHelper.getEnchantments(stack).entrySet()) {
 							if (((Enchantment) me.getKey()).getName().equalsIgnoreCase("enchantment.mending")) {
-								inv.putInOffhand(stack);
+								ImpHackInventory.putInOffhand(stack);
 								break;
 							}
 						}

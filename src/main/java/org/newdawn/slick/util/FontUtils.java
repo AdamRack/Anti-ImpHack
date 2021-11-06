@@ -1,9 +1,9 @@
 package org.newdawn.slick.util;
 
-import java.awt.Graphics2D;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
+
+import java.awt.*;
 
 /**
  * Simple utility class to support justified text

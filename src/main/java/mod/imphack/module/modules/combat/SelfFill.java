@@ -7,11 +7,7 @@ import mod.imphack.setting.settings.FloatSetting;
 import mod.imphack.setting.settings.IntSetting;
 import mod.imphack.setting.settings.ModeSetting;
 import mod.imphack.util.BlockUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockAir;
-import net.minecraft.block.BlockEnderChest;
-import net.minecraft.block.BlockLiquid;
-import net.minecraft.block.BlockObsidian;
+import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemBlock;
@@ -29,14 +25,14 @@ import net.minecraft.util.math.Vec3d;
 public class SelfFill extends Module {
 
 	
-	public ModeSetting mode = new ModeSetting("mode", this, "instant", "instant", "jump", "tp");
-	public BooleanSetting autoSwitch = new BooleanSetting("autoSwitch", this, true);
-	public BooleanSetting rotations = new BooleanSetting("rotate", this, false);
-	public FloatSetting offset = new FloatSetting("offset", this, 4.0f);
-	public IntSetting rubberbandDelay = new IntSetting("delay", this, 13);
-	public BooleanSetting autoDisable = new BooleanSetting("autoDisable", this, true);
+	public final ModeSetting mode = new ModeSetting("mode", this, "instant", "instant", "jump", "tp");
+	public final BooleanSetting autoSwitch = new BooleanSetting("autoSwitch", this, true);
+	public final BooleanSetting rotations = new BooleanSetting("rotate", this, false);
+	public final FloatSetting offset = new FloatSetting("offset", this, 4.0f);
+	public final IntSetting rubberbandDelay = new IntSetting("delay", this, 13);
+	public final BooleanSetting autoDisable = new BooleanSetting("autoDisable", this, true);
 	
-	private double[] jump = {0.41999998688698D, 0.7531999805211997D, 1.00133597911214D, 1.16610926093821D};
+	private final double[] jump = {0.41999998688698D, 0.7531999805211997D, 1.00133597911214D, 1.16610926093821D};
 	private boolean placed;
 	private boolean jumped;
 	private BlockPos startPos;
@@ -132,24 +128,25 @@ public class SelfFill extends Module {
         return false;
     }
 	
-    private boolean placeBlock(BlockPos pos, boolean rotate, boolean packet, boolean isSneaking) {
+    private
+	void placeBlock(BlockPos pos, boolean rotate, boolean packet, boolean isSneaking) {
         Block block = mc.world.getBlockState(pos).getBlock();
 
         if (!(block instanceof BlockAir) && !(block instanceof BlockLiquid)) {
-            return false;
+            return;
         }
 
         EnumFacing side = BlockUtil.getPlaceableSide(pos);
 
         if (side == null){
-            return false;
+            return;
         }
 
         BlockPos neighbour = pos.offset(side);
         EnumFacing opposite = side.getOpposite();
 
-        if (!BlockUtil.canBeClicked(neighbour)) {
-            return false;
+        if (BlockUtil.canBeClicked(neighbour)) {
+            return;
         }
 
         Vec3d hitVec = new Vec3d(neighbour).add(0.5, 0.5, 0.5).add(new Vec3d(opposite.getDirectionVec()).scale(0.5));
@@ -175,8 +172,7 @@ public class SelfFill extends Module {
         mc.player.swingArm(EnumHand.MAIN_HAND);
         mc.rightClickDelayTimer = 4;
 
-        return true;
-    }
+	}
 
     private int findBlockSlot() {
         int slot = -1;

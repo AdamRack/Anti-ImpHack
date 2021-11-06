@@ -1,13 +1,13 @@
 package org.newdawn.slick.opengl;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.IntBuffer;
-
 import org.lwjgl.BufferUtils;
 import org.newdawn.slick.opengl.renderer.Renderer;
 import org.newdawn.slick.opengl.renderer.SGL;
 import org.newdawn.slick.util.Log;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.IntBuffer;
 
 /**
  * A texture to be bound within JOGL. This object is responsible for 

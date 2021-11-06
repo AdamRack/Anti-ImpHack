@@ -1,18 +1,5 @@
 package mod.imphack.module.modules.render;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-
-import org.lwjgl.opengl.GL11;
-
 import me.zero.alpine.listener.EventHandler;
 import me.zero.alpine.listener.Listener;
 import mod.imphack.Main;
@@ -49,13 +36,21 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.lwjgl.opengl.GL11;
 
+import java.awt.*;
+import java.util.List;
+import java.util.*;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+@SuppressWarnings ("CanBeFinal")
 public class Search extends Module {
 
-	SearchBlockSelectorSetting blocks = new SearchBlockSelectorSetting("Select Blocks", this, true, new ArrayList<>(),
+	final SearchBlockSelectorSetting blocks = new SearchBlockSelectorSetting("Select Blocks", this, true, new ArrayList<>(),
 			new HashMap<>());
 	BooleanSetting outline = new BooleanSetting("Outline", this, true);
-	BooleanSetting tracer = new BooleanSetting("Tracer", this, true);
+	final BooleanSetting tracer = new BooleanSetting("Tracer", this, true);
 
 	public Search() {
 		super("Search", "Highlights Blocks", Category.RENDER);
@@ -74,7 +69,7 @@ public class Search extends Module {
 
 	/* Map of Blocks to be searched */
 	private final ReadWriteLock search_lock;
-	public Map<Block, Integer> to_search;
+	public final Map<Block, Integer> to_search;
 
 	/* List of blocks that have been selected for highlighting */
 	private ReadWriteLock targets_lock;
@@ -94,6 +89,7 @@ public class Search extends Module {
 
 				int color;
 				color = new Color(blocks.getColor(b)).getRGB();
+				assert this.to_search != null;
 				this.to_search.put(b, color);
 			}
 	}

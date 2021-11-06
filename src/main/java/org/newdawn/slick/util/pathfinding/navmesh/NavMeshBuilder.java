@@ -1,10 +1,10 @@
 package org.newdawn.slick.util.pathfinding.navmesh;
 
-import java.util.ArrayList;
-
 import org.newdawn.slick.util.pathfinding.Mover;
 import org.newdawn.slick.util.pathfinding.PathFindingContext;
 import org.newdawn.slick.util.pathfinding.TileBasedMap;
+
+import java.util.ArrayList;
 
 /**
  * The builder responsible for converting a tile based map into

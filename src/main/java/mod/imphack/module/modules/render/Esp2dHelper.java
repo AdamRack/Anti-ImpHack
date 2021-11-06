@@ -1,7 +1,5 @@
 package mod.imphack.module.modules.render;
 
-import org.lwjgl.opengl.GL11;
-
 import mod.imphack.Main;
 import mod.imphack.event.events.ImpHackEventRender;
 import mod.imphack.module.Category;
@@ -14,8 +12,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.fml.common.Mod.EventHandler;
+import org.lwjgl.opengl.GL11;
 
 public class Esp2dHelper extends Module {
 	

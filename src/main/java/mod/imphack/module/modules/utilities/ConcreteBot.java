@@ -1,5 +1,6 @@
 package mod.imphack.module.modules.utilities;
 
+import mod.imphack.container.ImpHackInventory;
 import mod.imphack.module.Category;
 import mod.imphack.module.Module;
 import mod.imphack.setting.settings.IntSetting;
@@ -72,7 +73,7 @@ public class ConcreteBot extends Module {
 				Item block = Item.getItemFromBlock(Blocks.CONCRETE_POWDER);
 
 				if (stack.getDisplayName().equals(new ItemStack(block).getDisplayName())) {
-					inv.putInOffhand(stack);
+					ImpHackInventory.putInOffhand(stack);
 					break;
 				}
 			}

@@ -1,7 +1,6 @@
 package mod.imphack.event;
 
 import me.zero.alpine.event.type.Cancellable;
-import mod.imphack.event.events.ImpHackEventStageable.EventStage;
 import net.minecraft.client.Minecraft;
 
 public class ImpHackEventCancellable extends Cancellable  {

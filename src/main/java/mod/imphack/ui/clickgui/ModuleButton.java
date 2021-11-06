@@ -1,10 +1,9 @@
 package mod.imphack.ui.clickgui;
 
-import java.awt.Color;
-import java.awt.Font;
-
 import mod.imphack.module.Module;
 import net.minecraft.client.Minecraft;
+
+import java.awt.*;
 
 public class ModuleButton {
 	public final int x;

@@ -1,19 +1,16 @@
 package mod.imphack.util.font;
 
-import static org.lwjgl.opengl.GL11.glDisable;
-import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-
-import java.awt.Font;
-
-import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.UnicodeFont;
-import org.newdawn.slick.font.effects.ColorEffect;
-
 import mod.imphack.Main;
 import mod.imphack.util.render.ColorUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.StringUtils;
+import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.font.effects.ColorEffect;
+
+import java.awt.*;
+
+import static org.lwjgl.opengl.GL11.*;
 
 public class FontUtils {
 
@@ -22,16 +19,14 @@ public class FontUtils {
 	private final UnicodeFont unicodeFont;
 	private final int[] colorCodes = new int[32];
 
-	private int fontType, size;
-	private String fontName;
+	private final float kerning;
 
-	private float kerning;
-
-	public static float drawStringWithShadow(boolean customFont, String text, int x, int y, ColorUtil color) {
+	public static
+	void drawStringWithShadow(boolean customFont, String text, int x, int y, ColorUtil color) {
 		if (customFont) {
-			return Main.customFontRenderer.drawStringWithShadow(text, x, y, color);
+			Main.customFontRenderer.drawStringWithShadow(text, x, y, color);
 		} else {
-			return mc.fontRenderer.drawStringWithShadow(text, x, y, color.getRGB());
+			mc.fontRenderer.drawStringWithShadow(text, x, y, color.getRGB());
 		}
 	}
 
@@ -56,9 +51,6 @@ public class FontUtils {
 	}
 
 	public FontUtils(String fontName, int fontType, int size, float kerning) {
-		this.fontName = fontName;
-		this.fontType = fontType;
-		this.size = size;
 
 		this.unicodeFont = new UnicodeFont(new Font(fontName, fontType, size));
 		this.kerning = kerning;
@@ -76,7 +68,7 @@ public class FontUtils {
 			int shadow = (i >> 3 & 1) * 85;
 			int red = (i >> 2 & 1) * 170 + shadow;
 			int green = (i >> 1 & 1) * 170 + shadow;
-			int blue = (i >> 0 & 1) * 170 + shadow;
+			int blue = (i & 1) * 170 + shadow;
 
 			if (i == 6) {
 				red += 85;
@@ -132,8 +124,7 @@ public class FontUtils {
 				if (codeIndex < 0)
 					continue;
 
-				int col = this.colorCodes[codeIndex];
-				currentColor = col;
+				currentColor = this.colorCodes[codeIndex];
 			}
 
 			index++;

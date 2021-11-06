@@ -1,8 +1,5 @@
 package mod.imphack.util;
 
-import java.util.Arrays;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
@@ -16,8 +13,11 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class BlockUtil {
-	static Minecraft mc = Minecraft.getMinecraft();
+	static final Minecraft mc;
 	public static final List blackList;
 	public static final List shulkerList;
 
@@ -100,7 +100,7 @@ public class BlockUtil {
 	
 	public static boolean canBeClicked(BlockPos pos)
 	{
-		return getBlock(pos).canCollideCheck(getState(pos), false);
+		return !getBlock(pos).canCollideCheck(getState(pos), false);
 	}
 	public static void faceVectorPacketInstant(Vec3d vec){
 		float[] rotations = getNeededRotations(vec);

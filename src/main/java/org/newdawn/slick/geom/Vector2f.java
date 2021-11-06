@@ -1,8 +1,8 @@
 package org.newdawn.slick.geom;
 
-import java.io.Serializable;
-
 import org.newdawn.slick.util.FastTrig;
+
+import java.io.Serializable;
 
 /**
  * A two dimensional vector
