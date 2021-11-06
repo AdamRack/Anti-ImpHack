@@ -9,15 +9,14 @@ import org.lwjgl.opengl.GL11;
 import mod.imphack.Main;
 import mod.imphack.util.render.RenderUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiWorldSelection;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 
 public class ImpHackSplashScreen extends GuiScreen {
 
@@ -28,8 +27,18 @@ public class ImpHackSplashScreen extends GuiScreen {
 	private int x;
 	private int y;
 
+	private float tempSound;
+
+	@Override
+	public void onGuiClosed() {
+		mc.gameSettings.setSoundLevel(SoundCategory.MUSIC, tempSound);
+	}
+
 	@Override
 	public void initGui() {
+		tempSound = mc.gameSettings.getSoundLevel(SoundCategory.MUSIC);
+		mc.gameSettings.setSoundLevel(SoundCategory.MUSIC, 0.0f);
+
 		backgrounds.add(new ResourceLocation("textures/1.png"));
 		backgrounds.add(new ResourceLocation("textures/2.png"));
 		backgrounds.add(new ResourceLocation("textures/3.png"));
@@ -109,8 +118,6 @@ public class ImpHackSplashScreen extends GuiScreen {
 	}
 
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		if (mc.soundHandler.isSoundPlaying(PositionedSoundRecord.getMasterRecord(SoundEvents.MUSIC_MENU, 1.0f)))
-			mc.soundHandler.stopSound(PositionedSoundRecord.getMasterRecord(SoundEvents.MUSIC_MENU, 1.0f));
 		this.x = this.width / 32;
 		this.y = this.height / 32 + 10;
 		GlStateManager.enableTexture2D();
