@@ -23,7 +23,7 @@ public class HudWatermark {
 			if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT) {
 				if (((BooleanSetting) Main.settingManager.getSettingByName(Main.moduleManager.getModule("Hud"),
 						"Watermark")).enabled)
-					mc.fontRenderer.drawStringWithShadow("ImpHack Revised " + Reference.DEVVERSION, 2, 1, 0xa600ff);
+					mc.fontRenderer.drawStringWithShadow("ImpHack Revised " + Reference.DEV_VERSION, 2, 1, 0xa600ff);
 
 			}
 		}
