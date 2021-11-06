@@ -28,7 +28,7 @@ public class Esp2dHelper extends Module {
 	 public void render(ImpHackEventRender event) {
 			Minecraft mc = Minecraft.getMinecraft();
 	    	//add mobs and items to 2dEsp
-		  if (Main.moduleManager.getModule("Esp's") != null && Main.moduleManager.getModule("Esp's").isToggled() && ((Esp)Main.moduleManager.getModule("Esp's")).entityMode.is("2dEsp")) {
+		  if (Main.moduleManager.getModule("Esp's") != null && Main.moduleManager.getModule("Esp's").isToggled() && ((Esp)Main.moduleManager.getModule("Esp's")).entityMode.is("outlineEsp")) {
 	       	 if ((mc.getRenderManager()).options == null)
 	  		      return; 
 	       	 float viewerYaw = (mc.getRenderManager()).playerViewY;

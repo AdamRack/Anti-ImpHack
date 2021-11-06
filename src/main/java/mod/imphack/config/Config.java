@@ -41,14 +41,13 @@ public class Config {
 
 		for (Module mod : Main.moduleManager.modules) {
 			if (mod.getName().equalsIgnoreCase("ClickGUI")) {
-				if (mod.getName().equalsIgnoreCase("Esp2dHelper")) {
 
 				save.add("module:" + mod.getName() + ":false:" + mod.getKey());
 			} else {
 				save.add("module:" + mod.getName() + ":" + mod.isToggled() + ":" + mod.getKey());
 			}
 		}
-		}
+	
 
 		for (Module mod : Main.moduleManager.modules) {
 			for (Setting setting : mod.settings) {
