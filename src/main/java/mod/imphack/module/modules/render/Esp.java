@@ -38,7 +38,6 @@ public class Esp extends Module {
 	public final ModeSetting entityMode = new ModeSetting("entity", this, "box", "box", "highlight", "box+highlight", "outline", "outlineEsp2D", "glow", "off");
 	public final ModeSetting storage = new ModeSetting("storage", this, "outline", "outline", "fill", "both", "off");
 	public final ModeSetting crystalMode = new ModeSetting("crystal", this, "pretty", "pretty", "glow", "off");
-
 	public final BooleanSetting mob = new BooleanSetting("mob", this, false);
 	public final BooleanSetting item = new BooleanSetting("item", this, true);
 	public final IntSetting range = new IntSetting("range", this, 100);
@@ -54,7 +53,7 @@ public class Esp extends Module {
 	public final ColorSetting otherColor = new ColorSetting("other", this, new ColorUtil(150, 150, 150, 50));
 
 	public Esp() {
-		super("ESP", "draws esp around players and storage blocks.", Category.RENDER);
+		super("Esp's", "draws esp around players and storage blocks.", Category.RENDER);
 		this.addSetting(entityMode, storage, crystalMode, mob, item, chams, range, lineWidth, playerColor,
 				passiveMobColor, hostileMobColor, itemColor, chestColor, enderChestColor, shulkerBoxColor, otherColor);
 	}
@@ -135,7 +134,6 @@ public class Esp extends Module {
             if (item.isEnabled() && !entityMode.is("off") && !entityMode.is("glow") && entity instanceof EntityItem){
             	RenderUtil.drawBoundingBox(entity.getEntityBoundingBox(), 2, mainIntColor);
             }
-            // 2d esp is under me/srgantmoomoo/postman/api/util/render/Esp2dHelper
         });
         
         if (storage.is("outline")) {
