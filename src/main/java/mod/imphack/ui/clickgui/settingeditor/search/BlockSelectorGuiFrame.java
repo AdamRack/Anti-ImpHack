@@ -1,14 +1,15 @@
 package mod.imphack.ui.clickgui.settingeditor.search;
 
+import java.util.ArrayList;
+
+import org.apache.commons.lang3.StringUtils;
+import org.lwjgl.opengl.GL11;
+
 import mod.imphack.Main;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import org.apache.commons.lang3.StringUtils;
-import org.lwjgl.opengl.GL11;
-
-import java.util.ArrayList;
 
 public class BlockSelectorGuiFrame {
 	final int x;
@@ -36,7 +37,7 @@ public class BlockSelectorGuiFrame {
 
 		offsetY += 20;
 
-		controller.blocks = new ArrayList <>();
+		controller.blocks = new ArrayList<>();
 
 		if (Main.settingManager.getSettingByName(Main.moduleManager.getModule("Search"), "Select Blocks") != null
 				&& controller.blocks.isEmpty()) {
@@ -44,8 +45,8 @@ public class BlockSelectorGuiFrame {
 				for (Block b : ForgeRegistries.BLOCKS.getValuesCollection()) {
 
 					controller.blocks.add(new BlockButton(
-							Main.settingManager
-									.getSettingByName(Main.moduleManager.getModule("Search"), "Select Blocks").parent,
+							Main.settingManager.getSettingByName(Main.moduleManager.getModule("Search"),
+									"Select Blocks").parent,
 							this.x + 2, this.y + offsetY + controller.scrollOffset, this, b));
 					offsetY += 20;
 				}
@@ -53,8 +54,8 @@ public class BlockSelectorGuiFrame {
 				for (Block b : ForgeRegistries.BLOCKS.getValuesCollection()) {
 					if (StringUtils.containsIgnoreCase(b.getLocalizedName(), searchText)) {
 						controller.blocks.add(new BlockButton(
-								Main.settingManager.getSettingByName(
-										Main.moduleManager.getModule("Search"), "Select Blocks").parent,
+								Main.settingManager.getSettingByName(Main.moduleManager.getModule("Search"),
+										"Select Blocks").parent,
 								this.x + 2, this.y + offsetY + controller.scrollOffset, this, b));
 						offsetY += 20;
 					}
@@ -88,7 +89,7 @@ public class BlockSelectorGuiFrame {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glShadeModel(GL11.GL_SMOOTH);
-		GL11.glLineWidth(5);
+		GL11.glLineWidth(1);
 
 		GL11.glColor4f(0.0f, 0.0f, 0.0f, 0.4f);
 		GL11.glBegin(GL11.GL_QUADS);
@@ -128,13 +129,13 @@ public class BlockSelectorGuiFrame {
 			if (b != null && b.y + b.height >= 0 && b.y <= mc.displayHeight)
 				onScreen.add(b);
 			else {
-                assert b != null;
-                if (b.textFieldRed != null && b.textFieldGreen != null && b.textFieldBlue != null) {
-                    b.textFieldRed.setFocused(false);
-                    b.textFieldGreen.setFocused(false);
-                    b.textFieldBlue.setFocused(false);
-                }
-            }
+				assert b != null;
+				if (b.textFieldRed != null && b.textFieldGreen != null && b.textFieldBlue != null) {
+					b.textFieldRed.setFocused(false);
+					b.textFieldGreen.setFocused(false);
+					b.textFieldBlue.setFocused(false);
+				}
+			}
 		}
 
 		for (BlockButton b : onScreen) {

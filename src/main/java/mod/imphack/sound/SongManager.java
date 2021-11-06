@@ -9,9 +9,9 @@ import java.util.Random;
 
 public class SongManager {
 
-	private final List<ISound> songs = Collections.singletonList(ICopeBrickZebra.sound);
+	private final List<ISound> songs = Arrays.asList(ICopeBrickZebra.sound, Project206.sound);
 
-	private final ISound menuSong;
+	private ISound menuSong;
 	private ISound currentSong;
 
 	public SongManager() {
@@ -20,6 +20,7 @@ public class SongManager {
 	}
 
 	public ISound getMenuSong() {
+		this.menuSong = this.getRandomSong();
 		return this.menuSong;
 	}
 

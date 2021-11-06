@@ -6,6 +6,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -21,8 +23,18 @@ public class ImpHackSplashScreen extends GuiScreen {
 	private int x;
 	private int y;
 
+	private float tempSound;
+
+	@Override
+	public void onGuiClosed() {
+		mc.gameSettings.setSoundLevel(SoundCategory.MUSIC, tempSound);
+	}
+
 	@Override
 	public void initGui() {
+		tempSound = mc.gameSettings.getSoundLevel(SoundCategory.MUSIC);
+		mc.gameSettings.setSoundLevel(SoundCategory.MUSIC, 0.0f);
+
 		backgrounds.add(new ResourceLocation("textures/1.png"));
 		backgrounds.add(new ResourceLocation("textures/2.png"));
 		backgrounds.add(new ResourceLocation("textures/3.png"));
@@ -143,6 +155,7 @@ public class ImpHackSplashScreen extends GuiScreen {
 	}
 
 	public void playMusic() {
+		mc.soundHandler.stopSounds();
 		if (!mc.soundHandler.isSoundPlaying(Main.songManager.getMenuSong())) {
 			mc.soundHandler.playSound(Main.songManager.getMenuSong());
 		}
