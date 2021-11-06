@@ -35,12 +35,7 @@ import net.minecraft.util.math.BlockPos;
 public class Esp extends Module {
 
 	public final BooleanSetting chams = new BooleanSetting("walls", this, false);
-<<<<<<< HEAD
 	public final ModeSetting entityMode = new ModeSetting("entity", this, "box", "box", "highlight", "box+highlight", "outline", "outlineEsp", "glow", "off");
-=======
-	public final ModeSetting entityMode = new ModeSetting("entity", this, "box", "box", "highlight", "box+highlight",
-			"outline", "2dEsp", "glow", "off");
->>>>>>> branch 'master' of https://github.com/Supergamer5465/ImpHack-Revised.git
 	public final ModeSetting storage = new ModeSetting("storage", this, "outline", "outline", "fill", "both", "off");
 	public final ModeSetting crystalMode = new ModeSetting("crystal", this, "pretty", "pretty", "glow", "off");
 
