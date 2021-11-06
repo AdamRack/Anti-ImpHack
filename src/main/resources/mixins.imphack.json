@@ -21,6 +21,7 @@
     "ImpHackMixinRenderPlayer",
     "ImpHackMixinVisGraph",
     "ImpHackMixinWorld",
-    "MixinRenderLivingBase"
+    "ImpHackMixinRenderLivingBase",
+    "ImpHackMixinItemRenderer"
   ]
 }

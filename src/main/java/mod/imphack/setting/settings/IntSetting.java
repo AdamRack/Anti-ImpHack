@@ -1,7 +1,10 @@
 package mod.imphack.setting.settings;
 
+import java.util.function.Predicate;
+
 import mod.imphack.Main;
 import mod.imphack.module.Module;
+import mod.imphack.module.modules.render.Nametags;
 import mod.imphack.setting.Setting;
 
 public class IntSetting extends Setting {
@@ -12,6 +15,10 @@ public class IntSetting extends Setting {
 		this.parent = parent;
 		if (!Main.configLoaded)
 			this.value = value;
+	}
+
+	public IntSetting(String string, int i, Nametags nametags, Predicate<Integer> shown) {
+		// TODO Auto-generated constructor stub
 	}
 
 	public int getValue() {

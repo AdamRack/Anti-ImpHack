@@ -36,7 +36,7 @@ public class ModuleManager {
 
 		// combat
 		addModule(new KillAura()); // TODO Add Switch and Sword only
-		addModule(new CrystalAura());// TODO BROKEN WILL FIX TMRW
+		addModule(new CrystalAura());
 		addModule(new Surround());// TODO fix surround its broken
 		addModule(new AutoTotem());
 		addModule(new Anchor());
@@ -75,7 +75,7 @@ public class ModuleManager {
 		addModule(new FullBright());
 		addModule(new Freecam());// TODO fix entity dismounting with shift in freecam/make it baritone
 		addModule(new BlockOverlay());// compatible, fix character skin, fix desync and glitch on disable
-		addModule(new Nametags());
+		//addModule(new Nametags());
 		addModule(new ExtraTab());
 		addModule(new HoleEsp());
 		addModule(new Esp());

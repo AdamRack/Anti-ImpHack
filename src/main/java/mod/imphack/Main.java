@@ -45,6 +45,9 @@ public class Main {
 	public static final HudArmor hudArmor = new HudArmor();
 	public static final HudWelcome hudWelcome = new HudWelcome();
 
+	
+	
+
 	public static CommandManager cmdManager;
 	public static SettingManager settingManager;
 	public static ImpHackEventManager eventManager;
