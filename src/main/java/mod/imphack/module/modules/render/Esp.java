@@ -1,5 +1,8 @@
 package mod.imphack.module.modules.render;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import mod.imphack.event.events.ImpHackEventRender;
 import mod.imphack.module.Category;
 import mod.imphack.module.Module;
@@ -19,24 +22,29 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.*;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.tileentity.TileEntityDispenser;
+import net.minecraft.tileentity.TileEntityDropper;
+import net.minecraft.tileentity.TileEntityEnderChest;
+import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.tileentity.TileEntityHopper;
+import net.minecraft.tileentity.TileEntityShulkerBox;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class Esp extends Module {
-	
+
 	public final BooleanSetting chams = new BooleanSetting("walls", this, false);
-	public final ModeSetting entityMode = new ModeSetting("entity", this, "box", "box", "highlight", "box+highlight", "outline", "2dEsp", "glow", "off");
+	public final ModeSetting entityMode = new ModeSetting("entity", this, "box", "box", "highlight", "box+highlight",
+			"outline", "2dEsp", "glow", "off");
 	public final ModeSetting storage = new ModeSetting("storage", this, "outline", "outline", "fill", "both", "off");
 	public final ModeSetting crystalMode = new ModeSetting("crystal", this, "pretty", "pretty", "glow", "off");
-	
+
 	public final BooleanSetting mob = new BooleanSetting("mob", this, false);
 	public final BooleanSetting item = new BooleanSetting("item", this, true);
 	public final IntSetting range = new IntSetting("range", this, 100);
 	public final IntSetting lineWidth = new IntSetting("lineWidth", this, 3);
-	
+
 	public final ColorSetting playerColor = new ColorSetting("player", this, new ColorUtil(0, 121, 194, 100));
 	public final ColorSetting hostileMobColor = new ColorSetting("hostileMob", this, new ColorUtil(255, 0, 0, 100));
 	public final ColorSetting passiveMobColor = new ColorSetting("passiveMob", this, new ColorUtil(0, 255, 0, 100));
@@ -45,12 +53,13 @@ public class Esp extends Module {
 	public final ColorSetting enderChestColor = new ColorSetting("enderChest", this, new ColorUtil(255, 70, 200, 50));
 	public final ColorSetting shulkerBoxColor = new ColorSetting("shulkerBox", this, new ColorUtil(255, 182, 193, 50));
 	public final ColorSetting otherColor = new ColorSetting("other", this, new ColorUtil(150, 150, 150, 50));
-	
+
 	public Esp() {
-		super ("Esp's", "draws esp around players and storage blocks.", Category.RENDER);
-		this.addSetting(entityMode, storage, crystalMode, mob, item, chams, range, lineWidth, playerColor, passiveMobColor, hostileMobColor, itemColor, chestColor
-				, enderChestColor, shulkerBoxColor, otherColor);
+		super("ESP", "draws esp around players and storage blocks.", Category.RENDER);
+		this.addSetting(entityMode, storage, crystalMode, mob, item, chams, range, lineWidth, playerColor,
+				passiveMobColor, hostileMobColor, itemColor, chestColor, enderChestColor, shulkerBoxColor, otherColor);
 	}
+
 	private static final Minecraft mc = Minecraft.getMinecraft();
 
 	List<Entity> entities;
@@ -210,66 +219,64 @@ public class Esp extends Module {
     
     private void drawStorageBox(BlockPos blockPos, ColorUtil color) {
 		RenderUtil.drawStorageBox(blockPos, 0.88, color, Geometry.Quad.ALL);
-    }
-    
-    private void drawBox(BlockPos blockPos, ColorUtil color) {
+	}
+
+	private void drawBox(BlockPos blockPos, ColorUtil color) {
 		RenderUtil.drawBox(blockPos, 1, color, Geometry.Quad.ALL);
-   }
+	}
 
-    public void onDisable() {
-        if (entities != mc.player) {
-        	entities.forEach(p -> p.setGlowing(false));
-        }
-    }
+	public void onDisable() {
+		if (entities != mc.player) {
+			entities.forEach(p -> p.setGlowing(false));
+		}
+	}
 
-    private void defineEntityColors(Entity entity) {
-        if (entity instanceof EntityPlayer) {
-             playerC = new ColorUtil(playerColor.getValue());
-             playerCOutline = new ColorUtil(playerColor.getValue(), 255);
-        }
+	private void defineEntityColors(Entity entity) {
+		if (entity instanceof EntityPlayer) {
+			playerC = new ColorUtil(playerColor.getValue());
+			playerCOutline = new ColorUtil(playerColor.getValue(), 255);
+		}
 
-        if (entity instanceof EntityMob) {
-        	hostileMobC = new ColorUtil(hostileMobColor.getValue());
-        }
-        else if (entity instanceof EntityAnimal) {
-        	passiveMobC = new ColorUtil(passiveMobColor.getValue());
-        }
-        else {
-        	passiveMobC = new ColorUtil(passiveMobColor.getValue());
-        }
+		if (entity instanceof EntityMob) {
+			hostileMobC = new ColorUtil(hostileMobColor.getValue());
+		} else if (entity instanceof EntityAnimal) {
+			passiveMobC = new ColorUtil(passiveMobColor.getValue());
+		} else {
+			passiveMobC = new ColorUtil(passiveMobColor.getValue());
+		}
 
-        if (entity instanceof EntitySlime) {
-        	hostileMobC = new ColorUtil(hostileMobColor.getValue());
-        }
+		if (entity instanceof EntitySlime) {
+			hostileMobC = new ColorUtil(hostileMobColor.getValue());
+		}
 
-        if (entity != null) {
-            mainIntColor = new ColorUtil(itemColor.getValue());
-        }
-    }
-    //boolean range check and opacity gradient
+		if (entity != null) {
+			mainIntColor = new ColorUtil(itemColor.getValue());
+		}
+	}
+	// boolean range check and opacity gradient
 
-    private boolean rangeTileCheck(TileEntity tileEntity) {
-        //the range value has to be squared for this
-        if (tileEntity.getDistanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) > range.getValue() * range.getValue()){
-            return false;
-        }
+	private boolean rangeTileCheck(TileEntity tileEntity) {
+		// the range value has to be squared for this
+		if (tileEntity.getDistanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) > range.getValue()
+				* range.getValue()) {
+			return false;
+		}
 
-        if (tileEntity.getDistanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) >= 32400){
-            opacityGradient = 50;
-        }
-        else if (tileEntity.getDistanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) >= 16900 && tileEntity.getDistanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) < 32400){
-            opacityGradient = 100;
-        }
-        else if (tileEntity.getDistanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) >= 6400 && tileEntity.getDistanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) < 16900){
-            opacityGradient = 150;
-        }
-        else if (tileEntity.getDistanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) >= 900 && tileEntity.getDistanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) < 6400){
-            opacityGradient = 200;
-        }
-        else {
-            opacityGradient = 255;
-        }
+		if (tileEntity.getDistanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) >= 32400) {
+			opacityGradient = 50;
+		} else if (tileEntity.getDistanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) >= 16900
+				&& tileEntity.getDistanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) < 32400) {
+			opacityGradient = 100;
+		} else if (tileEntity.getDistanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) >= 6400
+				&& tileEntity.getDistanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) < 16900) {
+			opacityGradient = 150;
+		} else if (tileEntity.getDistanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) >= 900
+				&& tileEntity.getDistanceSq(mc.player.posX, mc.player.posY, mc.player.posZ) < 6400) {
+			opacityGradient = 200;
+		} else {
+			opacityGradient = 255;
+		}
 
-        return true;
-    }
+		return true;
+	}
 }
