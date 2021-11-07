@@ -35,11 +35,9 @@ import net.minecraft.util.math.BlockPos;
 public class Esp extends Module {
 
 	public final BooleanSetting chams = new BooleanSetting("walls", this, false);
-	public final ModeSetting entityMode = new ModeSetting("entity", this, "box", "box", "highlight", "box+highlight",
-			"outline", "2dEsp", "glow", "off");
+	public final ModeSetting entityMode = new ModeSetting("entity", this, "box", "box", "highlight", "box+highlight", "outline", "outlineEsp2D", "glow", "off");
 	public final ModeSetting storage = new ModeSetting("storage", this, "outline", "outline", "fill", "both", "off");
 	public final ModeSetting crystalMode = new ModeSetting("crystal", this, "pretty", "pretty", "glow", "off");
-
 	public final BooleanSetting mob = new BooleanSetting("mob", this, false);
 	public final BooleanSetting item = new BooleanSetting("item", this, true);
 	public final IntSetting range = new IntSetting("range", this, 100);
@@ -55,7 +53,7 @@ public class Esp extends Module {
 	public final ColorSetting otherColor = new ColorSetting("other", this, new ColorUtil(150, 150, 150, 50));
 
 	public Esp() {
-		super("ESP", "draws esp around players and storage blocks.", Category.RENDER);
+		super("Esp's", "draws esp around players and storage blocks.", Category.RENDER);
 		this.addSetting(entityMode, storage, crystalMode, mob, item, chams, range, lineWidth, playerColor,
 				passiveMobColor, hostileMobColor, itemColor, chestColor, enderChestColor, shulkerBoxColor, otherColor);
 	}
@@ -63,178 +61,160 @@ public class Esp extends Module {
 	private static final Minecraft mc = Minecraft.getMinecraft();
 
 	List<Entity> entities;
+	
+    ColorUtil playerC;
+    ColorUtil playerCOutline;
+    ColorUtil hostileMobC;
+    ColorUtil passiveMobC;
+    ColorUtil mainIntColor;
+    ColorUtil containerColor;
+    ColorUtil containerBox;
+    int opacityGradient;
 
-	ColorUtil playerC;
-	ColorUtil playerCOutline;
-	ColorUtil hostileMobC;
-	ColorUtil passiveMobC;
-	ColorUtil mainIntColor;
-	ColorUtil containerColor;
-	ColorUtil containerBox;
-	int opacityGradient;
-
-	@Override
-	public void render(ImpHackEventRender event) {
-
-		entities = mc.world.loadedEntityList.stream().filter(entity -> entity != mc.player)
-				.collect(Collectors.toList());
-		entities.forEach(entity -> {
-			defineEntityColors(entity);
-
-			if (!entityMode.is("glow") && !(entity instanceof EntityEnderCrystal))
-				entity.setGlowing(false);
-			if (entityMode.is("glow") && !mob.isEnabled() && entity instanceof EntityCreature
-					|| entity instanceof EntitySlime || entity instanceof EntityAnimal)
-				entity.setGlowing(false);
-			if (entityMode.is("glow") && !item.isEnabled() && entity instanceof EntityItem)
-				entity.setGlowing(false);
-
-			if (!crystalMode.is("glow") && entity instanceof EntityEnderCrystal)
-				entity.setGlowing(false);
-
-			// players - box
-			if (entityMode.is("box") && entity instanceof EntityPlayer) {
-				RenderUtil.playerEsp(entity.getEntityBoundingBox(), (float) lineWidth.getValue(), playerCOutline);
-			}
-			// player - highlight
-			if (entityMode.is("highlight") && entity instanceof EntityPlayer) {
-				RenderUtil.drawPlayerBox(entity.getEntityBoundingBox(), (float) lineWidth.getValue(), playerC,
-						Geometry.Quad.ALL);
-			}
-			// players - box+highlight
-			if (entityMode.is("box+highlight") && entity instanceof EntityPlayer) {
-				RenderUtil.playerEsp(entity.getEntityBoundingBox(), (float) lineWidth.getValue(), playerCOutline);
-				RenderUtil.drawPlayerBox(entity.getEntityBoundingBox(), (float) lineWidth.getValue(), playerC,
-						Geometry.Quad.ALL);
-			}
-
-			// glow esp's
-			if (entityMode.is("glow") && entity instanceof EntityPlayer) {
-				entity.setGlowing(true);
-			}
-			if (entityMode.is("glow") && mob.isEnabled() && entity instanceof EntityCreature
-					|| entity instanceof EntitySlime) {
-				entity.setGlowing(true);
-			}
-			if (entityMode.is("glow") && mob.isEnabled() && entity instanceof EntityAnimal) {
-				entity.setGlowing(true);
-			}
-			if (entityMode.is("glow") && item.isEnabled() && entity instanceof EntityItem) {
-				entity.setGlowing(true);
-			}
-			if (crystalMode.is("glow") && entity instanceof EntityEnderCrystal) {
-				entity.setGlowing(true);
-			}
-
-			// hostiles and passives - box
-			if (mob.isEnabled() && !entityMode.is("outline") && !entityMode.is("glow") && !entityMode.is("off")) {
-				if (entity instanceof EntityCreature || entity instanceof EntitySlime) {
-					RenderUtil.drawBoundingBox(entity.getEntityBoundingBox(), 2, hostileMobC);
-				}
-			}
-			if (mob.isEnabled() && !entityMode.is("outline") && !entityMode.is("glow") && !entityMode.is("off")) {
-				if (entity instanceof EntityAnimal) {
-					RenderUtil.drawBoundingBox(entity.getEntityBoundingBox(), 2, passiveMobC);
-				}
-			}
-
-			// items
-			if (item.isEnabled() && !entityMode.is("off") && !entityMode.is("glow") && entity instanceof EntityItem) {
-				RenderUtil.drawBoundingBox(entity.getEntityBoundingBox(), 2, mainIntColor);
-			}
-			// 2d esp is under me/srgantmoomoo/postman/api/util/render/Esp2dHelper
-		});
-
-		if (storage.is("outline")) {
-			mc.world.loadedTileEntityList.stream().filter(this::rangeTileCheck).forEach(tileEntity -> {
-				if (tileEntity instanceof TileEntityChest) {
-					containerColor = new ColorUtil(chestColor.getValue(), 255);
-					RenderUtil.drawBoundingBox(mc.world.getBlockState(tileEntity.getPos())
-							.getSelectedBoundingBox(mc.world, tileEntity.getPos()), 2, containerColor);
-				}
-				if (tileEntity instanceof TileEntityEnderChest) {
-					containerColor = new ColorUtil(enderChestColor.getValue(), 255);
-					RenderUtil.drawBoundingBox(mc.world.getBlockState(tileEntity.getPos())
-							.getSelectedBoundingBox(mc.world, tileEntity.getPos()), 2, containerColor);
-				}
-				if (tileEntity instanceof TileEntityShulkerBox) {
-					containerColor = new ColorUtil(shulkerBoxColor.getValue(), 255);
-					RenderUtil.drawBoundingBox(mc.world.getBlockState(tileEntity.getPos())
-							.getSelectedBoundingBox(mc.world, tileEntity.getPos()), 2, containerColor);
-				}
-				if (tileEntity instanceof TileEntityDispenser || tileEntity instanceof TileEntityFurnace
-						|| tileEntity instanceof TileEntityHopper || tileEntity instanceof TileEntityDropper) {
-					containerColor = new ColorUtil(otherColor.getValue(), 255);
-					RenderUtil.drawBoundingBox(mc.world.getBlockState(tileEntity.getPos())
-							.getSelectedBoundingBox(mc.world, tileEntity.getPos()), 2, containerColor);
-				}
-			});
-		}
-
-		if (storage.is("both")) {
-			mc.world.loadedTileEntityList.stream().filter(this::rangeTileCheck).forEach(tileEntity -> {
-				if (tileEntity instanceof TileEntityChest) {
-					containerColor = new ColorUtil(chestColor.getValue(), 255);
-					containerBox = new ColorUtil(chestColor.getValue());
-					RenderUtil.drawBoundingBox(mc.world.getBlockState(tileEntity.getPos())
-							.getSelectedBoundingBox(mc.world, tileEntity.getPos()), 2, containerColor);
-					drawStorageBox(tileEntity.getPos(), containerBox);
-				}
-				if (tileEntity instanceof TileEntityEnderChest) {
-					containerColor = new ColorUtil(enderChestColor.getValue(), 255);
-					containerBox = new ColorUtil(enderChestColor.getValue());
-					RenderUtil.drawBoundingBox(mc.world.getBlockState(tileEntity.getPos())
-							.getSelectedBoundingBox(mc.world, tileEntity.getPos()), 2, containerColor);
-					drawStorageBox(tileEntity.getPos(), containerBox);
-				}
-				if (tileEntity instanceof TileEntityShulkerBox) {
-					containerColor = new ColorUtil(shulkerBoxColor.getValue(), 255);
-					containerBox = new ColorUtil(shulkerBoxColor.getValue());
-					RenderUtil.drawBoundingBox(mc.world.getBlockState(tileEntity.getPos())
-							.getSelectedBoundingBox(mc.world, tileEntity.getPos()), 2, containerColor);
-					drawBox(tileEntity.getPos(), containerBox);
-				}
-				if (tileEntity instanceof TileEntityDispenser || tileEntity instanceof TileEntityFurnace
-						|| tileEntity instanceof TileEntityHopper || tileEntity instanceof TileEntityDropper) {
-					containerColor = new ColorUtil(otherColor.getValue(), 255);
-					containerBox = new ColorUtil(otherColor.getValue());
-					RenderUtil.drawBoundingBox(mc.world.getBlockState(tileEntity.getPos())
-							.getSelectedBoundingBox(mc.world, tileEntity.getPos()), 2, containerColor);
-					drawBox(tileEntity.getPos(), containerBox);
-				}
-			});
-		}
-
-		if (storage.is("fill")) {
-			mc.world.loadedTileEntityList.stream().filter(this::rangeTileCheck).forEach(tileEntity -> {
-				if (tileEntity instanceof TileEntityChest) {
-					containerBox = new ColorUtil(chestColor.getValue());
-					drawStorageBox(tileEntity.getPos(), containerBox);
-				}
-				if (tileEntity instanceof TileEntityEnderChest) {
-					containerBox = new ColorUtil(enderChestColor.getValue());
-					drawStorageBox(tileEntity.getPos(), containerBox);
-				}
-				if (tileEntity instanceof TileEntityShulkerBox) {
-					containerBox = new ColorUtil(shulkerBoxColor.getValue());
-					drawBox(tileEntity.getPos(), containerBox);
-				}
-				if (tileEntity instanceof TileEntityDispenser || tileEntity instanceof TileEntityFurnace
-						|| tileEntity instanceof TileEntityHopper || tileEntity instanceof TileEntityDropper) {
-					containerBox = new ColorUtil(otherColor.getValue());
-					drawBox(tileEntity.getPos(), containerBox);
-				}
-			});
-		}
-
-		// crystal csgo
-
-		if (crystalMode.is("csgo")) {
-
-		}
-	}
-
-	private void drawStorageBox(BlockPos blockPos, ColorUtil color) {
+    @Override
+    public void render(ImpHackEventRender event) {
+    	
+    	entities = mc.world.loadedEntityList.stream()
+                .filter(entity -> entity != mc.player)
+                .collect(Collectors.toList());
+        entities.forEach(entity -> {
+            defineEntityColors(entity);
+            
+            if(!entityMode.is("glow") && !(entity instanceof EntityEnderCrystal)) entity.setGlowing(false);
+            if(entityMode.is("glow") && !mob.isEnabled() && entity instanceof EntityCreature || entity instanceof EntitySlime || entity instanceof EntityAnimal) entity.setGlowing(false);
+            if(entityMode.is("glow") && !item.isEnabled() && entity instanceof EntityItem) entity.setGlowing(false);
+            
+            if(!crystalMode.is("glow") && entity instanceof EntityEnderCrystal) entity.setGlowing(false);
+            
+            
+            // players - box
+            if (entityMode.is("box") && entity instanceof EntityPlayer) {
+            	RenderUtil.playerEsp(entity.getEntityBoundingBox(), (float) lineWidth.getValue(), playerCOutline);
+            }
+            // player - highlight
+            if (entityMode.is("highlight") && entity instanceof EntityPlayer) {
+            	RenderUtil.drawPlayerBox(entity.getEntityBoundingBox(), (float)lineWidth.getValue(), playerC, Geometry.Quad.ALL);
+            }
+            // players - box+highlight
+            if (entityMode.is("box+highlight") && entity instanceof EntityPlayer) {
+            	RenderUtil.playerEsp(entity.getEntityBoundingBox(), (float) lineWidth.getValue(), playerCOutline);
+            	RenderUtil.drawPlayerBox(entity.getEntityBoundingBox(), (float)lineWidth.getValue(), playerC, Geometry.Quad.ALL);
+            }
+            
+            // glow Esp's
+            if (entityMode.is("glow") && entity instanceof EntityPlayer) {
+            	entity.setGlowing(true);
+            }
+            if (entityMode.is("glow") && mob.isEnabled() &&  entity instanceof EntityCreature || entity instanceof EntitySlime) {
+            	entity.setGlowing(true);
+            }
+            if (entityMode.is("glow") && mob.isEnabled() && entity instanceof EntityAnimal) {
+            	entity.setGlowing(true);
+            }
+            if (entityMode.is("glow") && item.isEnabled() && entity instanceof EntityItem) {
+            	entity.setGlowing(true);
+            }
+            if (crystalMode.is("glow") && entity instanceof EntityEnderCrystal) {
+            	entity.setGlowing(true);
+            }
+            
+            // hostiles and passives - box
+            if (mob.isEnabled() && !entityMode.is("outline") && !entityMode.is("glow") && !entityMode.is("off")){
+                if (entity instanceof EntityCreature || entity instanceof EntitySlime) {
+                    RenderUtil.drawBoundingBox(entity.getEntityBoundingBox(), 2, hostileMobC);
+                }
+            }
+            if (mob.isEnabled() && !entityMode.is("outline") && !entityMode.is("glow") && !entityMode.is("off")){
+                if (entity instanceof EntityAnimal) {
+                    RenderUtil.drawBoundingBox(entity.getEntityBoundingBox(), 2, passiveMobC);
+                }
+            }
+            
+            // items
+            if (item.isEnabled() && !entityMode.is("off") && !entityMode.is("glow") && entity instanceof EntityItem){
+            	RenderUtil.drawBoundingBox(entity.getEntityBoundingBox(), 2, mainIntColor);
+            }
+        });
+        
+        if (storage.is("outline")) {
+            mc.world.loadedTileEntityList.stream().filter(this::rangeTileCheck).forEach(tileEntity -> {
+                if (tileEntity instanceof TileEntityChest){
+                    containerColor = new ColorUtil(chestColor.getValue(), 255);
+                    RenderUtil.drawBoundingBox(mc.world.getBlockState(tileEntity.getPos()).getSelectedBoundingBox(mc.world, tileEntity.getPos()), 2, containerColor);
+                }
+                if (tileEntity instanceof TileEntityEnderChest){
+                    containerColor = new ColorUtil(enderChestColor.getValue(), 255);
+                    RenderUtil.drawBoundingBox(mc.world.getBlockState(tileEntity.getPos()).getSelectedBoundingBox(mc.world, tileEntity.getPos()), 2, containerColor);
+                }
+                if (tileEntity instanceof TileEntityShulkerBox){
+                    containerColor = new ColorUtil(shulkerBoxColor.getValue(), 255);
+                    RenderUtil.drawBoundingBox(mc.world.getBlockState(tileEntity.getPos()).getSelectedBoundingBox(mc.world, tileEntity.getPos()), 2, containerColor);
+                }
+                if(tileEntity instanceof TileEntityDispenser || tileEntity instanceof TileEntityFurnace || tileEntity instanceof TileEntityHopper || tileEntity instanceof TileEntityDropper){
+                    containerColor = new ColorUtil(otherColor.getValue(), 255);
+                    RenderUtil.drawBoundingBox(mc.world.getBlockState(tileEntity.getPos()).getSelectedBoundingBox(mc.world, tileEntity.getPos()), 2, containerColor);
+                }
+            });
+        }
+        
+        if (storage.is("both")) {
+            mc.world.loadedTileEntityList.stream().filter(this::rangeTileCheck).forEach(tileEntity -> {
+                if (tileEntity instanceof TileEntityChest){
+                    containerColor = new ColorUtil(chestColor.getValue(), 255);
+                    containerBox = new ColorUtil(chestColor.getValue());
+                    RenderUtil.drawBoundingBox(mc.world.getBlockState(tileEntity.getPos()).getSelectedBoundingBox(mc.world, tileEntity.getPos()), 2, containerColor);
+                    drawStorageBox(tileEntity.getPos(), containerBox);
+                }
+                if (tileEntity instanceof TileEntityEnderChest){
+                	containerColor = new ColorUtil(enderChestColor.getValue(), 255);
+                	containerBox = new ColorUtil(enderChestColor.getValue());
+                    RenderUtil.drawBoundingBox(mc.world.getBlockState(tileEntity.getPos()).getSelectedBoundingBox(mc.world, tileEntity.getPos()), 2, containerColor);
+                    drawStorageBox(tileEntity.getPos(), containerBox);
+                }
+                if (tileEntity instanceof TileEntityShulkerBox){
+                	containerColor = new ColorUtil(shulkerBoxColor.getValue(), 255);
+                	containerBox = new ColorUtil(shulkerBoxColor.getValue());
+                    RenderUtil.drawBoundingBox(mc.world.getBlockState(tileEntity.getPos()).getSelectedBoundingBox(mc.world, tileEntity.getPos()), 2, containerColor);
+                    drawBox(tileEntity.getPos(), containerBox);
+                }
+                if(tileEntity instanceof TileEntityDispenser || tileEntity instanceof TileEntityFurnace || tileEntity instanceof TileEntityHopper || tileEntity instanceof TileEntityDropper){
+                	containerColor = new ColorUtil(otherColor.getValue(), 255);
+                	containerBox = new ColorUtil(otherColor.getValue());
+                    RenderUtil.drawBoundingBox(mc.world.getBlockState(tileEntity.getPos()).getSelectedBoundingBox(mc.world, tileEntity.getPos()), 2, containerColor);
+                    drawBox(tileEntity.getPos(), containerBox);
+                }
+            });
+        }
+        
+        if (storage.is("fill")) {
+            mc.world.loadedTileEntityList.stream().filter(this::rangeTileCheck).forEach(tileEntity -> {
+                if (tileEntity instanceof TileEntityChest){
+                	containerBox = new ColorUtil(chestColor.getValue());
+                    drawStorageBox(tileEntity.getPos(), containerBox);
+                }
+                if (tileEntity instanceof TileEntityEnderChest){
+                	containerBox = new ColorUtil(enderChestColor.getValue());
+                    drawStorageBox(tileEntity.getPos(), containerBox);
+                }
+                if (tileEntity instanceof TileEntityShulkerBox){
+                	containerBox = new ColorUtil(shulkerBoxColor.getValue());
+                    drawBox(tileEntity.getPos(), containerBox);
+                }
+                if(tileEntity instanceof TileEntityDispenser || tileEntity instanceof TileEntityFurnace || tileEntity instanceof TileEntityHopper || tileEntity instanceof TileEntityDropper){
+                	containerBox = new ColorUtil(otherColor.getValue());
+                    drawBox(tileEntity.getPos(), containerBox);
+                }
+            });
+        }
+        
+        // crystal csgo
+        
+        if(crystalMode.is("csgo")) {
+        	
+        }
+    }
+    
+    private void drawStorageBox(BlockPos blockPos, ColorUtil color) {
 		RenderUtil.drawStorageBox(blockPos, 0.88, color, Geometry.Quad.ALL);
 	}
 

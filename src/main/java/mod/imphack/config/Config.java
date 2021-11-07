@@ -52,7 +52,6 @@ public class Config {
 
 		for (Module mod : Main.moduleManager.modules) {
 			if (mod.getName().equalsIgnoreCase("Esp2dHelper") || mod.getName().equalsIgnoreCase("ClickGUI")) {
-
 				save.add("module:" + mod.getName() + ":false:" + mod.getKey());
 			} else {
 				save.add("module:" + mod.getName() + ":" + mod.isToggled() + ":" + mod.getKey());

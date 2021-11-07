@@ -963,7 +963,7 @@ public class RenderUtil extends Tessellator {
 		return new AxisAlignedBB(x,y,z,x+ (double) 1,y+height,z+ (double) 1);
 	}
 
-	//ESP'S
+	//Esp's
 	public static void playerEsp (BlockPos bp, double height, float width, ColorUtil color) {
 		drawBoundingBox(getBoundingBox(bp, height),width,color);
 	}
