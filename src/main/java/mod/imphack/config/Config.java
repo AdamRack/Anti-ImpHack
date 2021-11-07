@@ -1,21 +1,32 @@
 package mod.imphack.config;
 
-import mod.imphack.Main;
-import mod.imphack.module.Module;
-import mod.imphack.module.modules.render.Search;
-import mod.imphack.setting.Setting;
-import mod.imphack.setting.settings.*;
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-
-import java.awt.*;
-import java.io.*;
+import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Map.Entry;
+
+import mod.imphack.Main;
+import mod.imphack.module.Module;
+import mod.imphack.module.modules.render.Search;
+import mod.imphack.setting.Setting;
+import mod.imphack.setting.settings.BooleanSetting;
+import mod.imphack.setting.settings.ColorSetting;
+import mod.imphack.setting.settings.FloatSetting;
+import mod.imphack.setting.settings.IntSetting;
+import mod.imphack.setting.settings.ModeSetting;
+import mod.imphack.setting.settings.SearchBlockSelectorSetting;
+import mod.imphack.setting.settings.StringSetting;
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 // config issue?
 
@@ -37,17 +48,15 @@ public class Config {
 
 	public void Save() {
 
-		ArrayList<String> save = new ArrayList <>();
+		ArrayList<String> save = new ArrayList<>();
 
 		for (Module mod : Main.moduleManager.modules) {
-			if (mod.getName().equalsIgnoreCase("ClickGUI")) {
-
+			if (mod.getName().equalsIgnoreCase("Esp2dHelper") || mod.getName().equalsIgnoreCase("ClickGUI")) {
 				save.add("module:" + mod.getName() + ":false:" + mod.getKey());
 			} else {
 				save.add("module:" + mod.getName() + ":" + mod.isToggled() + ":" + mod.getKey());
 			}
 		}
-	
 
 		for (Module mod : Main.moduleManager.modules) {
 			for (Setting setting : mod.settings) {
@@ -90,12 +99,15 @@ public class Config {
 						list.append(b.getLocalizedName()).append("/");
 					}
 					for (Entry<Block, Integer> e : block.colors.entrySet()) {
-						colorList.append(new Color(e.getValue()).getRed()).append(".").append(new Color(e.getValue()).getGreen()).append(".").append(new Color(e.getValue()).getBlue()).append(",").append(e.getKey().getLocalizedName()).append("/");
+						colorList.append(new Color(e.getValue()).getRed()).append(".")
+								.append(new Color(e.getValue()).getGreen()).append(".")
+								.append(new Color(e.getValue()).getBlue()).append(",")
+								.append(e.getKey().getLocalizedName()).append("/");
 					}
 					save.add("setting:" + mod.getName() + ":" + setting.name + ":" + list + ";" + colorList);
 				}
 			}
-	}
+		}
 
 		try {
 			PrintWriter pw = new PrintWriter(this.configFile.toFile());
@@ -106,11 +118,11 @@ public class Config {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public void Load() {
-		ArrayList<String> lines = new ArrayList <>();
+		ArrayList<String> lines = new ArrayList<>();
 
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(this.configFile.toFile()));
@@ -145,7 +157,7 @@ public class Config {
 				}
 			}
 		}
-		ArrayList <String> save = new ArrayList <>(lines);
+		ArrayList<String> save = new ArrayList<>(lines);
 		for (Module mod : Main.moduleManager.getModuleList()) {
 			for (Setting setting : mod.settings) {
 				if (!Main.settingManager.getSettings().contains(setting)) {
@@ -188,7 +200,10 @@ public class Config {
 							list.append(b.getLocalizedName()).append("/");
 						}
 						for (Entry<Block, Integer> e : block.colors.entrySet()) {
-							colorList.append(new Color(e.getValue()).getRed()).append(".").append(new Color(e.getValue()).getGreen()).append(".").append(new Color(e.getValue()).getBlue()).append(",").append(e.getKey().getLocalizedName()).append("/");
+							colorList.append(new Color(e.getValue()).getRed()).append(".")
+									.append(new Color(e.getValue()).getGreen()).append(".")
+									.append(new Color(e.getValue()).getBlue()).append(",")
+									.append(e.getKey().getLocalizedName()).append("/");
 						}
 						save.add("setting:" + mod.getName() + ":" + setting.name + ":" + list + ";" + colorList);
 					}
@@ -207,7 +222,7 @@ public class Config {
 
 		Main.settingManager.clearSettings();
 
-		lines = new ArrayList <>();
+		lines = new ArrayList<>();
 
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(this.configFile.toFile()));
