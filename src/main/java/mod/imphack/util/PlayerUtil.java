@@ -200,5 +200,9 @@ public class PlayerUtil {
 	        
 	    }
 	 
+	 public static Vec3d getCenter(double posX, double posY, double posZ) {
+	        return new Vec3d(Math.floor(posX) + 0.5D, Math.floor(posY), Math.floor(posZ) + 0.5D);
+	    }
+	 
 	 
 }

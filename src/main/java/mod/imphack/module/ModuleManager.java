@@ -41,6 +41,9 @@ public class ModuleManager {
 		addModule(new AutoTotem());
 		addModule(new Anchor());
 		addModule(new Criticals());
+		addModule(new SpeedEXP());
+		addModule(new FootEXP());
+
 		//addModule(new SelfFill());
 
 

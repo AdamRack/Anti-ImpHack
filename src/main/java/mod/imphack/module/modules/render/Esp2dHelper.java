@@ -5,6 +5,7 @@ import mod.imphack.event.events.ImpHackEventRender;
 import mod.imphack.module.Category;
 import mod.imphack.module.Module;
 import mod.imphack.module.modules.combat.Surround;
+import mod.imphack.util.EntityUtil;
 import mod.imphack.util.render.ColorUtil;
 import mod.imphack.util.render.RenderUtil;
 import net.minecraft.client.Minecraft;
@@ -35,7 +36,7 @@ public class Esp2dHelper extends Module {
 	  		 mc.world.loadedEntityList.stream().filter(entity -> entity != mc.player).forEach(e -> {
 	  			 RenderUtil.prepare_new();
 	  		     GlStateManager.pushMatrix();
-	  		     Vec3d pos = Surround.getInterpolatedPos(e, mc.getRenderPartialTicks());
+	  		     Vec3d pos = EntityUtil.getInterpolatedPos(e, mc.getRenderPartialTicks());
 	  		     GlStateManager.translate(pos.x - (mc.getRenderManager()).renderPosX, pos.y - (mc.getRenderManager()).renderPosY, pos.z - (mc.getRenderManager()).renderPosZ);
 	  		     GlStateManager.glNormal3f(0.0F, 1.0F, 0.0F);
 	  		     GlStateManager.rotate(-viewerYaw, 0.0F, 1.0F, 0.0F);

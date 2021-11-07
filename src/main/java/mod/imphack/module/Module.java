@@ -23,8 +23,11 @@ public class Module implements Listenable {
 	public final String name;
 	public String description;
 	public int key;
+	
 	private final Category category;
 	public boolean toggled;
+	private boolean enabled;
+
 	public final List<Setting> settings = new ArrayList <>();
 	public final List<GuiButton> buttons = new ArrayList <>();
 
@@ -35,6 +38,8 @@ public class Module implements Listenable {
 		this.key = 0;
 		this.category = category;
 		this.toggled = false;
+		this.enabled = false;
+
 	}
 
 	public void addButton(GuiButton... buttons) {
@@ -92,6 +97,32 @@ public class Module implements Listenable {
 
 		Main.config.Save();
 	}
+	public void enable() {
+		if (!this.isEnabled()) {
+			this.enabled = true;
+			try {
+				this.onEnable();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void disable() {
+		if (this.isEnabled()) {
+			this.enabled = false;
+			try {
+				this.onDisable();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public boolean isEnabled() {
+		return this.enabled;
+	}
+
 
 	protected void onDisable() {
 		MinecraftForge.EVENT_BUS.unregister(this);

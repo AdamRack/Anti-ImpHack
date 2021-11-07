@@ -31,7 +31,7 @@ public class ClickGuiFrame {
 		moduleButtons = new ArrayList<>();
 		int offsetY = 14;
 		for (Module module : Main.moduleManager.getModulesByCategory(category)) {
-			if(Objects.equals(module.name, "Esp2dHelper"))
+			if(Objects.equals(module.name, "Esp2dHelper") || Objects.equals(module.name, "FootEXP"))
 				continue;
 			moduleButtons.add(new ModuleButton(module, x, y + offsetY, this));
 			offsetY += 14;
