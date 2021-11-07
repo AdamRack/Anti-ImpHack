@@ -23,7 +23,7 @@ public class Hud extends Gui {
 			if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT) {
 				if (((BooleanSetting) Main.settingManager.getSettingByName(Main.moduleManager.getModule("Hud"),
 						"Watermark")).enabled)
-					fr.drawStringWithShadow("ImpHack Revised " + Reference.VERSION, 2, 1, 0xa600ff);
+					fr.drawStringWithShadow("ImpHack Revised " + Reference.RELEASE_VERSION, 2, 1, 0xa600ff);
 
 			}
 		}

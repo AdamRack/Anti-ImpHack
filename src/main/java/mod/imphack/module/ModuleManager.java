@@ -74,8 +74,8 @@ public class ModuleManager {
 		addModule(new EntityTracers());
 		addModule(new FullBright());
 		addModule(new Freecam());// TODO fix entity dismounting with shift in freecam/make it baritone
-		addModule(new BlockOverlay());// compatible, fix character skin, fix desync and glitch on disable
-		//addModule(new Nametags());
+		//addModule(new BlockOverlay());// compatible, fix character skin, fix desync and glitch on disable
+		addModule(new Nametags());
 		addModule(new ExtraTab());
 		addModule(new HoleEsp());
 		addModule(new Esp());

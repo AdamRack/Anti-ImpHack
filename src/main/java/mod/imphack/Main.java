@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 //main class, contains all event handlers etc.
 
-@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION)
+@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.RELEASE_VERSION)
 @SideOnly(Side.CLIENT)
 public class Main {
 

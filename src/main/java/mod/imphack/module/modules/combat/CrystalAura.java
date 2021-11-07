@@ -536,9 +536,7 @@ private List<BlockPos> findCrystalBlocks() {
     return positions;
 }
 
-/*
- * Crystal Utils from gamesense
- */
+
 
 private boolean crystalCheck(Entity crystal) {
 

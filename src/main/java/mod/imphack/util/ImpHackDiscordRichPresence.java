@@ -19,7 +19,7 @@ public class ImpHackDiscordRichPresence {
 			discordRPC.Discord_Initialize(discordID, eventHandlers, true, null);
 
 			discordRichPresence.startTimestamp = System.currentTimeMillis() / 1000L;
-			discordRichPresence.details = Reference.NAME + " " + Reference.VERSION;
+			discordRichPresence.details = Reference.NAME + " " + Reference.RELEASE_VERSION;
 			discordRichPresence.largeImageKey = "2b2t_-_spawnbase_2b2t-891";
 			discordRichPresence.largeImageText = "ImpHack Revised 0.3.1.";
 			discordRichPresence.smallImageKey = "skyrim";
