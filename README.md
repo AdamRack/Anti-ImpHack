@@ -17,7 +17,7 @@ Skidders can rot in a hole and die!
 <br>
 <br>
 
-###IMPERIALS TAKE NO RESPONSIBILITY FOR ANY TOKENLOGGING ALLEGATIONS
+### IMPERIALS TAKE NO RESPONSIBILITY FOR ANY TOKENLOGGING ALLEGATIONS
 It's open source, why don't you read it yourself you lazy computer illiterate skid
 
 ## To get started:
