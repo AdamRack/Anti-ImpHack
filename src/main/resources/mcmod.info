@@ -1,7 +1,7 @@
 [
 {
   "modid" : "imphack",
-  "name" : "ImpHack Revised",
+  "name" : "Anti-ImpHack",
   "description" : "Official client of the 2b2t Imperials",
   "version" : "1.0.0",
   "mcversion" : "1.12.2",

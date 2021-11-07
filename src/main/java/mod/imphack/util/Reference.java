@@ -4,7 +4,7 @@ import mod.imphack.util.render.ColorUtil;
 
 public class Reference {
 	public static final String MODID = "imphack";
-	public static final String NAME = "ImpHack Revised";
+	public static final String NAME = "Anti-ImpHack";
 	public static final String DEV_VERSION = "1.0.0";
 	public static final String RELEASE_VERSION = "1.0.0";
 	public static final String ACCEPTVERSIONS = "[1.12.2]";

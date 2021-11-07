@@ -1,7 +1,5 @@
 <img src="https://user-images.githubusercontent.com/64598162/137604406-ef3e8459-b1c6-4094-9354-d3e8c9853c39.png" alt="imphack" width="175"/>
 
-# imphack
-
 [![minecraft](https://img.shields.io/badge/Minecraft-1.12.2-blueviolet.svg)](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.12.2.html)
 [![Discord](https://img.shields.io/discord/840168131652747264?color=9900ee&label=discord&style=flat-round)](https://discord.gg/KKPVj2K3GF)
 ![GitHub Lines](https://img.shields.io/tokei/lines/github/Supergamer5465/ImpHack-Revised?color=9900ee)
@@ -10,14 +8,17 @@
 [![Downloads](https://img.shields.io/github/downloads/Supergamer5465/ImpHack-Revised/total?color=9900ee)](https://github.com/Supergamer5465/ImpHack-Revised/release/latest)
 [![License](https://img.shields.io/github/license/Supergamer5465/ImpHack-Revised)](https://github.com/Supergamer5465/ImpHack-Revised/blob/master/LICENSE)
 
-# ImpHack Revised
-Official client of the 2b2t Imperials.
+# Anti Imphack
+(definitely not) The official client of the 2b2t Imperials.
 
-ImpHack is a client that runs off Minecraft Forge 1.12.2, it is intended for use on servers which allow client-side modification. 
-ImpHack takes no inspiration from any previous clients. It is completely original and no skidding was done.
+Anti ImpHack is a client that runs off Minecraft Forge 1.12.2, it is intended for use on servers which allow client-side modification. 
+Anti ImpHack takes no inspiration from any previous clients. It is completely original and no skidding was done.
 Skidders can rot in a hole and die!
 <br>
 <br>
+
+### IMPERIALS TAKE NO RESPONSIBILITY FOR ANY TOKENLOGGING ALLEGATIONS
+It's open source, why don't you read it yourself you lazy computer illiterate skid
 
 ## To get started:
 This client runs on forge 1.12.2
