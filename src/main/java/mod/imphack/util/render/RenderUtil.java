@@ -626,9 +626,9 @@ public class RenderUtil extends Tessellator {
 			scale *= 2.0 / 75.0;
 			break;
 		case 2:
-			scale = 0.0018 + 0.003 * dist;
+			scale = 0.002 + 0.00349 * dist ;
 			if (dist <= 8.0)
-				scale = 0.0245;
+				scale = .0265;
 			start = -8;
 			break;
 		}
@@ -640,7 +640,7 @@ public class RenderUtil extends Tessellator {
 		GlStateManager.scale(-scale, -scale, scale);
 		if (type == 2) {
 			double width = 0;
-			ColorUtil bcolor = new ColorUtil(0, 0, 0, 51);
+			ColorUtil bcolor = new ColorUtil(255, 0, 200, 100);
 			/*
 			 * if (Nametags.customColor.getValue()) { bcolor =
 			 * Nametags.borderColor.getValue(); }
@@ -651,7 +651,7 @@ public class RenderUtil extends Tessellator {
 					width = w;
 				}
 			}
-			drawBorderedRect(-width - 1, -mc.fontRenderer.FONT_HEIGHT, width + 2, new ColorUtil(0, 4, 0, 85),
+			drawBorderedRect(-width - 1, -mc.fontRenderer.FONT_HEIGHT, width + 3, new ColorUtil(110, 4, 0, 100),
 					bcolor);
 		}
 		GlStateManager.enableTexture2D();
