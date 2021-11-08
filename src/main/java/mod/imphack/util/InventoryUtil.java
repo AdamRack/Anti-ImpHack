@@ -83,4 +83,14 @@ public class InventoryUtil {
 	        return mc.player.getHeldItemMainhand().getItem().equals(item) || mc.player.getHeldItemOffhand().getItem().equals(item);
 	    }
 
+
+	    public static int getInventoryItemSlot(Item item, boolean hotbar) {
+	        for (int i = hotbar ? 9 : 0; i < 45; i++) {
+	            if (mc.player.inventory.getStackInSlot(i).getItem() == item)
+	                return i;
+	        }
+
+	        return -1;
+	    }
+
 }

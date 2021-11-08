@@ -43,6 +43,8 @@ public class ModuleManager {
 		addModule(new Criticals());
 		addModule(new SpeedEXP());
 		addModule(new FootEXP());
+		addModule(new AutoArmor());
+
 
 		//addModule(new SelfFill());
 

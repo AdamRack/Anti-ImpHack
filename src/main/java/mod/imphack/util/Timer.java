@@ -68,6 +68,8 @@ public class Timer {
     public long getTimePassed(){
 		return System.currentTimeMillis() - this.current;
 	}
-        
+     
+    
+    
  
 }
