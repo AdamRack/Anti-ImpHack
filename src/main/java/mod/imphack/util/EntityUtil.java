@@ -32,6 +32,8 @@ public class EntityUtil {
 				(EntityUtil.mc.player.getRidingEntity() != null) ? EntityUtil.mc.player.getRidingEntity().posZ
 						: EntityUtil.mc.player.posZ);
 	}
+	
+	
 
 	public static boolean isPassive(Entity e) {
 		if (e instanceof EntityWolf && ((EntityWolf) e).isAngry())

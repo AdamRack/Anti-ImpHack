@@ -6,37 +6,39 @@ import mod.imphack.event.events.ImpHackEventPacket;
 import mod.imphack.module.Category;
 import mod.imphack.module.Module;
 import mod.imphack.setting.settings.BooleanSetting;
+import mod.imphack.setting.settings.ModeSetting;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.network.play.client.CPacketPlayer;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import static net.minecraft.network.play.client.CPacketEntityAction.Action.START_SPRINTING;
 import static net.minecraft.network.play.client.CPacketEntityAction.Action.STOP_SPRINTING;
 
 public class NoHunger extends Module {
 
-	final BooleanSetting cancelSprint = new BooleanSetting("Cancel Sprint Packets", this, true);
-	final BooleanSetting onGround = new BooleanSetting("On Ground", this, true);
+   ModeSetting mode = new ModeSetting("Mode", this, "Packet", "Packet", "Vanilla");
+
 
 	public NoHunger() {
-		super("NoHunger", "Prevents You From Losing Hunger", Category.PLAYER);
+		super("NoHunger", "Prevents You From Losing Hunger", Category.UTILITIES);
 
-		addSetting(cancelSprint);
-		addSetting(onGround);
+		addSetting(mode);
 	}
+
+	@Override
+	public void onUpdate() {
+        if (mode.getMode() == "Vanilla")
+            mc.player.getFoodStats().setFoodLevel(20);
+    }
 
 	@EventHandler
 	private final Listener<ImpHackEventPacket.ReceivePacket> PacketEvent = new Listener<>(p_Event -> {
-		if (p_Event.get_packet() instanceof CPacketPlayer && onGround.enabled && !mc.player.isElytraFlying()) {
-			final CPacketPlayer l_Packet = (CPacketPlayer) p_Event.get_packet();
+        if (mode.getMode() == "Packet") {
+            if (p_Event.get_packet() instanceof CPacketPlayer)
+                ((CPacketPlayer) p_Event.get_packet()).onGround = (mc.player.fallDistance > 0 || mc.playerController.isHittingBlock);
 
-			l_Packet.onGround = mc.player.fallDistance > 0 || mc.playerController.getIsHittingBlock();
-		}
-
-		if (p_Event.get_packet() instanceof CPacketEntityAction && cancelSprint.enabled) {
-			final CPacketEntityAction l_Packet = (CPacketEntityAction) p_Event.get_packet();
-			if (l_Packet.getAction() == START_SPRINTING || l_Packet.getAction() == STOP_SPRINTING) {
-				p_Event.cancel();
-			}
-		}
-	});
+            if (p_Event.get_packet() instanceof CPacketEntityAction && ((CPacketEntityAction) p_Event.get_packet()).getAction() == START_SPRINTING || ((CPacketEntityAction) p_Event.get_packet()).getAction() == STOP_SPRINTING)
+                p_Event.setCanceled(true);
+        }
+    });
 }

@@ -7,13 +7,20 @@ import mod.imphack.event.events.ImpHackEventPacket;
 import mod.imphack.event.events.ImpHackEventPush;
 import mod.imphack.module.Category;
 import mod.imphack.module.Module;
+import mod.imphack.setting.settings.BooleanSetting;
+import mod.imphack.setting.settings.FloatSetting;
 import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.network.play.server.SPacketExplosion;
 
 public class Velocity extends Module {
 
+	
+	FloatSetting horizontal = new FloatSetting("Horizontal", this, 0.0f);
+	FloatSetting vertical = new FloatSetting("Vertical", this, 0.0f);
+	BooleanSetting noPush = new BooleanSetting("No Push", this, true);
 	public Velocity() {
 		super("Velocity", "Stops Knockback", Category.MOVEMENT);
+		addSetting(horizontal,vertical,noPush);
 	}
 
 	@EventHandler
@@ -33,4 +40,10 @@ public class Velocity extends Module {
 	@EventHandler
 	private final Listener<ImpHackEventPush> PushEvent = new Listener<>(Cancellable::cancel);
 
+	
+	 public void onPush(ImpHackEventPush event) {
+	        if (event.stage == 0 && this.noPush.isEnabled() && event.entity.equals(mc.player)) {
+	            event.cancel();
+	        }
+	    }
 }

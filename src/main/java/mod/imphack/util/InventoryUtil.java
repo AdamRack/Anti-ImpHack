@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockObsidian;
 import net.minecraft.client.Minecraft;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemAir;
 import net.minecraft.item.ItemBlock;
@@ -28,6 +29,27 @@ public class InventoryUtil {
 	        }
 
 	        return -1;
+	    }
+	  
+	  
+	  public static void moveItemToOffhand(int slot) {
+	        int returnSlot = -1;
+
+	        if (slot == -1)
+	            return;
+
+	        mc.playerController.windowClick(0, slot < 9 ? slot + 36 : slot, 0, ClickType.PICKUP, mc.player);
+	        mc.playerController.windowClick(0, 45, 0, ClickType.PICKUP, mc.player);
+
+	        for (int i = 0; i < 45; i++) {
+	            if (mc.player.inventory.getStackInSlot(i).isEmpty()) {
+	                returnSlot = i;
+	                break;
+	            }
+	        }
+
+	        if (returnSlot != -1)
+	            mc.playerController.windowClick(0, returnSlot < 9 ? returnSlot + 36 : returnSlot, 0, ClickType.PICKUP, mc.player);
 	    }
 	  
 	   public static int getAnyBlockInHotbar() {

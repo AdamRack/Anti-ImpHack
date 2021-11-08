@@ -44,6 +44,7 @@ public class ModuleManager {
 		addModule(new SpeedEXP());
 		addModule(new FootEXP());
 		addModule(new AutoArmor());
+		addModule(new Offhand());
 
 
 		//addModule(new SelfFill());
@@ -71,6 +72,8 @@ public class ModuleManager {
 		addModule(new Disabler());
 		addModule(new FakePlayer());
 		addModule(new XCarry());
+		addModule(new NoEntityTrace());
+		addModule(new FastPlace());
 
 		// hud
 		//GOTO Main

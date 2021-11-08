@@ -204,5 +204,8 @@ public class PlayerUtil {
 	        return new Vec3d(Math.floor(posX) + 0.5D, Math.floor(posY), Math.floor(posZ) + 0.5D);
 	    }
 	 
+	 public static double getHealth() {
+	        return mc.player.getHealth() + mc.player.getAbsorptionAmount();
+	    }
 	 
 }
