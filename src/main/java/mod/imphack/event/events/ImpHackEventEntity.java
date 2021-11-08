@@ -1,9 +1,6 @@
 package mod.imphack.event.events;
 
-import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.At;
 
-import mod.imphack.Main;
 import mod.imphack.event.ImpHackEventCancellable;
 import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.entity.Entity;
@@ -11,15 +8,7 @@ import net.minecraft.entity.Entity;
 public class ImpHackEventEntity extends ImpHackEventCancellable {
 	
 	
-	@Redirect(method = "applyEntityCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;addVelocity(DDD)V"))
-	public void velocity(Entity entity, double x, double y, double z) {
-		if (!Main.moduleManager.getModule("noPush").isEnabled()) {
-			entity.motionX += x;
-			entity.motionY += y;
-			entity.motionZ += z;
-			entity.isAirBorne = true;
-		}
-	}
+	
 	private Entity entity;
 
 	public ImpHackEventEntity(Entity entity) {
