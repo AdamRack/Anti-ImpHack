@@ -2,6 +2,7 @@ package mod.imphack.module.modules.hud;
 
 import mod.imphack.Main;
 import mod.imphack.setting.settings.BooleanSetting;
+import mod.imphack.util.font.FontUtils;
 import mod.imphack.util.render.ColorUtil;
 import mod.imphack.util.render.RenderUtil;
 import net.minecraft.client.Minecraft;
@@ -37,7 +38,14 @@ public class HudCoords extends Gui{
 				
 				int heightCoords = isChatOpen ? sr.getScaledHeight() - 25 : sr.getScaledHeight() - 10;
 				
-				mc.fontRenderer.drawStringWithShadow(coords,  2, heightCoords, ColorUtil.rainbow(300));
+		        if(Main.moduleManager.getModule("ClientFont").isToggled()) {
+
+				FontUtils.drawStringWithShadow(true, coords,  2, heightCoords, ColorUtil.getRainbow(300, 255));
+		        }
+		        else {
+					FontUtils.drawStringWithShadow(false, coords,  2, heightCoords, ColorUtil.getRainbow(300, 255));
+
+		        }
 				}
 			}
 		}

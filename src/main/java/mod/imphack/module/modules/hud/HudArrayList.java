@@ -3,6 +3,7 @@ package mod.imphack.module.modules.hud;
 import mod.imphack.Main;
 import mod.imphack.module.Module;
 import mod.imphack.setting.settings.BooleanSetting;
+import mod.imphack.util.font.FontUtils;
 import mod.imphack.util.render.ColorUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -60,17 +61,27 @@ public class HudArrayList extends Gui{
 					for (Module mod : Main.moduleManager.getModuleList()) {
 						if (!mod.getName().equalsIgnoreCase("Esp2dHelper") && mod.isToggled()) {
 							if (!mod.getName().equalsIgnoreCase("Hud") && mod.isToggled()) {
+								if (!mod.getName().equalsIgnoreCase("ClientFont") && mod.isToggled()) {
+
 
 							modules.add(mod);
-						}
+								}
 						}
 					}
+				}
 
 					modules.sort(comparator);
 
 					for (Module m : modules) {
-						mc.fontRenderer.drawStringWithShadow(m.getName(), sr.getScaledWidth() - fr.getStringWidth(m.getName()) - 2,
-								y, ColorUtil.rainbow(300));
+	                	if(Main.moduleManager.getModule("ClientFont").isToggled()) {
+
+						FontUtils.drawStringWithShadow(true, m.getName(), sr.getScaledWidth() - fr.getStringWidth(m.getName()) - 2,
+								y, ColorUtil.getRainbow(300, 255));
+	                	}
+	                	else {
+	                		FontUtils.drawStringWithShadow(false, m.getName(), sr.getScaledWidth() - fr.getStringWidth(m.getName()) - 2,
+									y, ColorUtil.getRainbow(300, 255));
+	                	}
 						y += fr.FONT_HEIGHT;
 					}
 				}

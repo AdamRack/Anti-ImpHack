@@ -3,6 +3,8 @@ package mod.imphack.ui.clickgui;
 import mod.imphack.Main;
 import mod.imphack.module.Category;
 import mod.imphack.module.Module;
+import mod.imphack.util.font.FontUtils;
+import mod.imphack.util.render.ColorUtil;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
@@ -69,8 +71,15 @@ public class ClickGuiFrame {
 
 		GL11.glColor3f(1, 1, 1);
 
-		int categoryColor = new Color(255, 255, 255).getRGB();
-		mc.fontRenderer.drawString(category.toString(), x + 2, y + 2, categoryColor);
+		ColorUtil categoryColor = new ColorUtil(255, 255, 255);
+		if(Main.moduleManager.getModule("ClientFont").toggled) {
+			FontUtils.drawString(true,category.toString(), x + 2, y + 2, categoryColor);
+
+		}
+		else {
+			FontUtils.drawString(false,category.toString(), x + 2, y + 2, categoryColor);
+
+		}
 		for (ModuleButton moduleButton : moduleButtons) {
 			moduleButton.draw(mouseX, mouseY);
 		}

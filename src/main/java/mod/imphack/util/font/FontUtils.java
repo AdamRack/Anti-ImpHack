@@ -43,6 +43,15 @@ public class FontUtils {
 	public static void drawStringWithShadow(String text, double x, double y, int color) {
 		
 	}
+	
+	public static float drawString(boolean customFont, String text, int x, int y, ColorUtil color) {
+		if(customFont) {
+			return Main.customFontRenderer.drawString(text, x, y, color);
+		}
+		else {
+			return mc.fontRenderer.drawString(text, x, y, color.getRGB());
+		}
+	}
 
 	  
 }

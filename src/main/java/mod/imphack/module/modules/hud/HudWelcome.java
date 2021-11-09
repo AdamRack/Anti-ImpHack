@@ -2,6 +2,7 @@ package mod.imphack.module.modules.hud;
 
 import mod.imphack.Main;
 import mod.imphack.setting.settings.BooleanSetting;
+import mod.imphack.util.font.FontUtils;
 import mod.imphack.util.render.ColorUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -23,7 +24,13 @@ public class HudWelcome extends Gui {
 			if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT) {
 				if (((BooleanSetting) Main.settingManager.getSettingByName(Main.moduleManager.getModule("Hud"),
 						"Welcome")).enabled)
-					mc.fontRenderer.drawStringWithShadow("Welcome " + mc.player.getName(), 450, 1, ColorUtil.rainbow(300));
+					if(Main.moduleManager.getModule("ClientFont").isToggled()) {
+					FontUtils.drawStringWithShadow(true,"Welcome " + mc.player.getName(), 450, 1, ColorUtil.getRainbow(300, 255));
+					}
+					else {
+						FontUtils.drawStringWithShadow(false,"Welcome " + mc.player.getName(), 450, 1, ColorUtil.getRainbow(300, 255));
+
+					}
 			}
 		}
 	}

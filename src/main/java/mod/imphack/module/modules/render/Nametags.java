@@ -4,13 +4,16 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 import me.zero.alpine.event.type.Cancellable;
 import me.zero.alpine.listener.EventHandler;
 import me.zero.alpine.listener.Listener;
+import mod.imphack.Main;
 import mod.imphack.event.events.ImpHackEventPush;
 import mod.imphack.event.events.ImpHackEventRender;
 import mod.imphack.event.events.ImpHackEventRenderEntityName;
 import mod.imphack.module.Category;
 import mod.imphack.module.Module;
+import mod.imphack.module.modules.client.ClientFont;
 import mod.imphack.setting.settings.BooleanSetting;
 import mod.imphack.setting.settings.IntSetting;
+import mod.imphack.util.font.FontUtils;
 import mod.imphack.util.render.ColorUtil;
 import mod.imphack.util.render.RenderUtil;
 import net.minecraft.client.renderer.GlStateManager;
@@ -160,7 +163,13 @@ public class Nametags extends Module {
 	        GlStateManager.enableTexture2D();
 	        GlStateManager.pushMatrix();
 	        GlStateManager.scale(0.5, 0.5, 0.5);
-	        mc.fontRenderer.drawStringWithShadow((int) (damagePercent * 100) + "%", posX * 2, posY, 0xff00ff00);
+	        if(Main.moduleManager.getModule("ClientFont").isToggled()) {
+	        FontUtils.drawStringWithShadow(true, (int) (damagePercent * 100) + "%", posX * 2, posY, new ColorUtil(255,255,255,255));
+	        }
+	        else {
+		        FontUtils.drawStringWithShadow(false, (int) (damagePercent * 100) + "%", posX * 2, posY, new ColorUtil(255,255,255,255));
+
+	        }
 	        GlStateManager.popMatrix();
 	        GlStateManager.disableTexture2D();
 	    }
@@ -268,7 +277,14 @@ public class Nametags extends Module {
 	            if(protType.isEnabled()) {
 	            	int level = EnchantmentHelper.getEnchantmentLevel(enchantment, itemStack);
 	                if(enchantment.equals(Enchantments.BLAST_PROTECTION) || enchantment.equals(Enchantments.PROTECTION))
-	                mc.fontRenderer.drawStringWithShadow(ChatFormatting.BOLD + findStringForEnchants(enchantment, level), posX * 2 + 13, posY + 18, 0xffffffff);
+	                	if(Main.moduleManager.getModule("ClientFont").isToggled()) {
+	                		
+	                	FontUtils.drawStringWithShadow(true,ChatFormatting.BOLD + findStringForEnchants(enchantment, level), posX * 2 + 13, posY + 18, new ColorUtil(255,255,255,255));
+	                	}
+	                	else {
+		                	FontUtils.drawStringWithShadow(false,ChatFormatting.BOLD + findStringForEnchants(enchantment, level), posX * 2 + 13, posY + 18, new ColorUtil(255,255,255,255));
+
+	                	}
 	            }
 	        }
 

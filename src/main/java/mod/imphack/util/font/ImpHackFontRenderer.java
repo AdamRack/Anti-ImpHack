@@ -32,6 +32,13 @@ public class ImpHackFontRenderer extends ImpHackFont {
 		public float drawString(String text, float x, float y, ColorUtil color) {
 			return drawString(text, x, y, color, false);
 		}
+		
+		
+		public float drawString(String text, float x, float y, Color color) {
+			
+			return drawString(text, x, y, color);
+		}
+		
 
 		public float drawCenteredStringWithShadow(String text, float x, float y, ColorUtil color) {
 			return drawStringWithShadow(text, x - getStringWidth(text) / 2, y, color);

@@ -3,6 +3,8 @@ package mod.imphack.ui.clickgui.settingeditor;
 import mod.imphack.Main;
 import mod.imphack.module.Module;
 import mod.imphack.setting.Setting;
+import mod.imphack.util.font.FontUtils;
+import mod.imphack.util.render.ColorUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import org.lwjgl.opengl.GL11;
@@ -84,15 +86,28 @@ public class SettingFrame {
 
 		GL11.glColor3f(1, 1, 1);
 
-		int moduleNameColor = new Color(255, 255, 255).getRGB();
-		mc.fontRenderer.drawString(module.getName(), x + 2, y + 2, moduleNameColor);
+		ColorUtil moduleNameColor = new ColorUtil(255, 255, 255);
+		if(Main.moduleManager.getModule("ClientFont").toggled) {
+			FontUtils.drawString(true, module.getName(), x + 2, y + 2, moduleNameColor);
+
+		}else {
+			FontUtils.drawString(false, module.getName(), x + 2, y + 2, moduleNameColor);
+
+		}
 		kbButton.draw(mouseX, mouseY);
 		for (SettingButton s : settingButtons) {
 			s.draw(mouseX, mouseY);
 		}
 
 		for (GuiButton b : module.buttons) {
-			mc.fontRenderer.drawString(b.displayString, b.x + 2, b.y + 2, new Color(255, 255, 255).getRGB());
+			
+			if(Main.moduleManager.getModule("ClientFont").toggled) {
+				FontUtils.drawString(true, b.displayString, b.x + 2, b.y + 2, new ColorUtil(255, 255, 255));
+
+			}else {
+				FontUtils.drawString(false,b.displayString, b.x + 2, b.y + 2, new ColorUtil(255, 255, 255));
+
+			}
 		}
 	}
 

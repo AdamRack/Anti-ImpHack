@@ -1,6 +1,8 @@
 package mod.imphack.ui;
 
 import mod.imphack.Main;
+import mod.imphack.util.font.FontUtils;
+import mod.imphack.util.render.ColorUtil;
 import mod.imphack.util.render.RenderUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
@@ -135,8 +137,8 @@ public class ImpHackSplashScreen extends GuiScreen {
 				this.enabled = true;
 				this.hovered = (float) mouseX >= (float) this.x && mouseY >= this.y && mouseX < this.x + this.width
 						&& mouseY < this.y + this.height;
-				Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(this.displayString, (float) this.x + 1f,
-						(float) this.y, Color.ORANGE.getRGB());
+				FontUtils.drawStringWithShadow(false, this.displayString,  this.x + 1,
+						 this.y, new ColorUtil(255,255,255,255));
 				if (this.hovered) {
 					RenderUtil.drawLine(this.x - 5f, this.y + 2 + mc.fontRenderer.FONT_HEIGHT,
 							this.x + 5f + mc.fontRenderer.getStringWidth(this.displayString),

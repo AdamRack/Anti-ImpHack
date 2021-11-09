@@ -1,5 +1,6 @@
 package mod.imphack.util.render;
 
+import mod.imphack.Main;
 import mod.imphack.misc.RenderBuilder;
 import mod.imphack.misc.RenderBuilder.RenderMode;
 import mod.imphack.util.EntityUtil;
@@ -656,8 +657,14 @@ public class RenderUtil extends Tessellator {
 		}
 		GlStateManager.enableTexture2D();
 		for (int i = 0; i < text.length; i++) {
-			FontUtils.drawStringWithShadow(false, text[i], -FontUtils.getStringWidth(false, text[i]) / 2,
+	        if(Main.moduleManager.getModule("ClientFont").isToggled()) {
+
+			FontUtils.drawStringWithShadow(true, text[i], -FontUtils.getStringWidth(false, text[i]) / 2,
 					i * (mc.fontRenderer.FONT_HEIGHT + 1) + start, color);
+	        }else {
+	        	FontUtils.drawStringWithShadow(false, text[i], -FontUtils.getStringWidth(false, text[i]) / 2,
+						i * (mc.fontRenderer.FONT_HEIGHT + 1) + start, color);
+	        }
 		}
 		GlStateManager.disableTexture2D();
 		if (type != 2) {

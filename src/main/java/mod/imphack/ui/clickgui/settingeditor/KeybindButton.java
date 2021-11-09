@@ -1,8 +1,11 @@
 package mod.imphack.ui.clickgui.settingeditor;
 
 import mod.imphack.Client;
+import mod.imphack.Main;
 import mod.imphack.module.Module;
 import mod.imphack.ui.clickgui.ClickGuiController;
+import mod.imphack.util.font.FontUtils;
+import mod.imphack.util.render.ColorUtil;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 
@@ -34,6 +37,8 @@ public class KeybindButton {
 
 	public void draw(int mouseX, int mouseY) {
 		mc.fontRenderer.drawString("Keybind: " + Keyboard.getKeyName(module.getKey()), x + 2, y + 2, color.getRGB());
+
+		
 	}
 
 	public void onClick(int x, int y, int button) {

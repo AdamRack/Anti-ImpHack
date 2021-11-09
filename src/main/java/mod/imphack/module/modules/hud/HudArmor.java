@@ -2,6 +2,8 @@ package mod.imphack.module.modules.hud;
 
 import mod.imphack.Main;
 import mod.imphack.setting.settings.BooleanSetting;
+import mod.imphack.util.font.FontUtils;
+import mod.imphack.util.render.ColorUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -57,17 +59,28 @@ public class HudArmor extends Gui{
 			            GlStateManager.disableDepth();
 			 
 				        String s = is.getCount() > 50 ? is.getCount() + "" : "";
-				        mc.fontRenderer.drawStringWithShadow(s, x + 19 - 2 - mc.fontRenderer.getStringWidth(s), y + 9, 0xffffffff);
-			 
+				        if(Main.moduleManager.getModule("ClientFont").isToggled()) {
+
+				        FontUtils.drawStringWithShadow(true,s, x + 19 - 2 - FontUtils.getStringWidth(true,s), y + 9, new ColorUtil(255,255,255,255));
+				        }
+				        else {
+					        FontUtils.drawStringWithShadow(false,s, x + 19 - 2 - FontUtils.getStringWidth(false, s), y + 9, new ColorUtil(255,255,255,255));
+
+				        }
 				        if(mc.player.isCreative()) {
 				        	
 				        	float green = ((float) is.getMaxDamage() - (float) is.getItemDamage()) / (float) is.getMaxDamage();
 					        float red = 1 - green;
 					        int dmg = 100 - (int) (red * 100);
 					        int y1 = resolution.getScaledHeight() - 40 - (mc.player.isInWater() ? 10 : 0);
+					        if(Main.moduleManager.getModule("ClientFont").isToggled()) {
 
-				                mc.fontRenderer.drawStringWithShadow(dmg  + "%", x + 10 - mc.fontRenderer.getStringWidth(dmg + "" + "%") / 2, y1 - 9, 0xffffffff);		
-				                
+				                FontUtils.drawStringWithShadow(true,dmg  + "%", x + 10 - FontUtils.getStringWidth(true, dmg + "" + "%") / 2, y1 - 9, new ColorUtil(255,255,255,255));		
+					        }
+					        else {
+				                FontUtils.drawStringWithShadow(false,dmg  + "%", x + 10 - FontUtils.getStringWidth(false, dmg + "" + "%") / 2, y1 - 9, new ColorUtil(255,255,255,255));		
+
+					        }
 				                armourCompress = 2;
 				                armourSpacing = 20;
 				                
@@ -76,7 +89,14 @@ public class HudArmor extends Gui{
 				        float green = ((float) is.getMaxDamage() - (float) is.getItemDamage()) / (float) is.getMaxDamage();
 				        float red = 1 - green;
 				        int dmg = 100 - (int) (red * 100);
-			                mc.fontRenderer.drawStringWithShadow(dmg  + "%", x + 10 - mc.fontRenderer.getStringWidth(dmg + "" + "%") / 2, y - 8, 0xffffffff);			                
+				        if(Main.moduleManager.getModule("ClientFont").isToggled()) {
+
+			                FontUtils.drawStringWithShadow(true, dmg  + "%", x + 10 - FontUtils.getStringWidth(true, dmg + "" + "%") / 2, y - 8, new ColorUtil(255,255,255,255));
+				        }
+				        else {
+			                FontUtils.drawStringWithShadow(false, dmg  + "%", x + 10 - FontUtils.getStringWidth(false, dmg + "" + "%") / 2, y - 8, new ColorUtil(255,255,255,255));
+
+				        }
 			                armourCompress = 2;
 			                armourSpacing = 20;
 				        

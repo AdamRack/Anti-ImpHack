@@ -2,6 +2,7 @@ package mod.imphack.module;
 
 import mod.imphack.event.events.ImpHackEventRender;
 import mod.imphack.module.modules.client.ClickGui;
+import mod.imphack.module.modules.client.ClientFont;
 import mod.imphack.module.modules.client.DiscordRPC;
 import mod.imphack.module.modules.combat.*;
 import mod.imphack.module.modules.hud.Hud;
@@ -33,6 +34,7 @@ public class ModuleManager {
 		addModule(new ClickGui());
 		addModule(new Hud());
 		addModule(new DiscordRPC());
+		addModule(new ClientFont());
 
 		// combat
 		addModule(new KillAura()); // TODO Add Switch and Sword only

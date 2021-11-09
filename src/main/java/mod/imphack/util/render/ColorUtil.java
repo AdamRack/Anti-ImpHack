@@ -11,10 +11,9 @@ public class ColorUtil extends Color {
 
     
     
-    public static int rainbow(int delay) {
-		double rainbowState = Math.ceil((System.currentTimeMillis() + delay) / 50.0);
-		rainbowState %= 360;
-		return Color.getHSBColor((float) (rainbowState / 360.0f), 0.5f, 1f).getRGB();
+	public static ColorUtil getRainbow(int incr, int alpha) {
+		ColorUtil color =  ColorUtil.fromHSB(((System.currentTimeMillis() + incr * 200)%(360*20))/(360f * 20),0.5f,1f);
+		return new ColorUtil(color.getRed(), color.getBlue(), color.getGreen(), alpha);
 	}
     
 
