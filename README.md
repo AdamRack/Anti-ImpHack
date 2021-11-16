@@ -12,8 +12,6 @@
 (definitely not) The official client of the 2b2t Imperials.
 
 Anti ImpHack is a client that runs off Minecraft Forge 1.12.2, it is intended for use on servers which allow client-side modification. 
-Anti ImpHack takes no inspiration from any previous clients. It is completely original and no skidding was done.
-Skidders can rot in a hole and die!
 <br>
 <br>
 
